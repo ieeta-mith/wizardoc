@@ -1,0 +1,97 @@
+{
+    "question-pools": [
+        {
+            "id": "1",
+            "name": "GREG SOP",
+            "source": "Imported from GREG Standardised Assessment Process for Feasibility Version 1 - Annex I",
+            "questionCount": 6,
+            "questions": [
+                {
+                    "id": "q1",
+                    "text": "Use case identifier [from submission form]",
+                    "domain": "ADMINISTRATIVE DETAILS",
+                    "riskType": "NA",
+                    "isoReference": "GREG SOP Annex I"
+                },
+                {
+                    "id": "q2",
+                    "text": "Use case title",
+                    "domain": "ADMINISTRATIVE DETAILS",
+                    "riskType": "NA",
+                    "isoReference": "GREG SOP Annex I"
+                },
+                {
+                    "id": "q3",
+                    "text": "Use Case Lead (name, email)",
+                    "domain": "ADMINISTRATIVE DETAILS",
+                    "riskType": "NA",
+                    "isoReference": "GREG SOP Annex I"
+                },
+                {
+                    "id": "q4",
+                    "text": "Check of completeness of Use Case form conducted by (name, email)",
+                    "domain": "ADMINISTRATIVE DETAILS",
+                    "riskType": "NA",
+                    "isoReference": "GREG SOP Annex I"
+                },
+                {
+                    "id": "q5",
+                    "text": "Date of initial feasibility request [DD/MM/YYYY]",
+                    "domain": "ADMINISTRATIVE DETAILS",
+                    "riskType": "NA",
+                    "isoReference": "GREG SOP Annex I"
+                },
+                {
+                    "id": "q6",
+                    "text": "Person(s) responsible for the Feasibility Assessment (name, email)",
+                    "domain": "ADMINISTRATIVE DETAILS",
+                    "riskType": "NA",
+                    "isoReference": "GREG SOP Annex I"
+                }
+            ]
+        }
+    ],
+    "studies": [
+        {
+            "id": "1",
+            "name": "GREG Assessment Study",
+            "phase": "Phase III",
+            "therapeuticArea": "SOP Assessment",
+            "studyQuestion": "Feasibility Assessment based on GREG SOP",
+            "poolId": "1",
+            "createdAt": "2024-01-15T10:00:00.000Z",
+            "updatedAt": "2024-02-20T14:30:00.000Z"
+        },
+        {
+            "id": "2",
+            "name": "GREG Assessment Study - Secondary",
+            "phase": "Phase II",
+            "therapeuticArea": "SOP Assessment",
+            "studyQuestion": "Secondary feasibility assessment linked to GREG SOP",
+            "poolId": "1",
+            "createdAt": "2024-03-01T09:00:00.000Z",
+            "updatedAt": "2024-03-01T09:00:00.000Z"
+        }
+    ],
+    "assessments": [
+        {
+            "id": "1",
+            "studyId": "1",
+            "name": "GREG SOP Feasibility Assessment - GREG Assessment Study",
+            "progress": 100,
+            "totalQuestions": 6,
+            "answeredQuestions": 6,
+            "status": "completed",
+            "answers": {
+                "q1": "GREG-UC-2025-001",
+                "q2": "Feasibility of automated ECG analysis in multicenter study",
+                "q3": "Dr. Maria Silva, maria.silva@example.org",
+                "q4": "John Doe, john.doe@example.org",
+                "q5": "15/04/2025",
+                "q6": "Dr. Maria Silva, maria.silva@example.org; John Doe, john.doe@example.org"
+            },
+            "createdAt": "2025-04-15T09:00:00.000Z",
+            "updatedAt": "2025-04-15T09:30:00.000Z"
+        }
+    ]
+}

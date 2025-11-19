@@ -1,0 +1,625 @@
+{
+  "question-pools": [
+    {
+      "id": "1",
+      "name": "ICH E6 (R2) GCP Guideline - Core Assessment",
+      "source": "Imported from ICH E6 (R2) - Good Clinical Practice",
+      "questionCount": 8,
+      "questions": [
+        {
+          "id": "q1",
+          "text": "What is the primary objective of this study and how does it align with the intended clinical use?",
+          "domain": "Study Design",
+          "riskType": "Protocol Deviation",
+          "isoReference": "ICH E6-4.5.1"
+        },
+        {
+          "id": "q2",
+          "text": "How will patient safety be monitored throughout the study duration, including frequency and methods of adverse event reporting?",
+          "domain": "Safety",
+          "riskType": "Patient Safety",
+          "isoReference": "ICH E6-4.11.1"
+        },
+        {
+          "id": "q3",
+          "text": "What are the inclusion and exclusion criteria for patient enrollment?",
+          "domain": "Patient Selection",
+          "riskType": "Eligibility",
+          "isoReference": "ICH E6-4.8.10"
+        },
+        {
+          "id": "q4",
+          "text": "Describe the data collection methodology, including source data verification processes",
+          "domain": "Data Management",
+          "riskType": "Data Quality",
+          "isoReference": "ICH E6-5.5.3"
+        },
+        {
+          "id": "q5",
+          "text": "What is the informed consent process and how will it be documented?",
+          "domain": "Ethics",
+          "riskType": "Regulatory Compliance",
+          "isoReference": "ICH E6-4.8.2"
+        },
+        {
+          "id": "q6",
+          "text": "How will data privacy and confidentiality be maintained in accordance with applicable regulations?",
+          "domain": "Data Protection",
+          "riskType": "Data Privacy",
+          "isoReference": "ICH E6-5.5.7"
+        },
+        {
+          "id": "q7",
+          "text": "What quality control measures are in place for laboratory assessments and diagnostics?",
+          "domain": "Laboratory",
+          "riskType": "Data Quality",
+          "isoReference": "ICH E6-5.17.2"
+        },
+        {
+          "id": "q8",
+          "text": "Describe the site monitoring plan and frequency of monitoring visits",
+          "domain": "Monitoring",
+          "riskType": "Protocol Compliance",
+          "isoReference": "ICH E6-5.18.3"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "ISO 14155:2020 - Clinical Investigation of Medical Devices",
+      "source": "Imported from ISO 14155:2020",
+      "questionCount": 6,
+      "questions": [
+        {
+          "id": "q9",
+          "text": "What statistical methods will be used for sample size calculation and data analysis?",
+          "domain": "Statistics",
+          "riskType": "Analysis",
+          "isoReference": "ISO 14155-7.2.1"
+        },
+        {
+          "id": "q10",
+          "text": "How will serious adverse events and device deficiencies be reported to regulatory authorities?",
+          "domain": "Safety",
+          "riskType": "Reporting",
+          "isoReference": "ISO 14155-8.2.4"
+        },
+        {
+          "id": "q11",
+          "text": "What are the device accountability procedures throughout the clinical investigation?",
+          "domain": "Device Management",
+          "riskType": "Accountability",
+          "isoReference": "ISO 14155-6.5.2"
+        },
+        {
+          "id": "q12",
+          "text": "Describe the procedures for handling protocol deviations and amendments",
+          "domain": "Protocol Management",
+          "riskType": "Protocol Deviation",
+          "isoReference": "ISO 14155-5.3.7"
+        },
+        {
+          "id": "q13",
+          "text": "What training will be provided to investigators and site staff?",
+          "domain": "Training",
+          "riskType": "Human Error",
+          "isoReference": "ISO 14155-6.2.5"
+        },
+        {
+          "id": "q14",
+          "text": "How will endpoint assessments be performed and validated?",
+          "domain": "Endpoints",
+          "riskType": "Measurement Validity",
+          "isoReference": "ISO 14155-7.1.3"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "FDA 21 CFR Part 11 - Electronic Records Compliance",
+      "source": "Imported from FDA 21 CFR Part 11",
+      "questionCount": 5,
+      "questions": [
+        {
+          "id": "q15",
+          "text": "How will electronic signatures be validated and what controls are in place to ensure authenticity?",
+          "domain": "Electronic Systems",
+          "riskType": "Data Integrity",
+          "isoReference": "21 CFR 11.50"
+        },
+        {
+          "id": "q16",
+          "text": "What audit trail capabilities exist for tracking changes to electronic records?",
+          "domain": "Data Management",
+          "riskType": "Audit Trail",
+          "isoReference": "21 CFR 11.10(e)"
+        },
+        {
+          "id": "q17",
+          "text": "Describe system validation procedures for electronic data capture systems",
+          "domain": "System Validation",
+          "riskType": "System Failure",
+          "isoReference": "21 CFR 11.10(a)"
+        },
+        {
+          "id": "q18",
+          "text": "What access controls and authentication measures are implemented for electronic systems?",
+          "domain": "Data Security",
+          "riskType": "Unauthorized Access",
+          "isoReference": "21 CFR 11.10(d)"
+        },
+        {
+          "id": "q19",
+          "text": "How are electronic records backed up and what is the disaster recovery plan?",
+          "domain": "Business Continuity",
+          "riskType": "Data Loss",
+          "isoReference": "21 CFR 11.10(b)"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "EMA GCP Guideline - Risk-Based Monitoring",
+      "source": "Imported from EMA Reflection Paper on Risk-Based Quality Management",
+      "questionCount": 7,
+      "questions": [
+        {
+          "id": "q20",
+          "text": "What critical data and processes have been identified for risk-based monitoring?",
+          "domain": "Risk Management",
+          "riskType": "Critical Data",
+          "isoReference": "EMA-RBM-3.1"
+        },
+        {
+          "id": "q21",
+          "text": "How will key risk indicators be tracked and reviewed throughout the study?",
+          "domain": "Monitoring",
+          "riskType": "Risk Tracking",
+          "isoReference": "EMA-RBM-3.2"
+        },
+        {
+          "id": "q22",
+          "text": "What centralized monitoring activities will be performed?",
+          "domain": "Central Monitoring",
+          "riskType": "Data Quality",
+          "isoReference": "EMA-RBM-4.1"
+        },
+        {
+          "id": "q23",
+          "text": "Describe the risk assessment process for site selection and management",
+          "domain": "Site Management",
+          "riskType": "Site Performance",
+          "isoReference": "EMA-RBM-4.3"
+        },
+        {
+          "id": "q24",
+          "text": "How will patient enrollment rates and screening failures be monitored?",
+          "domain": "Enrollment",
+          "riskType": "Recruitment Issues",
+          "isoReference": "EMA-RBM-5.2"
+        },
+        {
+          "id": "q25",
+          "text": "What escalation procedures are in place for identified risks?",
+          "domain": "Risk Management",
+          "riskType": "Risk Escalation",
+          "isoReference": "EMA-RBM-3.3"
+        },
+        {
+          "id": "q26",
+          "text": "How will protocol compliance be assessed across sites?",
+          "domain": "Compliance",
+          "riskType": "Protocol Deviation",
+          "isoReference": "EMA-RBM-5.1"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "GDPR Clinical Trial Data Protection",
+      "source": "Imported from GDPR Articles 6 & 9",
+      "questionCount": 6,
+      "questions": [
+        {
+          "id": "q27",
+          "text": "What is the legal basis for processing personal data in this clinical study?",
+          "domain": "Data Protection",
+          "riskType": "Legal Compliance",
+          "isoReference": "GDPR Art.6"
+        },
+        {
+          "id": "q28",
+          "text": "How will data subject rights (access, rectification, erasure) be facilitated?",
+          "domain": "Data Subject Rights",
+          "riskType": "Data Privacy",
+          "isoReference": "GDPR Art.15-20"
+        },
+        {
+          "id": "q29",
+          "text": "What technical and organizational measures ensure data security?",
+          "domain": "Data Security",
+          "riskType": "Data Breach",
+          "isoReference": "GDPR Art.32"
+        },
+        {
+          "id": "q30",
+          "text": "Has a Data Protection Impact Assessment been completed for this study?",
+          "domain": "Impact Assessment",
+          "riskType": "Privacy Risk",
+          "isoReference": "GDPR Art.35"
+        },
+        {
+          "id": "q31",
+          "text": "How will cross-border data transfers be managed in compliance with GDPR?",
+          "domain": "Data Transfer",
+          "riskType": "Transfer Compliance",
+          "isoReference": "GDPR Art.44-50"
+        },
+        {
+          "id": "q32",
+          "text": "What is the data retention schedule and destruction process for study data?",
+          "domain": "Data Lifecycle",
+          "riskType": "Data Retention",
+          "isoReference": "GDPR Art.5.1(e)"
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "name": "ICH E8 (R1) - General Considerations for Clinical Studies",
+      "source": "Imported from ICH E8 (R1)",
+      "questionCount": 5,
+      "questions": [
+        {
+          "id": "q33",
+          "text": "How does the study design address the research question and minimize bias?",
+          "domain": "Study Design",
+          "riskType": "Study Validity",
+          "isoReference": "ICH E8-3.1"
+        },
+        {
+          "id": "q34",
+          "text": "What is the rationale for endpoint selection and their clinical relevance?",
+          "domain": "Endpoints",
+          "riskType": "Endpoint Validity",
+          "isoReference": "ICH E8-3.2"
+        },
+        {
+          "id": "q35",
+          "text": "How will the comparator group be selected and managed?",
+          "domain": "Comparators",
+          "riskType": "Bias",
+          "isoReference": "ICH E8-3.3"
+        },
+        {
+          "id": "q36",
+          "text": "What measures are in place to ensure blinding integrity where applicable?",
+          "domain": "Blinding",
+          "riskType": "Unblinding",
+          "isoReference": "ICH E8-3.4"
+        },
+        {
+          "id": "q37",
+          "text": "Describe the strategy for handling missing data and dropouts",
+          "domain": "Statistics",
+          "riskType": "Missing Data",
+          "isoReference": "ICH E8-4.2"
+        }
+      ]
+    }
+  ],
+  "studies": [
+    {
+      "id": "1",
+      "name": "CARDIO-PREVENT-2024: Cardiovascular Disease Prevention in High-Risk Patients",
+      "phase": "Phase III",
+      "therapeuticArea": "Cardiology",
+      "studyQuestion": "A multicenter, randomized, double-blind study to evaluate the efficacy and safety of novel lipid-lowering therapy in preventing major adverse cardiovascular events in patients with established cardiovascular disease and elevated LDL-C despite statin therapy.",
+      "poolId": "1",
+      "createdAt": "2024-01-15T10:00:00.000Z",
+      "updatedAt": "2024-02-20T14:30:00.000Z"
+    },
+    {
+      "id": "2",
+      "name": "NEURO-PROTECT: Neuroprotective Intervention in Early Parkinson's Disease",
+      "phase": "Phase II",
+      "therapeuticArea": "Neurology",
+      "studyQuestion": "A randomized, placebo-controlled study to assess the neuroprotective effects of a novel alpha-synuclein aggregation inhibitor in patients with early-stage Parkinson's disease, measuring disease progression over 24 months using MDS-UPDRS and imaging biomarkers.",
+      "poolId": "1",
+      "createdAt": "2024-02-01T09:15:00.000Z",
+      "updatedAt": "2024-02-28T16:45:00.000Z"
+    },
+    {
+      "id": "3",
+      "name": "ONCO-IMMUNO-001: Immunotherapy Combination in Advanced NSCLC",
+      "phase": "Phase III",
+      "therapeuticArea": "Oncology",
+      "studyQuestion": "An open-label, randomized study comparing the efficacy of dual checkpoint inhibitor therapy versus standard of care chemotherapy plus single checkpoint inhibitor in treatment-naïve patients with advanced non-small cell lung cancer with PD-L1 expression ≥50%.",
+      "poolId": "2",
+      "createdAt": "2024-01-20T11:30:00.000Z",
+      "updatedAt": "2024-03-05T13:20:00.000Z"
+    },
+    {
+      "id": "4",
+      "name": "DIABETES-TECH: Closed-Loop Insulin Delivery System Evaluation",
+      "phase": "Observational",
+      "therapeuticArea": "Endocrinology",
+      "studyQuestion": "A prospective observational study to evaluate real-world effectiveness and safety of advanced closed-loop insulin delivery systems in adults with type 1 diabetes, assessing time in range, glycemic variability, and quality of life outcomes over 12 months.",
+      "poolId": "4",
+      "createdAt": "2024-02-10T08:00:00.000Z",
+      "updatedAt": "2024-03-01T10:15:00.000Z"
+    },
+    {
+      "id": "5",
+      "name": "RHEUM-BIOLOGIC: Biologic Switching Patterns in Rheumatoid Arthritis",
+      "phase": "Observational",
+      "therapeuticArea": "Rheumatology",
+      "studyQuestion": "A retrospective cohort study analyzing biologic therapy switching patterns, reasons for switching, and long-term outcomes in patients with rheumatoid arthritis using real-world data from electronic health records across multiple healthcare systems.",
+      "poolId": "3",
+      "createdAt": "2024-01-25T14:20:00.000Z",
+      "updatedAt": "2024-02-15T11:40:00.000Z"
+    },
+    {
+      "id": "6",
+      "name": "PEDIATRIC-ASTHMA: Mobile Health Intervention for Pediatric Asthma Control",
+      "phase": "Phase II",
+      "therapeuticArea": "Pulmonology",
+      "studyQuestion": "A randomized controlled study to evaluate the effectiveness of a mobile health application with integrated spirometry and medication reminders in improving asthma control and reducing exacerbations in children aged 6-17 years with moderate to severe persistent asthma.",
+      "poolId": "1",
+      "createdAt": "2024-02-05T12:30:00.000Z",
+      "updatedAt": "2024-03-10T09:50:00.000Z"
+    },
+    {
+      "id": "7",
+      "name": "GASTRO-IBD: Novel Oral Therapy in Moderate to Severe Crohn's Disease",
+      "phase": "Phase III",
+      "therapeuticArea": "Gastroenterology",
+      "studyQuestion": "A multicenter, randomized, double-blind, placebo-controlled study to evaluate the efficacy and safety of an oral JAK inhibitor in inducing and maintaining clinical remission in patients with moderate to severe Crohn's disease who have had inadequate response to conventional therapy.",
+      "poolId": "1",
+      "createdAt": "2024-01-30T15:45:00.000Z",
+      "updatedAt": "2024-02-25T14:10:00.000Z"
+    },
+    {
+      "id": "8",
+      "name": "MENTAL-HEALTH-DIGITAL: Digital Cognitive Behavioral Therapy for Depression",
+      "phase": "Phase IV",
+      "therapeuticArea": "Psychiatry",
+      "studyQuestion": "A pragmatic randomized controlled trial comparing digitally-delivered cognitive behavioral therapy versus treatment as usual in primary care patients with moderate major depressive disorder, evaluating effectiveness, cost-effectiveness, and implementation outcomes.",
+      "poolId": "5",
+      "createdAt": "2024-02-12T10:00:00.000Z",
+      "updatedAt": "2024-03-08T16:30:00.000Z"
+    },
+    {
+      "id": "9",
+      "name": "RENAL-PROTECT: Kidney Protection in CKD Patients with Diabetes",
+      "phase": "Phase III",
+      "therapeuticArea": "Nephrology",
+      "studyQuestion": "A randomized, placebo-controlled study to assess the renoprotective effects of a novel mineralocorticoid receptor antagonist in patients with diabetic kidney disease and albuminuria, measuring time to composite renal endpoint and cardiovascular outcomes.",
+      "poolId": "1",
+      "createdAt": "2024-01-18T13:15:00.000Z",
+      "updatedAt": "2024-02-22T12:00:00.000Z"
+    },
+    {
+      "id": "10",
+      "name": "DERM-ATOPIC: Targeted Therapy for Moderate to Severe Atopic Dermatitis",
+      "phase": "Phase II",
+      "therapeuticArea": "Dermatology",
+      "studyQuestion": "A randomized, double-blind study evaluating the efficacy and safety of a novel oral JAK1-selective inhibitor in adolescents and adults with moderate to severe atopic dermatitis inadequately controlled by topical therapies, assessing EASI, IGA, and pruritus NRS scores.",
+      "poolId": "2",
+      "createdAt": "2024-02-08T11:45:00.000Z",
+      "updatedAt": "2024-03-03T15:20:00.000Z"
+    }
+  ],
+  "assessments": [
+    {
+      "id": "1",
+      "studyId": "1",
+      "name": "Initial Risk Assessment - CARDIO-PREVENT-2024",
+      "progress": 100,
+      "totalQuestions": 8,
+      "answeredQuestions": 8,
+      "status": "completed",
+      "answers": {
+        "q1": "The primary objective is to demonstrate superiority of the investigational lipid-lowering therapy in reducing the composite endpoint of cardiovascular death, myocardial infarction, stroke, or urgent coronary revascularization compared to placebo in high-risk patients.",
+        "q2": "Patient safety will be monitored through scheduled study visits at baseline, week 4, 8, 12, and then quarterly. Adverse events will be collected at each visit, with serious adverse events reported within 24 hours. Independent DSMB will review safety data quarterly.",
+        "q3": "Inclusion: Age 40-80 years, documented cardiovascular disease, LDL-C ≥70 mg/dL despite maximally tolerated statin therapy. Exclusion: Active liver disease, eGFR <30 mL/min, recent cardiovascular event within 3 months.",
+        "q4": "Data will be collected via electronic CRFs with built-in validation checks. Source data verification will be performed at 100% of sites for critical data points (primary endpoint, safety data, informed consent). Centralized review of all cardiovascular endpoints.",
+        "q5": "Written informed consent will be obtained by trained study coordinators before any study procedures. Consent forms approved by central IRB. Documentation maintained in regulatory binders with signatures and dates.",
+        "q6": "Patient data will be pseudonymized with unique study IDs. Access controls implemented for EDC system with role-based permissions. HIPAA compliance maintained with Business Associate Agreements for all vendors. Data encryption at rest and in transit.",
+        "q7": "Central laboratory used for all lipid measurements with standardized procedures. Regular proficiency testing and quality control checks. Local labs used for safety assessments with normal reference ranges documented.",
+        "q8": "Risk-based monitoring approach with remote monitoring of 100% data and on-site visits based on risk indicators. Minimum 2 on-site visits per site (initiation and close-out), with additional visits triggered by quality metrics."
+      },
+      "createdAt": "2024-01-16T10:30:00.000Z",
+      "updatedAt": "2024-01-18T16:45:00.000Z"
+    },
+    {
+      "id": "2",
+      "studyId": "1",
+      "name": "Mid-Study Risk Re-Assessment",
+      "progress": 100,
+      "totalQuestions": 8,
+      "answeredQuestions": 3,
+      "status": "completed",
+      "answers": {
+        "q2": "d",
+        "q3": "DAD",
+        "q4": "DAW"
+      },
+      "createdAt": "2024-02-19T09:00:00.000Z",
+      "updatedAt": "2025-11-12T18:08:51.005Z"
+    },
+    {
+      "id": "3",
+      "studyId": "2",
+      "name": "Protocol Risk Assessment - NEURO-PROTECT",
+      "progress": 100,
+      "totalQuestions": 8,
+      "answeredQuestions": 8,
+      "status": "completed",
+      "answers": {
+        "q1": "Primary objective is to evaluate neuroprotective effects by measuring change in MDS-UPDRS Part III score and dopamine transporter imaging (DaTscan) over 24 months compared to placebo.",
+        "q2": "Comprehensive safety monitoring includes monthly phone contacts and quarterly in-person visits. Neurological assessments at each visit. Independent neurologist adjudication of disease progression events.",
+        "q3": "Inclusion: Age 30-80, Parkinson's disease diagnosed within 3 years, Hoehn & Yahr stage 1-2, stable on current PD medications for ≥3 months. Exclusion: Atypical parkinsonism, prior deep brain stimulation, significant cognitive impairment (MoCA <24).",
+        "q4": "Standardized video-recorded motor assessments with central rating by trained, blinded raters. DaTscan imaging at central facility with standardized protocols. Electronic patient-reported outcome measures via tablet.",
+        "q5": "Enhanced consent process with additional information about investigational nature of neuroprotective claim. Patients must demonstrate understanding through teach-back method. Consent discussion includes family member when possible.",
+        "q6": "GDPR-compliant data management with Data Protection Impact Assessment completed. Video recordings stored on secure server with access restricted to central raters only. Automatic deletion after analysis completion.",
+        "q7": "Central laboratory for all PD-related biomarkers. Local labs for routine safety labs with cross-validation program. DaTscan imaging facility meets qualification requirements with phantom testing.",
+        "q8": "Hybrid monitoring with remote review of all data and targeted on-site monitoring. Focus on video assessment quality, informed consent process, and medication compliance. Monthly quality metrics reviewed by study team."
+      },
+      "createdAt": "2024-02-02T11:20:00.000Z",
+      "updatedAt": "2024-02-04T15:10:00.000Z"
+    },
+    {
+      "id": "4",
+      "studyId": "3",
+      "name": "Initial Risk Assessment - ONCO-IMMUNO-001",
+      "progress": 67,
+      "totalQuestions": 6,
+      "answeredQuestions": 4,
+      "status": "in-progress",
+      "answers": {
+        "q9": "Sample size of 1200 patients (1:1 randomization) provides 90% power to detect HR=0.75 for PFS with alpha=0.05. Statistical analysis per ITT principle using stratified log-rank test. Interim analyses at 50% and 75% of events.",
+        "q10": "Serious adverse events reported to sponsor within 24 hours, regulatory authorities per local requirements (typically within 7-15 days). Safety reports submitted quarterly to IRBs/ECs. Independent oncologist reviews all Grade 4+ immune-related adverse events.",
+        "q11": "Not applicable - this is a drug study, not a device study.",
+        "q12": "Minor protocol deviations reviewed by site PI and documented in deviation log. Major protocol deviations reported to IRB within 5 business days. Protocol amendments require regulatory approval before implementation with subjects re-consented if required."
+      },
+      "createdAt": "2024-01-22T14:00:00.000Z",
+      "updatedAt": "2024-01-25T10:30:00.000Z"
+    },
+    {
+      "id": "5",
+      "studyId": "4",
+      "name": "Initial Risk Assessment - DIABETES-TECH",
+      "progress": 100,
+      "totalQuestions": 7,
+      "answeredQuestions": 7,
+      "status": "completed",
+      "answers": {
+        "q20": "Critical data identified: Time in range (70-180 mg/dL), hypoglycemia events <54 mg/dL, severe hypoglycemia requiring assistance, device-related adverse events, diabetic ketoacidosis events. All data collected via automated device uploads.",
+        "q21": "Key risk indicators tracked via dashboard: enrollment rate, data upload compliance, hypoglycemia event rates, early discontinuation rate. Weekly review by study team, monthly steering committee review. Alerts triggered for severe hypoglycemia.",
+        "q22": "Centralized continuous glucose monitor data review for all participants. Automated algorithms flag potential data quality issues, missed uploads, unusual glucose patterns. Weekly reports generated for site coordinators.",
+        "q23": "Sites selected based on endocrinology expertise, previous research experience, and patient population. Risk assessment includes site infrastructure, staff training requirements, and patient retention strategies. Ongoing performance monitoring via enrollment and retention metrics.",
+        "q24": "Target enrollment 300 participants over 12 months. Weekly enrollment tracking with monthly projections. Screen failure rate monitored (target <30%). Sites with low enrollment receive additional support and marketing materials.",
+        "q25": "Risk escalation matrix defined: Yellow alerts for enrollment <80% target or data upload <70%; Red alerts for severe hypoglycemia or DKA events. Yellow alerts trigger site support call, red alerts trigger immediate sponsor review and potential protocol modification.",
+        "q26": "Protocol compliance tracked via data upload frequency, study visit adherence, completion of patient-reported outcomes. Quarterly compliance reports by site. Sites <80% compliance receive remediation plan."
+      },
+      "createdAt": "2024-02-11T13:45:00.000Z",
+      "updatedAt": "2024-02-13T09:20:00.000Z"
+    },
+    {
+      "id": "6",
+      "studyId": "5",
+      "name": "GDPR Compliance Assessment - RHEUM-BIOLOGIC",
+      "progress": 100,
+      "totalQuestions": 6,
+      "answeredQuestions": 6,
+      "status": "completed",
+      "answers": {
+        "q27": "Legal basis: Public interest in scientific research (GDPR Art.9.2.j) and explicit consent from participants where identifiable data is used. IRB approval obtained documenting public interest justification.",
+        "q28": "Data subject rights facilitated through dedicated email and phone contact. Requests processed within 30 days. Right to erasure balanced with research necessity per GDPR Art.17.3(d). Detailed privacy notice provided to all participants outlining rights.",
+        "q29": "Technical measures: Encryption (AES-256), pseudonymization, access controls with MFA, regular penetration testing. Organizational measures: Staff training, data processing agreements, clear roles/responsibilities, incident response plan. ISO 27001 certified data center.",
+        "q30": "Data Protection Impact Assessment completed prior to study initiation. High-risk processing identified due to health data and cross-border transfers. Mitigation measures implemented including enhanced encryption and Standard Contractual Clauses for transfers.",
+        "q31": "Cross-border transfers to US-based data processor managed via Standard Contractual Clauses (EU Commission approved). Additional safeguards: encryption, limited data access, regular audits, right to inspection documented in data processing agreement.",
+        "q32": "Retention schedule: identifiable data for duration of study + 25 years per regulatory requirements. Pseudonymized research data retained indefinitely for secondary research. Secure deletion procedures using DoD 5220.22-M standard. Annual review of stored data."
+      },
+      "createdAt": "2024-01-27T10:15:00.000Z",
+      "updatedAt": "2024-01-29T14:40:00.000Z"
+    },
+    {
+      "id": "7",
+      "studyId": "6",
+      "name": "Initial Risk Assessment - PEDIATRIC-ASTHMA",
+      "progress": 88,
+      "totalQuestions": 8,
+      "answeredQuestions": 7,
+      "status": "in-progress",
+      "answers": {
+        "q1": "Primary objective: demonstrate that mobile health intervention improves asthma control (ACT score) and reduces exacerbations (≥30% reduction) compared to usual care over 12 months in pediatric patients.",
+        "q2": "Safety monitored via monthly app check-ins, quarterly clinic visits. Asthma exacerbations requiring emergency care flagged automatically. Parent training on recognizing severe symptoms. 24/7 hotline for safety concerns. DSMB reviews safety quarterly.",
+        "q3": "Inclusion: Age 6-17 years, physician-diagnosed persistent asthma, ≥1 exacerbation in past year, smartphone access. Exclusion: Other chronic lung disease, inability to use mobile app, severe psychiatric comorbidity limiting app use.",
+        "q4": "App automatically collects spirometry data, medication adherence, symptom scores. Clinic visit data entered via EDC. Parent-reported outcomes via validated questionnaires. Real-time data validation with automated range checks.",
+        "q5": "Parental consent and child assent obtained per institutional guidelines (assent required for age 7+). Age-appropriate assent forms. Separate privacy discussion regarding app data collection. Option to withdraw at any time clearly explained.",
+        "q6": "COPPA compliance for children under 13. Parental controls for data sharing preferences. App data encrypted end-to-end. Limited data collection (no location tracking). Privacy-by-design principles with minimal data retention.",
+        "q7": "Spirometry devices calibrated quarterly per manufacturer specifications. Training provided to families with competency assessment. Quality metrics for spirometry maneuvers tracked via app. Central review of baseline spirometry by pediatric pulmonologist."
+      },
+      "createdAt": "2024-02-06T15:30:00.000Z",
+      "updatedAt": "2024-02-08T11:20:00.000Z"
+    },
+    {
+      "id": "8",
+      "studyId": "7",
+      "name": "Initial Risk Assessment - GASTRO-IBD",
+      "progress": 100,
+      "totalQuestions": 8,
+      "answeredQuestions": 8,
+      "status": "completed",
+      "answers": {
+        "q1": "Primary objective: achieve clinical remission (CDAI <150) at week 12 in higher proportion of patients receiving JAK inhibitor versus placebo. Secondary objectives include endoscopic improvement, quality of life, and sustained remission through week 52.",
+        "q2": "Enhanced safety monitoring for JAK inhibitor class effects: monthly CBC, lipid panel, liver function tests. Screening and periodic monitoring for tuberculosis, hepatitis B/C, herpes zoster. Independent GI safety adjudication committee. Serious infections trigger protocol-defined management algorithm.",
+        "q3": "Inclusion: Age 18-75, moderate to severe Crohn's disease (CDAI 220-450), inadequate response to conventional therapy, endoscopic evidence of active disease. Exclusion: Active infection, malignancy within 5 years (except treated skin cancer), previous JAK inhibitor exposure.",
+        "q4": "Standardized disease activity assessments (CDAI, PRO-2) at each visit. Endoscopic evaluation with central reading at baseline, week 12, week 52. Fecal calprotectin collected at all visits. eDiary for daily symptom tracking between visits.",
+        "q5": "Enhanced consent process includes discussion of JAK inhibitor class risks (infections, malignancy, thrombosis). Educational materials provided including FDA-approved medication guide. Understanding assessment via quiz. Opportunity for follow-up questions with study physician.",
+        "q6": "HIPAA-compliant EDC system. Patient data pseudonymized with study ID. Access controls with audit logs. Patient-reported outcomes collected via secure portal with encryption. Third-party vendors (central lab, endoscopy readers) have executed BAAs.",
+        "q7": "Central laboratory for all safety and efficacy labs with standardized methodology. Local labs for urgent safety assessments with protocol-specified acceptable ranges. Central pathology review of all endoscopic biopsies by GI pathologists blinded to treatment.",
+        "q8": "Risk-based monitoring plan: 100% remote SDV for informed consent, eligibility, primary endpoint, SAEs. On-site monitoring visits at site initiation, mid-study, and close-out. Additional triggered visits for sites with quality issues. Monthly KRI review."
+      },
+      "createdAt": "2024-02-01T08:45:00.000Z",
+      "updatedAt": "2024-02-03T16:15:00.000Z"
+    },
+    {
+      "id": "9",
+      "studyId": "8",
+      "name": "Initial Risk Assessment - MENTAL-HEALTH-DIGITAL",
+      "progress": 50,
+      "totalQuestions": 6,
+      "answeredQuestions": 3,
+      "status": "in-progress",
+      "answers": {
+        "q27": "Legal basis: Explicit informed consent (GDPR Art.6.1.a and Art.9.2.a) for health data processing. Public interest in healthcare research (Art.9.2.j) as secondary basis. Ethics committee approval obtained.",
+        "q28": "Patient portal provides access to own data. Requests for rectification or erasure handled within 30 days. Right to data portability enabled via structured data export. Detailed information on rights provided in layered privacy notice.",
+        "q29": "Digital CBT platform hosted on HIPAA and GDPR-compliant cloud infrastructure. End-to-end encryption for all communications. Multi-factor authentication for therapist access. Regular security audits and penetration testing. Staff confidentiality training."
+      },
+      "createdAt": "2024-02-14T12:00:00.000Z",
+      "updatedAt": "2024-02-15T10:45:00.000Z"
+    },
+    {
+      "id": "10",
+      "studyId": "9",
+      "name": "Initial Risk Assessment - RENAL-PROTECT",
+      "progress": 100,
+      "totalQuestions": 8,
+      "answeredQuestions": 8,
+      "status": "completed",
+      "answers": {
+        "q1": "Primary objective: demonstrate that mineralocorticoid receptor antagonist reduces composite renal endpoint (sustained eGFR decline ≥40%, ESKD, or renal death) compared to placebo in patients with diabetic kidney disease. Cardiovascular outcomes as key secondary endpoint.",
+        "q2": "Safety monitoring focused on hyperkalemia and renal function changes. Potassium and eGFR checked at weeks 1, 2, 4, then monthly for 4 months, then quarterly. Protocol-defined criteria for dose adjustment or discontinuation. Independent nephrology safety review of all serious renal events.",
+        "q3": "Inclusion: Type 2 diabetes, eGFR 25-75 mL/min, urine albumin-creatinine ratio ≥200 mg/g, stable on RAAS inhibitor. Exclusion: Potassium >5.0 mEq/L at screening, known renovascular disease, recent cardiovascular event within 3 months.",
+        "q4": "Centralized eGFR calculation using standardized creatinine measurements. Local labs for safety monitoring with central laboratory confirmation of concerning values. Urine samples for albuminuria collected at each visit with central laboratory analysis. REDCap system for data collection with real-time validation.",
+        "q5": "Informed consent includes detailed discussion of hyperkalemia risk and monitoring requirements. Dietary counseling on potassium restriction provided. Patients must demonstrate understanding of when to contact site for symptoms. Consent includes permission for medical record access to confirm endpoints.",
+        "q6": "Study database separate from clinical EMR with unique study IDs. Limited dataset created for statistical analysis without identifiers. HIPAA authorization obtained for endpoint adjudication access to medical records. Business Associate Agreements with central lab and clinical event adjudication committee.",
+        "q7": "Central laboratory for all creatinine, potassium, and albuminuria measurements using standardized, validated assays. Certificate of analysis provided quarterly. Proficiency testing program. Local labs must meet qualification criteria and provide normal ranges for safety values.",
+        "q8": "Risk-based monitoring with focus on renal safety labs, potassium levels, and endpoint events. 100% central monitoring of all renal function data. On-site monitoring at 30% of sites annually, focusing on highest enrolling sites and those with quality concerns. Remote SDV for informed consent and eligibility."
+      },
+      "createdAt": "2024-01-19T11:30:00.000Z",
+      "updatedAt": "2024-01-21T15:50:00.000Z"
+    },
+    {
+      "id": "11",
+      "studyId": "10",
+      "name": "Initial Risk Assessment - DERM-ATOPIC",
+      "progress": 83,
+      "totalQuestions": 6,
+      "answeredQuestions": 5,
+      "status": "in-progress",
+      "answers": {
+        "q9": "Sample size of 300 patients (2:1 active:placebo) provides 90% power to detect 25% difference in EASI-75 response rate with alpha=0.025 (adjusted for coprimary endpoints). Primary analysis using Cochran-Mantel-Haenszel test stratified by baseline severity and age group.",
+        "q10": "SAE reporting within 24 hours to sponsor. Expedited reporting of suspected JAK inhibitor class effects (serious infections, malignancies, thrombosis). Annual safety reports to IRBs. Patient safety cards provided with contact information for urgent issues between visits.",
+        "q11": "Not applicable - this is a drug study, not a device study.",
+        "q12": "Protocol deviation log maintained at each site. Minor deviations reviewed by PI monthly. Major deviations (affecting safety or integrity) reported to IRB within 5 days and sponsor within 24 hours. Root cause analysis performed for repeated deviations. Protocol amendments require regulatory approval and potential re-consent.",
+        "q13": "Investigator meeting for all sites covering protocol requirements, EASI/IGA scoring, JAK inhibitor safety monitoring. Certification required for all EASI/IGA assessors with photo guide. Annual refresher training. Site coordinators trained on eDiary support and patient education."
+      },
+      "createdAt": "2024-02-09T14:20:00.000Z",
+      "updatedAt": "2024-02-11T16:40:00.000Z"
+    }
+  ]
+}
