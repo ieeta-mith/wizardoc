@@ -18,7 +18,9 @@ export class AssessmentService {
    * @returns Array of assessments
    */
   static async getByStudyId(studyId: string): Promise<Assessment[]> {
-    const response = await fetch(`${API_BASE_URL}/assessments?studyId=${studyId}`)
+    const response = await fetch(`${API_BASE_URL}/assessments?studyId=${studyId}`, {
+      cache: "no-store",
+    })
 
     if (!response.ok) {
       throw new Error(`Failed to fetch assessments: ${response.statusText}`)
@@ -40,7 +42,9 @@ export class AssessmentService {
    * @returns The assessment or null if not found
    */
   static async getById(id: string): Promise<Assessment | null> {
-    const response = await fetch(`${API_BASE_URL}/assessments/${id}`)
+    const response = await fetch(`${API_BASE_URL}/assessments/${id}`, {
+      cache: "no-store",
+    })
 
     if (response.status === 404) {
       return null

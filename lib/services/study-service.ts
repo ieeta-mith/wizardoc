@@ -29,7 +29,9 @@ export class StudyService {
    * @returns The study or null if not found
    */
   static async getById(id: string): Promise<Study | null> {
-    const response = await fetch(`${API_BASE_URL}/studies/${id}`)
+    const response = await fetch(`${API_BASE_URL}/studies/${id}`, {
+      cache: "no-store",
+    })
 
     if (response.status === 404) {
       return null

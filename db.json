@@ -1,97 +1,164 @@
 {
-    "question-pools": [
+  "question-pools": [
+    {
+      "id": "1",
+      "name": "GREG SOP",
+      "source": "Imported from GREG Standardised Assessment Process for Feasibility Version 1 - Annex I",
+      "questionCount": 6,
+      "questions": [
         {
-            "id": "1",
-            "name": "GREG SOP",
-            "source": "Imported from GREG Standardised Assessment Process for Feasibility Version 1 - Annex I",
-            "questionCount": 6,
-            "questions": [
-                {
-                    "id": "q1",
-                    "text": "Use case identifier [from submission form]",
-                    "domain": "ADMINISTRATIVE DETAILS",
-                    "riskType": "NA",
-                    "isoReference": "GREG SOP Annex I"
-                },
-                {
-                    "id": "q2",
-                    "text": "Use case title",
-                    "domain": "ADMINISTRATIVE DETAILS",
-                    "riskType": "NA",
-                    "isoReference": "GREG SOP Annex I"
-                },
-                {
-                    "id": "q3",
-                    "text": "Use Case Lead (name, email)",
-                    "domain": "ADMINISTRATIVE DETAILS",
-                    "riskType": "NA",
-                    "isoReference": "GREG SOP Annex I"
-                },
-                {
-                    "id": "q4",
-                    "text": "Check of completeness of Use Case form conducted by (name, email)",
-                    "domain": "ADMINISTRATIVE DETAILS",
-                    "riskType": "NA",
-                    "isoReference": "GREG SOP Annex I"
-                },
-                {
-                    "id": "q5",
-                    "text": "Date of initial feasibility request [DD/MM/YYYY]",
-                    "domain": "ADMINISTRATIVE DETAILS",
-                    "riskType": "NA",
-                    "isoReference": "GREG SOP Annex I"
-                },
-                {
-                    "id": "q6",
-                    "text": "Person(s) responsible for the Feasibility Assessment (name, email)",
-                    "domain": "ADMINISTRATIVE DETAILS",
-                    "riskType": "NA",
-                    "isoReference": "GREG SOP Annex I"
-                }
-            ]
-        }
-    ],
-    "studies": [
-        {
-            "id": "1",
-            "name": "GREG Assessment Study",
-            "phase": "Phase III",
-            "therapeuticArea": "SOP Assessment",
-            "studyQuestion": "Feasibility Assessment based on GREG SOP",
-            "poolId": "1",
-            "createdAt": "2024-01-15T10:00:00.000Z",
-            "updatedAt": "2024-02-20T14:30:00.000Z"
+          "id": "q1",
+          "text": "Use case identifier [from submission form]",
+          "domain": "ADMINISTRATIVE DETAILS",
+          "riskType": "NA",
+          "isoReference": "GREG SOP Annex I"
         },
         {
-            "id": "2",
-            "name": "GREG Assessment Study - Secondary",
-            "phase": "Phase II",
-            "therapeuticArea": "SOP Assessment",
-            "studyQuestion": "Secondary feasibility assessment linked to GREG SOP",
-            "poolId": "1",
-            "createdAt": "2024-03-01T09:00:00.000Z",
-            "updatedAt": "2024-03-01T09:00:00.000Z"
-        }
-    ],
-    "assessments": [
+          "id": "q2",
+          "text": "Use case title",
+          "domain": "ADMINISTRATIVE DETAILS",
+          "riskType": "NA",
+          "isoReference": "GREG SOP Annex I"
+        },
         {
-            "id": "1",
-            "studyId": "1",
-            "name": "GREG SOP Feasibility Assessment - GREG Assessment Study",
-            "progress": 100,
-            "totalQuestions": 6,
-            "answeredQuestions": 6,
-            "status": "completed",
-            "answers": {
-                "q1": "GREG-UC-2025-001",
-                "q2": "Feasibility of automated ECG analysis in multicenter study",
-                "q3": "Dr. Maria Silva, maria.silva@example.org",
-                "q4": "John Doe, john.doe@example.org",
-                "q5": "15/04/2025",
-                "q6": "Dr. Maria Silva, maria.silva@example.org; John Doe, john.doe@example.org"
-            },
-            "createdAt": "2025-04-15T09:00:00.000Z",
-            "updatedAt": "2025-04-15T09:30:00.000Z"
+          "id": "q3",
+          "text": "Use Case Lead (name, email)",
+          "domain": "ADMINISTRATIVE DETAILS",
+          "riskType": "NA",
+          "isoReference": "GREG SOP Annex I"
+        },
+        {
+          "id": "q4",
+          "text": "Check of completeness of Use Case form conducted by (name, email)",
+          "domain": "ADMINISTRATIVE DETAILS",
+          "riskType": "NA",
+          "isoReference": "GREG SOP Annex I"
+        },
+        {
+          "id": "q5",
+          "text": "Date of initial feasibility request [DD/MM/YYYY]",
+          "domain": "ADMINISTRATIVE DETAILS",
+          "riskType": "NA",
+          "isoReference": "GREG SOP Annex I"
+        },
+        {
+          "id": "q6",
+          "text": "Person(s) responsible for the Feasibility Assessment (name, email)",
+          "domain": "ADMINISTRATIVE DETAILS",
+          "riskType": "NA",
+          "isoReference": "GREG SOP Annex I"
         }
-    ]
+      ]
+    }
+  ],
+  "studies": [
+    {
+      "id": "1",
+      "name": "GREG Assessment Study",
+      "phase": "Phase III",
+      "therapeuticArea": "SOP Assessment",
+      "studyQuestion": "Feasibility Assessment based on GREG SOP",
+      "poolId": "1",
+      "createdAt": "2024-01-15T10:00:00.000Z",
+      "updatedAt": "2024-02-20T14:30:00.000Z"
+    },
+    {
+      "id": "2",
+      "name": "GREG Assessment Study - Secondary",
+      "phase": "Phase II",
+      "therapeuticArea": "SOP Assessment",
+      "studyQuestion": "Secondary feasibility assessment linked to GREG SOP",
+      "poolId": "1",
+      "createdAt": "2024-03-01T09:00:00.000Z",
+      "updatedAt": "2024-03-01T09:00:00.000Z"
+    }
+  ],
+  "assessments": [
+    {
+      "id": "1",
+      "studyId": "1",
+      "name": "GREG SOP Feasibility Assessment - GREG Assessment Study",
+      "progress": 100,
+      "totalQuestions": 6,
+      "answeredQuestions": 6,
+      "status": "completed",
+      "answers": {
+        "q1": "GREG-UC-2025-001",
+        "q2": "Feasibility of automated ECG analysis in multicenter study",
+        "q3": "Dr. Maria Silva, maria.silva@example.org",
+        "q4": "John Doe, john.doe@example.org",
+        "q5": "15/04/2025",
+        "q6": "Dr. Maria Silva, maria.silva@example.org; John Doe, john.doe@example.org"
+      },
+      "createdAt": "2025-04-15T09:00:00.000Z",
+      "updatedAt": "2025-04-15T09:30:00.000Z"
+    },
+    {
+      "id": "e2d8",
+      "studyId": "1",
+      "name": "Test Assessment",
+      "progress": 0,
+      "totalQuestions": 6,
+      "answeredQuestions": 0,
+      "status": "in-progress",
+      "answers": {},
+      "createdAt": "2025-01-20T10:00:00.000Z",
+      "updatedAt": "2025-01-20T10:00:00.000Z"
+    },
+    {
+      "id": "780b",
+      "studyId": "1",
+      "name": "Assessment 1763637445836",
+      "progress": 0,
+      "totalQuestions": 6,
+      "answeredQuestions": 0,
+      "status": "in-progress",
+      "answers": {},
+      "createdAt": "2025-11-20T11:17:25.836Z",
+      "updatedAt": "2025-11-20T11:17:25.836Z"
+    },
+    {
+      "id": "afef",
+      "studyId": "1",
+      "name": "Assessment 1763637445843",
+      "progress": 100,
+      "totalQuestions": 6,
+      "answeredQuestions": 0,
+      "status": "completed",
+      "answers": {},
+      "createdAt": "2025-11-20T11:17:25.843Z",
+      "updatedAt": "2025-11-20T11:17:32.485Z"
+    },
+    {
+      "id": "9bed",
+      "studyId": "1",
+      "name": "Assessment 1763637468852",
+      "progress": 0,
+      "totalQuestions": 6,
+      "answeredQuestions": 0,
+      "status": "in-progress",
+      "answers": {},
+      "createdAt": "2025-11-20T11:17:48.852Z",
+      "updatedAt": "2025-11-20T11:17:48.852Z"
+    },
+    {
+      "id": "292e",
+      "studyId": "1",
+      "name": "Assessment 1763637468859",
+      "progress": 100,
+      "totalQuestions": 6,
+      "answeredQuestions": 6,
+      "status": "completed",
+      "answers": {
+        "q1": "oi",
+        "q2": "na",
+        "q3": "ni",
+        "q4": "ga",
+        "q5": "gaa",
+        "q6": "gaaa"
+      },
+      "createdAt": "2025-11-20T11:17:48.859Z",
+      "updatedAt": "2025-11-20T11:18:03.939Z"
+    }
+  ]
 }

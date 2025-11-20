@@ -9,9 +9,9 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/my-studies", request.url))
   }
 
-  // Redirect /assessment/:id to /assessment/:id/wizard
+  // Redirect /assessment/:id to /assessment/:id/wizard (but not /assessment/new)
   const assessmentMatch = pathname.match(/^\/assessment\/([^/]+)$/)
-  if (assessmentMatch) {
+  if (assessmentMatch && assessmentMatch[1] !== "new") {
     return NextResponse.redirect(new URL(`${pathname}/wizard`, request.url))
   }
 

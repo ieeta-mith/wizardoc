@@ -23,7 +23,9 @@ export class QuestionPoolService {
    * @returns The pool or null if not found
    */
   static async getById(id: string): Promise<QuestionPool | null> {
-    const response = await fetch(`${API_BASE_URL}/question-pools/${id}`)
+    const response = await fetch(`${API_BASE_URL}/question-pools/${id}`, {
+      cache: "no-store",
+    })
 
     if (response.status === 404) {
       return null
