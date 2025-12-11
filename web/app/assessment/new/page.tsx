@@ -37,7 +37,7 @@ export default function NewAssessmentPage() {
       } catch (err) {
         logger.error("Failed to create assessment", err)
         const errorMessage = err instanceof Error ? err.message : "Unknown error"
-        setError(`Failed to create assessment: ${errorMessage}. Make sure JSON Server is running on port 4000.`)
+        setError(`Failed to create assessment: ${errorMessage}. Ensure the API is running.`)
       }
     }
 
