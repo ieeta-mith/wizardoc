@@ -10,6 +10,7 @@ export const mockQuestionPools: QuestionPool[] = [
     questions: [
       {
         id: "q1",
+        identifier: "q1",
         text: "What is the primary objective of this study?",
         domain: "Study Design",
         riskType: "Protocol Deviation",
@@ -17,6 +18,7 @@ export const mockQuestionPools: QuestionPool[] = [
       },
       {
         id: "q2",
+        identifier: "q2",
         text: "How will patient safety be monitored?",
         domain: "Safety",
         riskType: "Patient Safety",
@@ -24,6 +26,7 @@ export const mockQuestionPools: QuestionPool[] = [
       },
       {
         id: "q3",
+        identifier: "q3",
         text: "What are the inclusion criteria?",
         domain: "Patient Selection",
         riskType: "Eligibility",
@@ -31,6 +34,7 @@ export const mockQuestionPools: QuestionPool[] = [
       },
       {
         id: "q4",
+        identifier: "q4",
         text: "Describe the data collection methodology",
         domain: "Data Management",
         riskType: "Data Quality",
@@ -46,6 +50,7 @@ export const mockQuestionPools: QuestionPool[] = [
     questions: [
       {
         id: "q5",
+        identifier: "q5",
         text: "What statistical methods will be used?",
         domain: "Statistics",
         riskType: "Analysis",
@@ -53,6 +58,7 @@ export const mockQuestionPools: QuestionPool[] = [
       },
       {
         id: "q6",
+        identifier: "q6",
         text: "How will adverse events be reported?",
         domain: "Safety",
         riskType: "Reporting",

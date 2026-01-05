@@ -8,6 +8,7 @@
       "questions": [
         {
           "id": "q1",
+          "identifier": "q1",
           "text": "Use case identifier [from submission form]",
           "domain": "ADMINISTRATIVE DETAILS",
           "riskType": "NA",
@@ -15,6 +16,7 @@
         },
         {
           "id": "q2",
+          "identifier": "q2",
           "text": "Use case title",
           "domain": "ADMINISTRATIVE DETAILS",
           "riskType": "NA",
@@ -22,6 +24,7 @@
         },
         {
           "id": "q3",
+          "identifier": "q3",
           "text": "Use Case Lead (name, email)",
           "domain": "ADMINISTRATIVE DETAILS",
           "riskType": "NA",
@@ -29,6 +32,7 @@
         },
         {
           "id": "q4",
+          "identifier": "q4",
           "text": "Check of completeness of Use Case form conducted by (name, email)",
           "domain": "ADMINISTRATIVE DETAILS",
           "riskType": "NA",
@@ -36,6 +40,7 @@
         },
         {
           "id": "q5",
+          "identifier": "q5",
           "text": "Date of initial feasibility request [DD/MM/YYYY]",
           "domain": "ADMINISTRATIVE DETAILS",
           "riskType": "NA",
@@ -43,6 +48,7 @@
         },
         {
           "id": "q6",
+          "identifier": "q6",
           "text": "Person(s) responsible for the Feasibility Assessment (name, email)",
           "domain": "ADMINISTRATIVE DETAILS",
           "riskType": "NA",

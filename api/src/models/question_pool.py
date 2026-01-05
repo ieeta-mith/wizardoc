@@ -4,6 +4,7 @@ from typing import List
 
 class Question(BaseModel):
     id: str
+    identifier: str
     text: str
     domain: str
     riskType: str

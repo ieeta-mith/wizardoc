@@ -8,6 +8,7 @@ export interface QuestionPool {
 
 export interface Question {
   id: string
+  identifier: string
   text: string
   domain: string
   riskType: string

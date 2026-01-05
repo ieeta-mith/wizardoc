@@ -16,6 +16,7 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
   const [currentPool, setCurrentPool] = useState(pool)
   const [questions, setQuestions] = useState(pool.questions || [])
   const [showAddForm, setShowAddForm] = useState(false)
+  const [questionIdentifier, setQuestionIdentifier] = useState("")
   const [questionText, setQuestionText] = useState("")
   const [questionDomain, setQuestionDomain] = useState("")
   const [questionRiskType, setQuestionRiskType] = useState("")
@@ -32,6 +33,7 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
   }, [pool])
 
   const resetQuestionForm = () => {
+    setQuestionIdentifier("")
     setQuestionText("")
     setQuestionDomain("")
     setQuestionRiskType("")
@@ -59,7 +61,13 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
   const handleAddQuestion = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setActionError(null)
-    if (!questionText.trim() || !questionDomain.trim() || !questionRiskType.trim() || !questionIsoRef.trim()) {
+    if (
+      !questionIdentifier.trim() ||
+      !questionText.trim() ||
+      !questionDomain.trim() ||
+      !questionRiskType.trim() ||
+      !questionIsoRef.trim()
+    ) {
       setActionError("All fields are required to add a question.")
       return
     }
@@ -67,6 +75,7 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
     setAdding(true)
     try {
       const updated = await QuestionPoolService.addQuestion(currentPool.id, {
+        identifier: questionIdentifier.trim(),
         text: questionText.trim(),
         domain: questionDomain.trim(),
         riskType: questionRiskType.trim(),
@@ -121,17 +130,19 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
     if (lines.length < 2) return []
     const headers = parseCsvLine(lines[0]).map((h) => h.replace(/^\"|\"$/g, "").trim().toLowerCase())
     const colIndex = {
+      identifier: headers.indexOf("identifier"),
       text: headers.indexOf("text"),
       domain: headers.indexOf("domain"),
       riskType: headers.indexOf("risktype"),
       isoReference: headers.indexOf("isoreference"),
     }
     if (Object.values(colIndex).some((i) => i === -1)) {
-      throw new Error("CSV must include headers: text, domain, riskType, isoReference")
+      throw new Error("CSV must include headers: identifier, text, domain, riskType, isoReference")
     }
     return lines.slice(1).map((line) => {
       const cells = parseCsvLine(line).map((c) => c.replace(/^\"|\"$/g, "").trim())
       return {
+        identifier: cells[colIndex.identifier],
         text: cells[colIndex.text],
         domain: cells[colIndex.domain],
         riskType: cells[colIndex.riskType],
@@ -156,7 +167,7 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
 
       let updatedPool = currentPool
       for (const q of parsedQuestions) {
-        if (!q.text || !q.domain || !q.riskType || !q.isoReference) continue
+        if (!q.identifier || !q.text || !q.domain || !q.riskType || !q.isoReference) continue
         const next = await QuestionPoolService.addQuestion(updatedPool.id, q)
         if (!next) {
           setActionError("Pool not found on server.")
@@ -235,6 +246,15 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
               <CardContent className="pt-6">
                 <form className="grid gap-4" onSubmit={handleAddQuestion}>
                   <div className="grid gap-2">
+                    <Label htmlFor="identifier">Identifier</Label>
+                    <Input
+                      id="identifier"
+                      placeholder="e.g., Q-001"
+                      value={questionIdentifier}
+                      onChange={(e) => setQuestionIdentifier(e.target.value)}
+                    />
+                  </div>
+                  <div className="grid gap-2">
                     <Label htmlFor="question-text">Question Text</Label>
                     <Input
                       id="question-text"
@@ -298,6 +318,7 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
               <TableHeader>
                 <TableRow>
                   <TableHead>Question ID</TableHead>
+                  <TableHead>Identifier</TableHead>
                   <TableHead>Text</TableHead>
                   <TableHead>Domain</TableHead>
                   <TableHead>Risk Type</TableHead>
@@ -309,6 +330,7 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
                 {questions.map((question) => (
                   <TableRow key={question.id}>
                     <TableCell className="font-mono text-sm">{question.id}</TableCell>
+                    <TableCell className="font-mono text-sm">{question.identifier}</TableCell>
                     <TableCell className="max-w-md">{question.text}</TableCell>
                     <TableCell>{question.domain}</TableCell>
                     <TableCell>{question.riskType}</TableCell>

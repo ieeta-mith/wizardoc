@@ -1,7 +1,7 @@
-text,domain,riskType,isoReference
-Use case identifier [from submission form],ADMINISTRATIVE DETAILS,NA,GREG SOP Annex I
-Use case title,ADMINISTRATIVE DETAILS,NA,GREG SOP Annex I
-"Use Case Lead (name, email)",ADMINISTRATIVE DETAILS,NA,GREG SOP Annex I
-"Check of completeness of Use Case form conducted by (name, email)",ADMINISTRATIVE DETAILS,NA,GREG SOP Annex I
-Date of initial feasibility request [DD/MM/YYYY],ADMINISTRATIVE DETAILS,NA,GREG SOP Annex I
-"Person(s) responsible for the Feasibility Assessment (name, email)",ADMINISTRATIVE DETAILS,NA,GREG SOP Annex I
+identifier,text,domain,riskType,isoReference
+use_case_id,Use case identifier [from submission form],ADMINISTRATIVE DETAILS,NA,GREG SOP Annex I
+case_title,Use case title,ADMINISTRATIVE DETAILS,NA,GREG SOP Annex I
+case_lead,"Use Case Lead (name, email)",ADMINISTRATIVE DETAILS,NA,GREG SOP Annex I
+completeness,"Check of completeness of Use Case form conducted by (name, email)",ADMINISTRATIVE DETAILS,NA,GREG SOP Annex I
+initial,Date of initial feasibility request [DD/MM/YYYY],ADMINISTRATIVE DETAILS,NA,GREG SOP Annex I
+responsible,"Person(s) responsible for the Feasibility Assessment (name, email)",ADMINISTRATIVE DETAILS,NA,GREG SOP Annex I

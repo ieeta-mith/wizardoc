@@ -8,6 +8,7 @@
       "questions": [
         {
           "id": "q1",
+          "identifier": "q1",
           "text": "What is the primary objective of this study and how does it align with the intended clinical use?",
           "domain": "Study Design",
           "riskType": "Protocol Deviation",
@@ -15,6 +16,7 @@
         },
         {
           "id": "q2",
+          "identifier": "q2",
           "text": "How will patient safety be monitored throughout the study duration, including frequency and methods of adverse event reporting?",
           "domain": "Safety",
           "riskType": "Patient Safety",
@@ -22,6 +24,7 @@
         },
         {
           "id": "q3",
+          "identifier": "q3",
           "text": "What are the inclusion and exclusion criteria for patient enrollment?",
           "domain": "Patient Selection",
           "riskType": "Eligibility",
@@ -29,6 +32,7 @@
         },
         {
           "id": "q4",
+          "identifier": "q4",
           "text": "Describe the data collection methodology, including source data verification processes",
           "domain": "Data Management",
           "riskType": "Data Quality",
@@ -36,6 +40,7 @@
         },
         {
           "id": "q5",
+          "identifier": "q5",
           "text": "What is the informed consent process and how will it be documented?",
           "domain": "Ethics",
           "riskType": "Regulatory Compliance",
@@ -43,6 +48,7 @@
         },
         {
           "id": "q6",
+          "identifier": "q6",
           "text": "How will data privacy and confidentiality be maintained in accordance with applicable regulations?",
           "domain": "Data Protection",
           "riskType": "Data Privacy",
@@ -50,6 +56,7 @@
         },
         {
           "id": "q7",
+          "identifier": "q7",
           "text": "What quality control measures are in place for laboratory assessments and diagnostics?",
           "domain": "Laboratory",
           "riskType": "Data Quality",
@@ -57,6 +64,7 @@
         },
         {
           "id": "q8",
+          "identifier": "q8",
           "text": "Describe the site monitoring plan and frequency of monitoring visits",
           "domain": "Monitoring",
           "riskType": "Protocol Compliance",
@@ -72,6 +80,7 @@
       "questions": [
         {
           "id": "q9",
+          "identifier": "q9",
           "text": "What statistical methods will be used for sample size calculation and data analysis?",
           "domain": "Statistics",
           "riskType": "Analysis",
@@ -79,6 +88,7 @@
         },
         {
           "id": "q10",
+          "identifier": "q10",
           "text": "How will serious adverse events and device deficiencies be reported to regulatory authorities?",
           "domain": "Safety",
           "riskType": "Reporting",
@@ -86,6 +96,7 @@
         },
         {
           "id": "q11",
+          "identifier": "q11",
           "text": "What are the device accountability procedures throughout the clinical investigation?",
           "domain": "Device Management",
           "riskType": "Accountability",
@@ -93,6 +104,7 @@
         },
         {
           "id": "q12",
+          "identifier": "q12",
           "text": "Describe the procedures for handling protocol deviations and amendments",
           "domain": "Protocol Management",
           "riskType": "Protocol Deviation",
@@ -100,6 +112,7 @@
         },
         {
           "id": "q13",
+          "identifier": "q13",
           "text": "What training will be provided to investigators and site staff?",
           "domain": "Training",
           "riskType": "Human Error",
@@ -107,6 +120,7 @@
         },
         {
           "id": "q14",
+          "identifier": "q14",
           "text": "How will endpoint assessments be performed and validated?",
           "domain": "Endpoints",
           "riskType": "Measurement Validity",
@@ -122,6 +136,7 @@
       "questions": [
         {
           "id": "q15",
+          "identifier": "q15",
           "text": "How will electronic signatures be validated and what controls are in place to ensure authenticity?",
           "domain": "Electronic Systems",
           "riskType": "Data Integrity",
@@ -129,6 +144,7 @@
         },
         {
           "id": "q16",
+          "identifier": "q16",
           "text": "What audit trail capabilities exist for tracking changes to electronic records?",
           "domain": "Data Management",
           "riskType": "Audit Trail",
@@ -136,6 +152,7 @@
         },
         {
           "id": "q17",
+          "identifier": "q17",
           "text": "Describe system validation procedures for electronic data capture systems",
           "domain": "System Validation",
           "riskType": "System Failure",
@@ -143,6 +160,7 @@
         },
         {
           "id": "q18",
+          "identifier": "q18",
           "text": "What access controls and authentication measures are implemented for electronic systems?",
           "domain": "Data Security",
           "riskType": "Unauthorized Access",
@@ -150,6 +168,7 @@
         },
         {
           "id": "q19",
+          "identifier": "q19",
           "text": "How are electronic records backed up and what is the disaster recovery plan?",
           "domain": "Business Continuity",
           "riskType": "Data Loss",
@@ -165,6 +184,7 @@
       "questions": [
         {
           "id": "q20",
+          "identifier": "q20",
           "text": "What critical data and processes have been identified for risk-based monitoring?",
           "domain": "Risk Management",
           "riskType": "Critical Data",
@@ -172,6 +192,7 @@
         },
         {
           "id": "q21",
+          "identifier": "q21",
           "text": "How will key risk indicators be tracked and reviewed throughout the study?",
           "domain": "Monitoring",
           "riskType": "Risk Tracking",
@@ -179,6 +200,7 @@
         },
         {
           "id": "q22",
+          "identifier": "q22",
           "text": "What centralized monitoring activities will be performed?",
           "domain": "Central Monitoring",
           "riskType": "Data Quality",
@@ -186,6 +208,7 @@
         },
         {
           "id": "q23",
+          "identifier": "q23",
           "text": "Describe the risk assessment process for site selection and management",
           "domain": "Site Management",
           "riskType": "Site Performance",
@@ -193,6 +216,7 @@
         },
         {
           "id": "q24",
+          "identifier": "q24",
           "text": "How will patient enrollment rates and screening failures be monitored?",
           "domain": "Enrollment",
           "riskType": "Recruitment Issues",
@@ -200,6 +224,7 @@
         },
         {
           "id": "q25",
+          "identifier": "q25",
           "text": "What escalation procedures are in place for identified risks?",
           "domain": "Risk Management",
           "riskType": "Risk Escalation",
@@ -207,6 +232,7 @@
         },
         {
           "id": "q26",
+          "identifier": "q26",
           "text": "How will protocol compliance be assessed across sites?",
           "domain": "Compliance",
           "riskType": "Protocol Deviation",
@@ -222,6 +248,7 @@
       "questions": [
         {
           "id": "q27",
+          "identifier": "q27",
           "text": "What is the legal basis for processing personal data in this clinical study?",
           "domain": "Data Protection",
           "riskType": "Legal Compliance",
@@ -229,6 +256,7 @@
         },
         {
           "id": "q28",
+          "identifier": "q28",
           "text": "How will data subject rights (access, rectification, erasure) be facilitated?",
           "domain": "Data Subject Rights",
           "riskType": "Data Privacy",
@@ -236,6 +264,7 @@
         },
         {
           "id": "q29",
+          "identifier": "q29",
           "text": "What technical and organizational measures ensure data security?",
           "domain": "Data Security",
           "riskType": "Data Breach",
@@ -243,6 +272,7 @@
         },
         {
           "id": "q30",
+          "identifier": "q30",
           "text": "Has a Data Protection Impact Assessment been completed for this study?",
           "domain": "Impact Assessment",
           "riskType": "Privacy Risk",
@@ -250,6 +280,7 @@
         },
         {
           "id": "q31",
+          "identifier": "q31",
           "text": "How will cross-border data transfers be managed in compliance with GDPR?",
           "domain": "Data Transfer",
           "riskType": "Transfer Compliance",
@@ -257,6 +288,7 @@
         },
         {
           "id": "q32",
+          "identifier": "q32",
           "text": "What is the data retention schedule and destruction process for study data?",
           "domain": "Data Lifecycle",
           "riskType": "Data Retention",
@@ -272,6 +304,7 @@
       "questions": [
         {
           "id": "q33",
+          "identifier": "q33",
           "text": "How does the study design address the research question and minimize bias?",
           "domain": "Study Design",
           "riskType": "Study Validity",
@@ -279,6 +312,7 @@
         },
         {
           "id": "q34",
+          "identifier": "q34",
           "text": "What is the rationale for endpoint selection and their clinical relevance?",
           "domain": "Endpoints",
           "riskType": "Endpoint Validity",
@@ -286,6 +320,7 @@
         },
         {
           "id": "q35",
+          "identifier": "q35",
           "text": "How will the comparator group be selected and managed?",
           "domain": "Comparators",
           "riskType": "Bias",
@@ -293,6 +328,7 @@
         },
         {
           "id": "q36",
+          "identifier": "q36",
           "text": "What measures are in place to ensure blinding integrity where applicable?",
           "domain": "Blinding",
           "riskType": "Unblinding",
@@ -300,6 +336,7 @@
         },
         {
           "id": "q37",
+          "identifier": "q37",
           "text": "Describe the strategy for handling missing data and dropouts",
           "domain": "Statistics",
           "riskType": "Missing Data",
@@ -334,7 +371,7 @@
       "name": "ONCO-IMMUNO-001: Immunotherapy Combination in Advanced NSCLC",
       "phase": "Phase III",
       "therapeuticArea": "Oncology",
-      "studyQuestion": "An open-label, randomized study comparing the efficacy of dual checkpoint inhibitor therapy versus standard of care chemotherapy plus single checkpoint inhibitor in treatment-naïve patients with advanced non-small cell lung cancer with PD-L1 expression ≥50%.",
+      "studyQuestion": "An open-label, randomized study comparing the efficacy of dual checkpoint inhibitor therapy versus standard of care chemotherapy plus single checkpoint inhibitor in treatment-na\u00efve patients with advanced non-small cell lung cancer with PD-L1 expression \u226550%.",
       "poolId": "2",
       "createdAt": "2024-01-20T11:30:00.000Z",
       "updatedAt": "2024-03-05T13:20:00.000Z"
@@ -422,7 +459,7 @@
       "answers": {
         "q1": "The primary objective is to demonstrate superiority of the investigational lipid-lowering therapy in reducing the composite endpoint of cardiovascular death, myocardial infarction, stroke, or urgent coronary revascularization compared to placebo in high-risk patients.",
         "q2": "Patient safety will be monitored through scheduled study visits at baseline, week 4, 8, 12, and then quarterly. Adverse events will be collected at each visit, with serious adverse events reported within 24 hours. Independent DSMB will review safety data quarterly.",
-        "q3": "Inclusion: Age 40-80 years, documented cardiovascular disease, LDL-C ≥70 mg/dL despite maximally tolerated statin therapy. Exclusion: Active liver disease, eGFR <30 mL/min, recent cardiovascular event within 3 months.",
+        "q3": "Inclusion: Age 40-80 years, documented cardiovascular disease, LDL-C \u226570 mg/dL despite maximally tolerated statin therapy. Exclusion: Active liver disease, eGFR <30 mL/min, recent cardiovascular event within 3 months.",
         "q4": "Data will be collected via electronic CRFs with built-in validation checks. Source data verification will be performed at 100% of sites for critical data points (primary endpoint, safety data, informed consent). Centralized review of all cardiovascular endpoints.",
         "q5": "Written informed consent will be obtained by trained study coordinators before any study procedures. Consent forms approved by central IRB. Documentation maintained in regulatory binders with signatures and dates.",
         "q6": "Patient data will be pseudonymized with unique study IDs. Access controls implemented for EDC system with role-based permissions. HIPAA compliance maintained with Business Associate Agreements for all vendors. Data encryption at rest and in transit.",
@@ -459,7 +496,7 @@
       "answers": {
         "q1": "Primary objective is to evaluate neuroprotective effects by measuring change in MDS-UPDRS Part III score and dopamine transporter imaging (DaTscan) over 24 months compared to placebo.",
         "q2": "Comprehensive safety monitoring includes monthly phone contacts and quarterly in-person visits. Neurological assessments at each visit. Independent neurologist adjudication of disease progression events.",
-        "q3": "Inclusion: Age 30-80, Parkinson's disease diagnosed within 3 years, Hoehn & Yahr stage 1-2, stable on current PD medications for ≥3 months. Exclusion: Atypical parkinsonism, prior deep brain stimulation, significant cognitive impairment (MoCA <24).",
+        "q3": "Inclusion: Age 30-80, Parkinson's disease diagnosed within 3 years, Hoehn & Yahr stage 1-2, stable on current PD medications for \u22653 months. Exclusion: Atypical parkinsonism, prior deep brain stimulation, significant cognitive impairment (MoCA <24).",
         "q4": "Standardized video-recorded motor assessments with central rating by trained, blinded raters. DaTscan imaging at central facility with standardized protocols. Electronic patient-reported outcome measures via tablet.",
         "q5": "Enhanced consent process with additional information about investigational nature of neuroprotective claim. Patients must demonstrate understanding through teach-back method. Consent discussion includes family member when possible.",
         "q6": "GDPR-compliant data management with Data Protection Impact Assessment completed. Video recordings stored on secure server with access restricted to central raters only. Automatic deletion after analysis completion.",
@@ -534,9 +571,9 @@
       "answeredQuestions": 7,
       "status": "in-progress",
       "answers": {
-        "q1": "Primary objective: demonstrate that mobile health intervention improves asthma control (ACT score) and reduces exacerbations (≥30% reduction) compared to usual care over 12 months in pediatric patients.",
+        "q1": "Primary objective: demonstrate that mobile health intervention improves asthma control (ACT score) and reduces exacerbations (\u226530% reduction) compared to usual care over 12 months in pediatric patients.",
         "q2": "Safety monitored via monthly app check-ins, quarterly clinic visits. Asthma exacerbations requiring emergency care flagged automatically. Parent training on recognizing severe symptoms. 24/7 hotline for safety concerns. DSMB reviews safety quarterly.",
-        "q3": "Inclusion: Age 6-17 years, physician-diagnosed persistent asthma, ≥1 exacerbation in past year, smartphone access. Exclusion: Other chronic lung disease, inability to use mobile app, severe psychiatric comorbidity limiting app use.",
+        "q3": "Inclusion: Age 6-17 years, physician-diagnosed persistent asthma, \u22651 exacerbation in past year, smartphone access. Exclusion: Other chronic lung disease, inability to use mobile app, severe psychiatric comorbidity limiting app use.",
         "q4": "App automatically collects spirometry data, medication adherence, symptom scores. Clinic visit data entered via EDC. Parent-reported outcomes via validated questionnaires. Real-time data validation with automated range checks.",
         "q5": "Parental consent and child assent obtained per institutional guidelines (assent required for age 7+). Age-appropriate assent forms. Separate privacy discussion regarding app data collection. Option to withdraw at any time clearly explained.",
         "q6": "COPPA compliance for children under 13. Parental controls for data sharing preferences. App data encrypted end-to-end. Limited data collection (no location tracking). Privacy-by-design principles with minimal data retention.",
@@ -591,9 +628,9 @@
       "answeredQuestions": 8,
       "status": "completed",
       "answers": {
-        "q1": "Primary objective: demonstrate that mineralocorticoid receptor antagonist reduces composite renal endpoint (sustained eGFR decline ≥40%, ESKD, or renal death) compared to placebo in patients with diabetic kidney disease. Cardiovascular outcomes as key secondary endpoint.",
+        "q1": "Primary objective: demonstrate that mineralocorticoid receptor antagonist reduces composite renal endpoint (sustained eGFR decline \u226540%, ESKD, or renal death) compared to placebo in patients with diabetic kidney disease. Cardiovascular outcomes as key secondary endpoint.",
         "q2": "Safety monitoring focused on hyperkalemia and renal function changes. Potassium and eGFR checked at weeks 1, 2, 4, then monthly for 4 months, then quarterly. Protocol-defined criteria for dose adjustment or discontinuation. Independent nephrology safety review of all serious renal events.",
-        "q3": "Inclusion: Type 2 diabetes, eGFR 25-75 mL/min, urine albumin-creatinine ratio ≥200 mg/g, stable on RAAS inhibitor. Exclusion: Potassium >5.0 mEq/L at screening, known renovascular disease, recent cardiovascular event within 3 months.",
+        "q3": "Inclusion: Type 2 diabetes, eGFR 25-75 mL/min, urine albumin-creatinine ratio \u2265200 mg/g, stable on RAAS inhibitor. Exclusion: Potassium >5.0 mEq/L at screening, known renovascular disease, recent cardiovascular event within 3 months.",
         "q4": "Centralized eGFR calculation using standardized creatinine measurements. Local labs for safety monitoring with central laboratory confirmation of concerning values. Urine samples for albuminuria collected at each visit with central laboratory analysis. REDCap system for data collection with real-time validation.",
         "q5": "Informed consent includes detailed discussion of hyperkalemia risk and monitoring requirements. Dietary counseling on potassium restriction provided. Patients must demonstrate understanding of when to contact site for symptoms. Consent includes permission for medical record access to confirm endpoints.",
         "q6": "Study database separate from clinical EMR with unique study IDs. Limited dataset created for statistical analysis without identifiers. HIPAA authorization obtained for endpoint adjudication access to medical records. Business Associate Agreements with central lab and clinical event adjudication committee.",
