@@ -1,0 +1,41 @@
+[
+    {
+        "id": "study_name",
+        "displayName": "Modelo do carro",
+        "type": "Line",
+        "required": true,
+        "placeholder": "Enter study name"
+    },
+    {
+        "id": "class",
+        "displayName": "Classe do carro",
+        "type": "DropDown",
+        "required": true,
+        "choices": [
+            "SUV",
+            "Sedan",
+            "Hatchback",
+            "Convertible",
+            "Coupe"
+        ]
+    },
+    {
+        "id": "color",
+        "displayName": "Cor do carro",
+        "type": "Line",
+        "required": true,
+        "placeholder": "e.g., Red, Blue, Black"
+    },
+    {
+        "id": "study_question",
+        "displayName": "Study Question",
+        "type": "Text",
+        "required": true,
+        "rows": 4,
+        "placeholder": "Describe the primary research question or objective" },{
+            "id": "pool_id",
+            "displayName": "Select Pool",
+            "type": "Pool",
+            "required": true
+        }
+    ]

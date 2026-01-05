@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Plus, Trash2 } from "lucide-react"
+import { Plus, Trash2, Upload } from "lucide-react"
 import { QuestionPoolService } from "@/lib/services/question-pool-service"
 import type { QuestionPool } from "@/lib/types"
 
@@ -21,8 +21,10 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
   const [questionRiskType, setQuestionRiskType] = useState("")
   const [questionIsoRef, setQuestionIsoRef] = useState("")
   const [adding, setAdding] = useState(false)
+  const [importing, setImporting] = useState(false)
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const [actionError, setActionError] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
 
   useEffect(() => {
     setCurrentPool(pool)
@@ -85,6 +87,94 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
     }
   }
 
+  const parseCsvLine = (line: string) => {
+    const cells: string[] = []
+    let current = ""
+    let inQuotes = false
+
+    for (let i = 0; i < line.length; i++) {
+      const char = line[i]
+      if (char === "\"") {
+        // Toggle quote unless this is an escaped quote inside a quoted field
+        if (inQuotes && line[i + 1] === "\"") {
+          current += "\""
+          i += 1
+        } else {
+          inQuotes = !inQuotes
+        }
+      } else if (char === "," && !inQuotes) {
+        cells.push(current.trim())
+        current = ""
+      } else {
+        current += char
+      }
+    }
+    cells.push(current.trim())
+    return cells
+  }
+
+  const parseCsvQuestions = (text: string) => {
+    const lines = text
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter(Boolean)
+    if (lines.length < 2) return []
+    const headers = parseCsvLine(lines[0]).map((h) => h.replace(/^\"|\"$/g, "").trim().toLowerCase())
+    const colIndex = {
+      text: headers.indexOf("text"),
+      domain: headers.indexOf("domain"),
+      riskType: headers.indexOf("risktype"),
+      isoReference: headers.indexOf("isoreference"),
+    }
+    if (Object.values(colIndex).some((i) => i === -1)) {
+      throw new Error("CSV must include headers: text, domain, riskType, isoReference")
+    }
+    return lines.slice(1).map((line) => {
+      const cells = parseCsvLine(line).map((c) => c.replace(/^\"|\"$/g, "").trim())
+      return {
+        text: cells[colIndex.text],
+        domain: cells[colIndex.domain],
+        riskType: cells[colIndex.riskType],
+        isoReference: cells[colIndex.isoReference],
+      }
+    })
+  }
+
+  const handleBatchImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    event.target.value = ""
+    if (!file) return
+    setActionError(null)
+    setImporting(true)
+    try {
+      const csvText = await file.text()
+      const parsedQuestions = parseCsvQuestions(csvText)
+      if (parsedQuestions.length === 0) {
+        setActionError("No questions found in CSV.")
+        return
+      }
+
+      let updatedPool = currentPool
+      for (const q of parsedQuestions) {
+        if (!q.text || !q.domain || !q.riskType || !q.isoReference) continue
+        const next = await QuestionPoolService.addQuestion(updatedPool.id, q)
+        if (!next) {
+          setActionError("Pool not found on server.")
+          return
+        }
+        updatedPool = next
+      }
+      setCurrentPool(updatedPool)
+      setQuestions(updatedPool.questions)
+      setShowAddForm(false)
+      resetQuestionForm()
+    } catch (err) {
+      setActionError((err as Error).message)
+    } finally {
+      setImporting(false)
+    }
+  }
+
   return (
     <>
       <div className="flex items-center justify-between mb-8">
@@ -107,18 +197,37 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Questions</CardTitle>
-          <Button
-            onClick={() => {
-              setActionError(null)
-              setShowAddForm(!showAddForm)
-            }}
-            variant="outline"
-            size="sm"
-            className="gap-2"
-          >
-            <Plus className="h-4 w-4" />
-            Manually Add
-          </Button>
+          <div className="flex gap-2">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".csv,text/csv"
+              className="hidden"
+              onChange={handleBatchImport}
+            />
+            <Button
+              variant="outline"
+              size="sm"
+              className="gap-2"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={importing}
+            >
+              <Upload className="h-4 w-4" />
+              {importing ? "Importing..." : "Batch Import"}
+            </Button>
+            <Button
+              onClick={() => {
+                setActionError(null)
+                setShowAddForm(!showAddForm)
+              }}
+              variant="outline"
+              size="sm"
+              className="gap-2"
+            >
+              <Plus className="h-4 w-4" />
+              Manually Add
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           {showAddForm && (

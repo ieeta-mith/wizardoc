@@ -31,17 +31,25 @@ export default function ExportPage() {
   // Fetch data from API
   useEffect(() => {
     const fetchData = async () => {
+      if (!assessmentId) {
+        setLoading(false)
+        return
+      }
+
       try {
         setLoading(true)
-        const [studyData, poolsData] = await Promise.all([
-          StudyService.getById("1"), // TODO: Get studyId from route params
+        const [context, poolsData] = await Promise.all([
+          AssessmentService.getContextById(assessmentId),
           QuestionPoolService.getAll(),
         ])
 
-        if (studyData) {
-          setStudy(studyData)
-          const assessmentsData = await AssessmentService.getByStudyId(studyData.id)
+        if (context) {
+          setStudy(context.study)
+          const assessmentsData = await AssessmentService.getByStudyId(context.study.id)
           setAssessments(assessmentsData)
+        } else {
+          setStudy(null)
+          setAssessments([])
         }
 
         setQuestionPools(poolsData)
@@ -53,7 +61,7 @@ export default function ExportPage() {
     }
 
     fetchData()
-  }, [])
+  }, [assessmentId])
 
   const completedAssessments = assessments.filter((a) => a.status === "completed")
 
@@ -188,7 +196,7 @@ export default function ExportPage() {
     <div className="container max-w-6xl py-8">
       <div className="mb-8">
         <Link
-          href="/my-studies/1"
+          href={`/my-studies/${study.id}`}
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4"
         >
           <ArrowLeft className="h-4 w-4" />
@@ -199,7 +207,7 @@ export default function ExportPage() {
             <h1 className="text-3xl font-bold tracking-tight">Export & Reports</h1>
             <p className="text-muted-foreground mt-2">Generate reports and analyze risk assessment data</p>
           </div>
-          <Link href="/assessment/new?studyId=1">
+          <Link href={`/assessment/new?studyId=${study.id}`}>
             <Button className="gap-2">
               <Plus className="h-4 w-4" />
               New Assessment

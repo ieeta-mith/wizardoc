@@ -1,0 +1,41 @@
+[
+    {
+        "id": "study_name",
+        "displayName": "Study Name",
+        "type": "Line",
+        "required": true,
+        "placeholder": "Enter study name"
+    },
+    {
+        "id": "phase",
+        "displayName": "Phase",
+        "type": "DropDown",
+        "required": true,
+        "choices": [
+            "phase-1",
+            "phase-2",
+            "phase-3",
+            "phase-4",
+            "observational"
+        ]
+    },
+    {
+        "id": "therapeutic_area",
+        "displayName": "Therapeutic Area",
+        "type": "Line",
+        "required": true,
+        "placeholder": "e.g., Cardiology, Oncology, Neurology"
+    },
+    {
+        "id": "study_question",
+        "displayName": "Study Question",
+        "type": "Text",
+        "required": true,
+        "rows": 4,
+        "placeholder": "Describe the primary research question or objective" },{
+            "id": "pool_id",
+            "displayName": "Select Pool",
+            "type": "Pool",
+            "required": true
+        }
+    ]
