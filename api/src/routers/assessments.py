@@ -1,11 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from src.core.deps import get_db
 from src.models.assessment import Assessment, AssessmentCreate, AssessmentUpdate
 from src.services.assessment import AssessmentService
+from src.services.assessment_docx import AssessmentDocxService, DocxPopulationError
 
 router = APIRouter()
 service = AssessmentService()
+docx_service = AssessmentDocxService()
 
 
 @router.get("/", response_model=list[Assessment])
@@ -49,3 +51,22 @@ async def delete_assessment(assessment_id: str, db: AsyncIOMotorDatabase = Depen
     if not deleted:
         raise HTTPException(status_code=404, detail="Assessment not found")
     return deleted
+
+
+@router.post("/{assessment_id}/docx")
+async def populate_assessment_docx(
+    assessment_id: str,
+    db: AsyncIOMotorDatabase = Depends(get_db),
+):
+    try:
+        populated = await docx_service.populate(db, assessment_id)
+    except DocxPopulationError as exc:
+        raise HTTPException(status_code=exc.status_code, detail=str(exc)) from exc
+
+    filename = populated.filename.replace("\"", "_")
+    headers = {"Content-Disposition": f'attachment; filename="{filename}"'}
+    return Response(
+        content=populated.data,
+        media_type=populated.content_type,
+        headers=headers,
+    )
