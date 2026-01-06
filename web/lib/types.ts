@@ -4,6 +4,14 @@ export interface QuestionPool {
   source: string
   questionCount: number
   questions: Question[]
+  docxFile?: DocxFile | null
+}
+
+export interface DocxFile {
+  filename: string
+  contentType: string
+  size: number
+  uploadedAt: string
 }
 
 export interface Question {

@@ -23,9 +23,11 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
   const [questionIsoRef, setQuestionIsoRef] = useState("")
   const [adding, setAdding] = useState(false)
   const [importing, setImporting] = useState(false)
+  const [uploadingDocx, setUploadingDocx] = useState(false)
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const [actionError, setActionError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const docxInputRef = useRef<HTMLInputElement | null>(null)
 
   useEffect(() => {
     setCurrentPool(pool)
@@ -151,6 +153,50 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
     })
   }
 
+  const formatFileSize = (bytes: number) => {
+    if (!Number.isFinite(bytes) || bytes <= 0) return "0 B"
+    const units = ["B", "KB", "MB", "GB"]
+    let size = bytes
+    let unitIndex = 0
+    while (size >= 1024 && unitIndex < units.length - 1) {
+      size /= 1024
+      unitIndex += 1
+    }
+    const precision = size >= 100 ? 0 : size >= 10 ? 1 : 2
+    return `${size.toFixed(precision)} ${units[unitIndex]}`
+  }
+
+  const formatUploadedAt = (value: string) => {
+    const date = new Date(value)
+    if (Number.isNaN(date.getTime())) return value
+    return date.toLocaleString()
+  }
+
+  const handleDocxUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    event.target.value = ""
+    if (!file) return
+    if (!file.name.toLowerCase().endsWith(".docx")) {
+      setActionError("Please select a .docx file.")
+      return
+    }
+    setActionError(null)
+    setUploadingDocx(true)
+    try {
+      const updated = await QuestionPoolService.uploadDocx(currentPool.id, file)
+      if (!updated) {
+        setActionError("Pool not found on server.")
+        return
+      }
+      setCurrentPool(updated)
+      setQuestions(updated.questions)
+    } catch (err) {
+      setActionError((err as Error).message)
+    } finally {
+      setUploadingDocx(false)
+    }
+  }
+
   const handleBatchImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     event.target.value = ""
@@ -216,6 +262,13 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
               className="hidden"
               onChange={handleBatchImport}
             />
+            <input
+              ref={docxInputRef}
+              type="file"
+              accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              className="hidden"
+              onChange={handleDocxUpload}
+            />
             <Button
               variant="outline"
               size="sm"
@@ -241,6 +294,31 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
           </div>
         </CardHeader>
         <CardContent>
+          <div className="mb-6 rounded-md border border-dashed px-4 py-3">
+            <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+              <div>
+                <p className="text-sm font-medium">DOCX file</p>
+                {currentPool.docxFile ? (
+                  <p className="text-xs text-muted-foreground">
+                    {currentPool.docxFile.filename} · {formatFileSize(currentPool.docxFile.size)} · Uploaded{" "}
+                    {formatUploadedAt(currentPool.docxFile.uploadedAt)}
+                  </p>
+                ) : (
+                  <p className="text-xs text-muted-foreground">No DOCX file uploaded yet.</p>
+                )}
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-2"
+                onClick={() => docxInputRef.current?.click()}
+                disabled={uploadingDocx}
+              >
+                <Upload className="h-4 w-4" />
+                {uploadingDocx ? "Uploading..." : currentPool.docxFile ? "Replace DOCX" : "Upload DOCX"}
+              </Button>
+            </div>
+          </div>
           {showAddForm && (
             <Card className="mb-6 bg-muted/50">
               <CardContent className="pt-6">

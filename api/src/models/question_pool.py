@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel, Field, ConfigDict
 from typing import List
 
@@ -30,7 +31,15 @@ class QuestionPoolUpdate(BaseModel):
     questions: List[Question] | None = None
 
 
+class DocxFile(BaseModel):
+    filename: str
+    contentType: str
+    size: int
+    uploadedAt: datetime
+
+
 class QuestionPool(QuestionPoolBase):
     id: str = Field(alias="id")
+    docxFile: DocxFile | None = None
 
     model_config = ConfigDict(populate_by_name=True)

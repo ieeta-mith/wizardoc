@@ -151,4 +151,30 @@ export class QuestionPoolService {
 
     return true
   }
+
+  /**
+   * Upload a DOCX file for a question pool
+   * @param poolId - The pool ID
+   * @param file - The DOCX file
+   * @returns The updated pool or null if not found
+   */
+  static async uploadDocx(poolId: string, file: File): Promise<QuestionPool | null> {
+    const formData = new FormData()
+    formData.append("file", file)
+
+    const response = await fetch(`${API_BASE_URL}/question-pools/${poolId}/docx`, {
+      method: "POST",
+      body: formData,
+    })
+
+    if (response.status === 404) {
+      return null
+    }
+
+    if (!response.ok) {
+      throw new Error(`Failed to upload DOCX: ${response.statusText}`)
+    }
+
+    return response.json()
+  }
 }
