@@ -14,7 +14,7 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     href: "/question-pool",
-    label: "Question Pool",
+    label: "Document Template",
     icon: ClipboardList,
   },
 ]

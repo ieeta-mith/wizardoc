@@ -1,4 +1,4 @@
-import type { Study } from "@/lib/types"
+import type { Study, StudyCreate } from "@/lib/types"
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "/api"
 
@@ -55,7 +55,7 @@ export class StudyService {
    * @param data - Study data without id and timestamps
    * @returns The created study
    */
-  static async create(data: Omit<Study, "id" | "createdAt" | "updatedAt">): Promise<Study> {
+  static async create(data: StudyCreate): Promise<Study> {
     const newStudy = {
       ...data,
       createdAt: new Date().toISOString(),
@@ -89,13 +89,14 @@ export class StudyService {
    * @param data - Partial study data to update
    * @returns The updated study or null if not found
    */
-  static async update(id: string, data: Partial<Study>): Promise<Study | null> {
+  static async update(id: string, data: Partial<StudyCreate>): Promise<Study | null> {
     // First check if the study exists
     const existing = await this.getById(id)
     if (!existing) return null
 
+    const { metadataTemplateSnapshot, ...existingPayload } = existing
     const updatedData = {
-      ...existing,
+      ...existingPayload,
       ...data,
       updatedAt: new Date().toISOString(),
     }
