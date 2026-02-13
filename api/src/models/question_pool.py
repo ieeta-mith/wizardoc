@@ -7,9 +7,8 @@ class Question(BaseModel):
     id: str
     identifier: str
     text: str
-    domain: str
-    riskType: str
-    isoReference: str
+    
+    model_config = ConfigDict(extra="allow")
 
 
 class QuestionPoolBase(BaseModel):

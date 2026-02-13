@@ -23,14 +23,20 @@ async def get_study(study_id: str, db: AsyncIOMotorDatabase = Depends(get_db)):
 
 @router.post("/", response_model=Study, status_code=201)
 async def create_study(payload: StudyCreate, db: AsyncIOMotorDatabase = Depends(get_db)):
-    return await service.create(db, payload)
+    try:
+        return await service.create(db, payload)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
 @router.put("/{study_id}", response_model=Study)
 async def update_study(
     study_id: str, payload: StudyUpdate, db: AsyncIOMotorDatabase = Depends(get_db)
 ):
-    study = await service.update(db, study_id, payload)
+    try:
+        study = await service.update(db, study_id, payload)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
     if not study:
         raise HTTPException(status_code=404, detail="Study not found")
     return study
