@@ -1,0 +1,9 @@
+identifier,text,domain,riskType,isoReference
+device_name,"Device / software name (commercial or project name)",DEVICE CONTEXT,NA,ISO 14971:2019 5
+device_description,"Brief device description",DEVICE CONTEXT,SAFETY,ISO 14971:2019 5
+intended_use,"Intended use / purpose",DEVICE CONTEXT,PERFORMANCE,ISO 14971:2019 5
+indications_for_use,"Indications for use (who/when/where it should be used)",DEVICE CONTEXT,SAFETY,ISO 14971:2019 5
+intended_users,"Intended users and required training",DEVICE CONTEXT,USABILITY,ISO 14971:2019 5
+patient_population,"Target patient population ",DEVICE CONTEXT,SAFETY,ISO 14971:2019 5
+use_environment,"Use environment(s) (home, ward, ICU, ambulance, outdoor, etc.)",DEVICE CONTEXT,SAFETY,ISO 14971:2019 5
+interfaces_dependencies,"External interfaces/dependencies ",DEVICE CONTEXT,SECURITY,ISO 14971:2019 5
