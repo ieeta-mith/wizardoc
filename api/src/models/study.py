@@ -3,7 +3,6 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from src.models.metadata_template import MetadataFieldDef
 
 
 class StudyBase(BaseModel):
@@ -12,7 +11,6 @@ class StudyBase(BaseModel):
     therapeuticArea: str | None = None
     studyQuestion: str | None = None
     poolId: str
-    metadataTemplateId: str | None = None
     metadata: dict[str, Any] = Field(default_factory=dict)
 
     model_config = ConfigDict(populate_by_name=True)
@@ -28,7 +26,6 @@ class StudyUpdate(BaseModel):
     therapeuticArea: str | None = None
     studyQuestion: str | None = None
     poolId: str | None = None
-    metadataTemplateId: str | None = None
     metadata: dict[str, Any] | None = None
 
 
@@ -36,4 +33,3 @@ class Study(StudyBase):
     id: str
     createdAt: datetime
     updatedAt: datetime
-    metadataTemplateSnapshot: list[MetadataFieldDef] | None = None

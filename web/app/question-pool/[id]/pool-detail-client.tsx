@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -10,7 +10,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Plus, Trash2, Upload } from "lucide-react"
 import { QuestionPoolService } from "@/lib/services/question-pool-service"
-import type { QuestionPool } from "@/lib/types"
+import type { Question, QuestionPool } from "@/lib/types"
 
 export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
   const [currentPool, setCurrentPool] = useState(pool)
@@ -124,33 +124,55 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
     return cells
   }
 
-  const parseCsvQuestions = (text: string) => {
+  const parseCsvQuestions = (text: string): Array<Record<string, string>> => {
     const lines = text
       .split(/\r?\n/)
       .map((line) => line.trim())
       .filter(Boolean)
     if (lines.length < 2) return []
-    const headers = parseCsvLine(lines[0]).map((h) => h.replace(/^\"|\"$/g, "").trim().toLowerCase())
-    const colIndex = {
-      identifier: headers.indexOf("identifier"),
-      text: headers.indexOf("text"),
-      domain: headers.indexOf("domain"),
-      riskType: headers.indexOf("risktype"),
-      isoReference: headers.indexOf("isoreference"),
+
+    const rawHeaders = parseCsvLine(lines[0]).map((h) => h.replace(/^\"|\"$/g, "").trim())
+    const headerAliasByToken: Record<string, string> = {
+      id: "identifier",
+      identifier: "identifier",
+      questionid: "identifier",
+      text: "text",
+      question: "text",
+      questiontext: "text",
+      domain: "domain",
+      risktype: "riskType",
+      isoreference: "isoReference",
     }
-    if (Object.values(colIndex).some((i) => i === -1)) {
-      throw new Error("CSV must include headers: identifier, text, domain, riskType, isoReference")
-    }
-    return lines.slice(1).map((line) => {
-      const cells = parseCsvLine(line).map((c) => c.replace(/^\"|\"$/g, "").trim())
-      return {
-        identifier: cells[colIndex.identifier],
-        text: cells[colIndex.text],
-        domain: cells[colIndex.domain],
-        riskType: cells[colIndex.riskType],
-        isoReference: cells[colIndex.isoReference],
+    const usedHeaderKeys = new Set<string>()
+    const headerKeys = rawHeaders.map((header, index) => {
+      const normalized = normalizeHeaderToken(header)
+      const baseKey = headerAliasByToken[normalized] ?? header
+      const fallbackKey = baseKey || `column${index + 1}`
+      let key = fallbackKey
+      let suffix = 2
+      while (usedHeaderKeys.has(key)) {
+        key = `${fallbackKey}_${suffix}`
+        suffix += 1
       }
+      usedHeaderKeys.add(key)
+      return key
     })
+
+    if (!headerKeys.includes("identifier") || !headerKeys.includes("text")) {
+      throw new Error("CSV must include headers for identifier and text.")
+    }
+
+    return lines
+      .slice(1)
+      .map((line) => {
+        const cells = parseCsvLine(line).map((c) => c.replace(/^\"|\"$/g, "").trim())
+        const row: Record<string, string> = {}
+        headerKeys.forEach((key, index) => {
+          row[key] = cells[index] ?? ""
+        })
+        return row
+      })
+      .filter((row) => Object.values(row).some((value) => value !== ""))
   }
 
   const formatFileSize = (bytes: number) => {
@@ -171,6 +193,76 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
     if (Number.isNaN(date.getTime())) return value
     return date.toLocaleString()
   }
+
+  const normalizeHeaderToken = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/g, "")
+
+  const toColumnLabel = (key: string) => {
+    const withSpaces = key.replace(/([a-z])([A-Z])/g, "$1 $2").replace(/[_-]+/g, " ").trim()
+    return withSpaces ? withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1) : key
+  }
+
+  const getCellClassName = (key: string) => {
+    const normalized = normalizeHeaderToken(key)
+    if (normalized === "id" || normalized === "identifier" || normalized.includes("reference")) {
+      return "font-mono text-sm"
+    }
+    if (normalized === "text" || normalized.includes("question")) {
+      return "max-w-md"
+    }
+    return undefined
+  }
+
+  const formatQuestionCellValue = (value: unknown) => {
+    if (value === null || value === undefined || value === "") return "—"
+    if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+      return String(value)
+    }
+    if (value instanceof Date) return value.toLocaleString()
+    try {
+      return JSON.stringify(value)
+    } catch {
+      return String(value)
+    }
+  }
+
+  const tableColumns = useMemo(() => {
+    const orderedKeys: string[] = []
+    const seenKeys = new Set<string>()
+
+    for (const question of questions) {
+      const questionRecord = question as unknown as Record<string, unknown>
+      for (const key of Object.keys(questionRecord)) {
+        if (seenKeys.has(key)) continue
+        seenKeys.add(key)
+        orderedKeys.push(key)
+      }
+    }
+
+    const headersFromPool = (currentPool as unknown as Record<string, unknown>).headers
+    if (Array.isArray(headersFromPool)) {
+      const columns: Array<{ key: string; label: string }> = []
+      const usedKeys = new Set<string>()
+
+      for (const header of headersFromPool) {
+        if (typeof header !== "string") continue
+        const label = header.trim()
+        if (!label) continue
+
+        const matchedKey =
+          orderedKeys.find((key) => key === label) ??
+          orderedKeys.find((key) => normalizeHeaderToken(key) === normalizeHeaderToken(label)) ??
+          label
+
+        if (usedKeys.has(matchedKey)) continue
+        usedKeys.add(matchedKey)
+        columns.push({ key: matchedKey, label })
+      }
+
+      if (columns.length > 0) return columns
+    }
+
+    return orderedKeys.map((key) => ({ key, label: toColumnLabel(key) }))
+  }, [currentPool, questions])
 
   const handleDocxUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -212,15 +304,30 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
       }
 
       let updatedPool = currentPool
+      let importedCount = 0
       for (const q of parsedQuestions) {
-        if (!q.identifier || !q.text || !q.domain || !q.riskType || !q.isoReference) continue
-        const next = await QuestionPoolService.addQuestion(updatedPool.id, q)
+        if (!q.identifier?.trim() || !q.text?.trim()) continue
+
+        const payload = {
+          ...q,
+          identifier: q.identifier.trim(),
+          text: q.text.trim(),
+        } as unknown as Omit<Question, "id">
+
+        const next = await QuestionPoolService.addQuestion(updatedPool.id, payload)
         if (!next) {
           setActionError("Pool not found on server.")
           return
         }
         updatedPool = next
+        importedCount += 1
       }
+
+      if (importedCount === 0) {
+        setActionError("No valid rows found in CSV. Required columns: identifier and text.")
+        return
+      }
+
       setCurrentPool(updatedPool)
       setQuestions(updatedPool.questions)
       setShowAddForm(false)
@@ -395,36 +502,40 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Question ID</TableHead>
-                  <TableHead>Identifier</TableHead>
-                  <TableHead>Text</TableHead>
-                  <TableHead>Domain</TableHead>
-                  <TableHead>Risk Type</TableHead>
-                  <TableHead>ISO Reference</TableHead>
+                  {tableColumns.map((column) => (
+                    <TableHead key={column.key}>{column.label}</TableHead>
+                  ))}
                   <TableHead className="w-[100px]"></TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {questions.map((question) => (
-                  <TableRow key={question.id}>
-                    <TableCell className="font-mono text-sm">{question.id}</TableCell>
-                    <TableCell className="font-mono text-sm">{question.identifier}</TableCell>
-                    <TableCell className="max-w-md">{question.text}</TableCell>
-                    <TableCell>{question.domain}</TableCell>
-                    <TableCell>{question.riskType}</TableCell>
-                    <TableCell className="font-mono text-sm">{question.isoReference}</TableCell>
-                    <TableCell>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        onClick={() => handleDelete(question.id)}
-                        disabled={deletingId === question.id}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                {questions.length === 0 ? (
+                  <TableRow>
+                    <TableCell className="text-muted-foreground" colSpan={Math.max(tableColumns.length + 1, 1)}>
+                      No questions available.
                     </TableCell>
                   </TableRow>
-                ))}
+                ) : (
+                  questions.map((question) => (
+                    <TableRow key={question.id}>
+                      {tableColumns.map((column) => (
+                        <TableCell key={`${question.id}-${column.key}`} className={getCellClassName(column.key)}>
+                          {formatQuestionCellValue((question as unknown as Record<string, unknown>)[column.key])}
+                        </TableCell>
+                      ))}
+                      <TableCell>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => handleDelete(question.id)}
+                          disabled={deletingId === question.id}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </div>

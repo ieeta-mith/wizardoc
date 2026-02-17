@@ -23,29 +23,6 @@ export interface Question {
   isoReference: string
 }
 
-export type MetadataFieldType = "text" | "textarea" | "number" | "date" | "select" | "multiselect" | "boolean"
-
-export interface MetadataFieldDef {
-  key: string
-  label: string
-  type: MetadataFieldType
-  required?: boolean
-  options?: string[]
-  min?: number
-  max?: number
-  regex?: string
-  default?: unknown
-}
-
-export interface MetadataTemplate {
-  id: string
-  name: string
-  version: number
-  fields: MetadataFieldDef[]
-  createdAt: Date
-  updatedAt: Date
-}
-
 export interface Study {
   id: string
   name?: string | null
@@ -53,14 +30,12 @@ export interface Study {
   therapeuticArea?: string | null
   studyQuestion?: string | null
   poolId: string
-  metadataTemplateId?: string | null
   metadata?: Record<string, unknown>
-  metadataTemplateSnapshot?: MetadataFieldDef[] | null
   createdAt: Date
   updatedAt: Date
 }
 
-export type StudyCreate = Omit<Study, "id" | "createdAt" | "updatedAt" | "metadataTemplateSnapshot">
+export type StudyCreate = Omit<Study, "id" | "createdAt" | "updatedAt">
 
 export interface Assessment {
   id: string

@@ -94,9 +94,8 @@ export class StudyService {
     const existing = await this.getById(id)
     if (!existing) return null
 
-    const { metadataTemplateSnapshot, ...existingPayload } = existing
     const updatedData = {
-      ...existingPayload,
+      ...existing,
       ...data,
       updatedAt: new Date().toISOString(),
     }
