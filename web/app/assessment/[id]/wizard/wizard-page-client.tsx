@@ -13,12 +13,16 @@ export function WizardPageClient({ assessmentId }: WizardPageClientProps) {
     context,
     currentQuestion,
     currentQuestionData,
+    documentName,
     error,
     goToNextQuestion,
     goToPreviousQuestion,
+    isRenaming,
     isSaving,
     loading,
     progress,
+    renameDocument,
+    renameError,
     totalQuestions,
     updateCurrentAnswer,
     persistAnswers,
@@ -41,6 +45,10 @@ export function WizardPageClient({ assessmentId }: WizardPageClientProps) {
       <WizardHeader
         projectId={context.study.id}
         projectName={context.study.name}
+        documentName={documentName}
+        isRenaming={isRenaming}
+        renameError={renameError}
+        onRenameDocument={renameDocument}
         currentQuestion={currentQuestion}
         totalQuestions={totalQuestions}
         progress={progress}

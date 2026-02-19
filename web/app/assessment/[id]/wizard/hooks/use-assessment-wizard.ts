@@ -12,17 +12,26 @@ export function useAssessmentWizard(assessmentId: string) {
   const router = useRouter()
   const { context, loading, error } = useAssessmentContext(assessmentId)
   const [currentQuestion, setCurrentQuestion] = useState(0)
+  const [documentName, setDocumentName] = useState("")
   const [answers, setAnswers] = usePersistedState<Record<number, string>>(
     `assessment-${assessmentId}-answers`,
     {}
   )
   const [isSaving, setIsSaving] = useState(false)
+  const [isRenaming, setIsRenaming] = useState(false)
+  const [renameError, setRenameError] = useState<string | null>(null)
 
   useEffect(() => {
     if (context?.assessment?.status === "in-progress") {
       setCurrentQuestion(context.assessment.answeredQuestions)
     }
   }, [context])
+
+  useEffect(() => {
+    if (context?.assessment?.name) {
+      setDocumentName(context.assessment.name)
+    }
+  }, [context?.assessment?.name])
 
   const totalQuestions = context?.questions.length ?? 0
   const progress = calculateWizardProgress(currentQuestion, totalQuestions)
@@ -38,6 +47,33 @@ export function useAssessmentWizard(assessmentId: string) {
   const goToPreviousQuestion = () => {
     if (currentQuestion > 0) {
       setCurrentQuestion(currentQuestion - 1)
+    }
+  }
+
+  const renameDocument = async (nextName: string) => {
+    const trimmedName = nextName.trim()
+    if (!trimmedName) {
+      setRenameError("Document name cannot be empty.")
+      return false
+    }
+
+    setIsRenaming(true)
+    setRenameError(null)
+    try {
+      const updated = await AssessmentService.rename(assessmentId, trimmedName)
+      if (!updated) {
+        setRenameError("Document not found.")
+        return false
+      }
+      setDocumentName(updated.name)
+      return true
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to rename document"
+      setRenameError(message)
+      logger.error("Failed to rename document", err)
+      return false
+    } finally {
+      setIsRenaming(false)
     }
   }
 
@@ -83,12 +119,16 @@ export function useAssessmentWizard(assessmentId: string) {
     context,
     currentQuestion,
     currentQuestionData,
+    documentName,
     error,
     goToNextQuestion,
     goToPreviousQuestion,
     isSaving,
+    isRenaming,
     loading,
     progress,
+    renameDocument,
+    renameError,
     setCurrentQuestion,
     totalQuestions,
     updateCurrentAnswer,

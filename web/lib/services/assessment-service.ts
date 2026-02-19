@@ -179,6 +179,47 @@ export class AssessmentService {
   }
 
   /**
+   * Rename an existing assessment/document.
+   * @param id - The assessment ID
+   * @param name - The new name
+   * @returns The updated assessment or null if not found
+   */
+  static async rename(id: string, name: string): Promise<Assessment | null> {
+    const assessment = await this.getById(id)
+    if (!assessment) return null
+
+    const updatedAssessment = {
+      ...assessment,
+      name: name.trim(),
+      updatedAt: new Date().toISOString(),
+    }
+
+    const response = await fetch(`${API_BASE_URL}/assessments/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedAssessment),
+    })
+
+    if (response.status === 404) {
+      return null
+    }
+
+    if (!response.ok) {
+      throw new Error(`Failed to rename document: ${response.statusText}`)
+    }
+
+    const updated = await response.json()
+
+    return {
+      ...updated,
+      createdAt: new Date(updated.createdAt),
+      updatedAt: new Date(updated.updatedAt),
+    }
+  }
+
+  /**
    * Complete an assessment
    * @param id - The assessment ID
    * @returns The completed assessment or null if not found
