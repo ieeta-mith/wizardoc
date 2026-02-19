@@ -27,7 +27,7 @@ export interface Study {
   id: string
   name?: string | null
   phase?: string | null
-  therapeuticArea?: string | null
+  category?: string | null
   studyQuestion?: string | null
   poolId: string
   metadata?: Record<string, unknown>

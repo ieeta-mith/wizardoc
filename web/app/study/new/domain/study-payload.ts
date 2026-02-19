@@ -8,7 +8,7 @@ export const buildStudyPayload = (data: StudyFormData) => {
 
   return {
     name: normalizeValue(data.projectName),
-    therapeuticArea: normalizeValue(data.therapeuticArea),
+    category: normalizeValue(data.category),
     studyQuestion: normalizeValue(data.projectQuestion),
     poolId: data.templateId,
   }

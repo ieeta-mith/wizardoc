@@ -90,7 +90,7 @@ export function NewStudyForm({
                 }
                 if (value === "existing") {
                   setValue("projectName", "")
-                  setValue("therapeuticArea", "")
+                  setValue("category", "")
                   setValue("projectQuestion", "")
                 }
               }}
@@ -152,13 +152,13 @@ export function NewStudyForm({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="therapeutic-area">Therapeutic Area</Label>
+            <Label htmlFor="therapeutic-area">Category</Label>
             <Input
               id="therapeutic-area"
               placeholder="e.g., Cardiology, Oncology, Neurology"
-              {...register("therapeuticArea")}
+              {...register("category")}
             />
-            {errors.therapeuticArea && <p className="text-sm text-destructive">{errors.therapeuticArea.message}</p>}
+            {errors.category && <p className="text-sm text-destructive">{errors.category.message}</p>}
           </div>
 
           <div className="space-y-2">

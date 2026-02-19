@@ -74,7 +74,7 @@ export const mockStudies: Study[] = [
     id: "1",
     name: "Study 1",
     phase: "Phase III",
-    therapeuticArea: "Cardiology",
+    category: "Cardiology",
     studyQuestion: "A study about something interesting. Lorem ipsum dolor sit amet, consectetur adipisci.",
     poolId: "1",
     createdAt: new Date("2024-01-15"),

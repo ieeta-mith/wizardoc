@@ -31,7 +31,7 @@ export function StudyDetailHeader({ study }: StudyDetailHeaderProps) {
             </div>
             <div className="flex items-center gap-2">
               <FlaskConical className="h-4 w-4" />
-              {study.therapeuticArea}
+              {study.category}
             </div>
           </div>
         </div>

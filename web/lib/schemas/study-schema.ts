@@ -5,7 +5,7 @@ export const studySchema = z
     projectMode: z.enum(["new", "existing"]),
     projectId: z.string().optional(),
     projectName: z.string().max(100, "Project name must be less than 100 characters").optional(),
-    therapeuticArea: z.string().max(50, "Therapeutic area must be less than 50 characters").optional(),
+    category: z.string().max(50, "Category must be less than 50 characters").optional(),
     projectQuestion: z.string().max(500, "Project objective must be less than 500 characters").optional(),
     templateId: z.string().min(1, "Please select a template"),
   })

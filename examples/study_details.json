@@ -21,7 +21,7 @@
     },
     {
         "id": "therapeutic_area",
-        "displayName": "Therapeutic Area",
+        "displayName": "Category",
         "type": "Line",
         "required": true,
         "placeholder": "e.g., Cardiology, Oncology, Neurology"

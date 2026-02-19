@@ -8,7 +8,7 @@ from pydantic import BaseModel, ConfigDict, Field
 class StudyBase(BaseModel):
     name: str | None = None
     phase: str | None = None
-    therapeuticArea: str | None = None
+    category: str | None = None
     studyQuestion: str | None = None
     poolId: str
     metadata: dict[str, Any] = Field(default_factory=dict)
@@ -23,7 +23,7 @@ class StudyCreate(StudyBase):
 class StudyUpdate(BaseModel):
     name: str | None = None
     phase: str | None = None
-    therapeuticArea: str | None = None
+    category: str | None = None
     studyQuestion: str | None = None
     poolId: str | None = None
     metadata: dict[str, Any] | None = None

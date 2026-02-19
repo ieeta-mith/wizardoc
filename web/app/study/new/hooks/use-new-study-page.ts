@@ -25,7 +25,7 @@ export function useNewStudyPage() {
       projectMode: "new",
       projectId: "",
       projectName: "",
-      therapeuticArea: "",
+      category: "",
       projectQuestion: "",
       templateId: "",
     },

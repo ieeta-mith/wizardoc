@@ -51,7 +51,7 @@ Generated a comprehensive `db.json` file with realistic medical research data:
 
 **Risk Types covered:** Protocol Deviation, Patient Safety, Eligibility, Data Quality, Regulatory Compliance, Data Privacy, Protocol Compliance, Analysis, Reporting, Accountability, Human Error, Measurement Validity, Data Integrity, Audit Trail, System Failure, Unauthorized Access, Data Loss, Critical Data, Risk Tracking, Site Performance, Recruitment Issues, Risk Escalation, Legal Compliance, Data Breach, Privacy Risk, Transfer Compliance, Data Retention, Study Validity, Endpoint Validity, Bias, Unblinding, Missing Data
 
-#### **2. Studies (10 studies across therapeutic areas)**
+#### **2. Studies (10 studies across Categorys)**
 - CARDIO-PREVENT-2024: Cardiovascular Disease Prevention (Phase III, Cardiology)
 - NEURO-PROTECT: Neuroprotective Intervention in Parkinson's (Phase II, Neurology)
 - ONCO-IMMUNO-001: Immunotherapy in Advanced NSCLC (Phase III, Oncology)
@@ -65,7 +65,7 @@ Generated a comprehensive `db.json` file with realistic medical research data:
 
 **Phases:** Phase I, Phase II (4), Phase III (5), Phase IV (1), Observational (2)
 
-**Therapeutic Areas:** Cardiology, Neurology, Oncology, Endocrinology, Rheumatology, Pulmonology, Gastroenterology, Psychiatry, Nephrology, Dermatology
+**Categorys:** Cardiology, Neurology, Oncology, Endocrinology, Rheumatology, Pulmonology, Gastroenterology, Psychiatry, Nephrology, Dermatology
 
 #### **3. Assessments (11 assessments with detailed answers)**
 - 7 completed assessments (100% progress)
@@ -377,7 +377,7 @@ curl -X POST http://localhost:4000/studies \
   -d '{
     "name": "New Study",
     "phase": "Phase II",
-    "therapeuticArea": "Oncology",
+    "category": "Oncology",
     "studyQuestion": "Test study question",
     "poolId": "1",
     "createdAt": "2024-01-01T00:00:00.000Z",
@@ -407,14 +407,14 @@ curl -X PUT http://localhost:4000/assessments/1 \
 - **Total Questions:** 37 questions
 - **Studies:** 10 studies
 - **Assessments:** 11 assessments
-- **Therapeutic Areas:** 10 different areas
+- **Categorys:** 10 different areas
 - **Study Phases:** Phase I-IV + Observational
 - **Question Domains:** 28 unique domains
 - **Risk Types:** 31 unique risk types
 
 ### Coverage:
 - ✅ All major clinical research standards (ICH E6, ISO 14155, FDA 21 CFR Part 11, EMA, GDPR, ICH E8)
-- ✅ Diverse therapeutic areas (Cardiology, Neurology, Oncology, etc.)
+- ✅ Diverse Categorys (Cardiology, Neurology, Oncology, etc.)
 - ✅ All study phases (I-IV, Observational)
 - ✅ Comprehensive risk assessment coverage
 - ✅ Realistic clinical research scenarios
@@ -569,7 +569,7 @@ curl -X PUT http://localhost:4000/assessments/1 \
 ✅ **1 page component** (export) refactored with dynamic data
 ✅ **next.config.ts** configured with API proxy
 ✅ **37 realistic questions** across clinical research standards
-✅ **10 realistic studies** across therapeutic areas
+✅ **10 realistic studies** across Categorys
 ✅ **100% removal** of hardcoded data from active code paths
 ✅ **TypeScript types** preserved and enhanced
 ✅ **Dynamic analytics** calculated from API data
