@@ -46,6 +46,16 @@ async def delete_question_pool(pool_id: str, db: AsyncIOMotorDatabase = Depends(
     return deleted
 
 
+@router.post("/{pool_id}/clear", response_model=QuestionPool)
+async def clear_question_pool_entries(
+    pool_id: str, db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    updated = await service.clear_entries(db, pool_id)
+    if not updated:
+        raise HTTPException(status_code=404, detail="Question pool not found")
+    return updated
+
+
 @router.post("/{pool_id}/docx", response_model=QuestionPool)
 async def upload_question_pool_docx(
     pool_id: str,

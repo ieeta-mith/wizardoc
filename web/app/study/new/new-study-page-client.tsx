@@ -13,8 +13,8 @@ export function NewStudyPageClient() {
 
       <Card>
         <CardHeader>
-          <CardTitle>New Study</CardTitle>
-          <CardDescription>Enter the study details and select which ISO/ICH question set to apply</CardDescription>
+          <CardTitle>New Document</CardTitle>
+          <CardDescription>Enter the document details and select which ISO/ICH question set to apply</CardDescription>
         </CardHeader>
         <CardContent>
           <NewStudyForm

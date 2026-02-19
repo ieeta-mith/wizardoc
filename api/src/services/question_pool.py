@@ -57,6 +57,14 @@ class QuestionPoolService:
         doc = await db[self.collection].find_one_and_delete({"_id": ObjectId(pool_id)})
         return _serialize_pool(doc) if doc else None
 
+    async def clear_entries(self, db: AsyncIOMotorDatabase, pool_id: str):
+        doc = await db[self.collection].find_one_and_update(
+            {"_id": ObjectId(pool_id)},
+            {"$set": {"questions": [], "questionCount": 0}},
+            return_document=ReturnDocument.AFTER,
+        )
+        return _serialize_pool(doc) if doc else None
+
     async def upload_docx(
         self,
         db: AsyncIOMotorDatabase,

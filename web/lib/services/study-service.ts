@@ -70,7 +70,7 @@ export class StudyService {
     })
 
     if (!response.ok) {
-      throw new Error(`Failed to create study: ${response.statusText}`)
+      throw new Error(`Failed to create document: ${response.statusText}`)
     }
 
     const created = await response.json()

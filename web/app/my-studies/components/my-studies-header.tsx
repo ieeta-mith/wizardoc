@@ -12,7 +12,7 @@ export function MyStudiesHeader() {
       <Link href="/study/new">
         <Button size="lg" className="gap-2">
           <Plus className="h-4 w-4" />
-          New Study
+          New Document
         </Button>
       </Link>
     </div>

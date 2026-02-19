@@ -4,7 +4,7 @@ import { useRef } from "react"
 import type { QuestionPool } from "@/lib/types"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ActionErrorAlert } from "../components"
-import { AddQuestionForm, DocxFilePanel, PoolDetailHeader, PoolDetailToolbar, QuestionsTableCard } from "./components"
+import { DocxFilePanel, PoolDetailHeader, PoolDetailToolbar, QuestionsTableCard } from "./components"
 import { usePoolDetail } from "./hooks"
 
 export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
@@ -12,20 +12,15 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
   const docxInputRef = useRef<HTMLInputElement | null>(null)
   const {
     actionError,
-    addQuestion,
-    adding,
-    closeQuestionForm,
+    clearEntries,
+    clearingEntries,
     currentPool,
     deleteQuestion,
     deletingId,
     importBatchCsv,
     importing,
-    questionForm,
     questions,
-    showAddForm,
     tableColumns,
-    toggleAddForm,
-    updateQuestionFormField,
     uploadDocx,
     uploadingDocx,
   } = usePoolDetail(pool)
@@ -42,11 +37,6 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
     event.target.value = ""
     if (!file) return
     await uploadDocx(file)
-  }
-
-  const handleAddQuestion = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    await addQuestion()
   }
 
   return (
@@ -78,9 +68,10 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
               onChange={handleDocxUpload}
             />
             <PoolDetailToolbar
+              clearingEntries={clearingEntries}
               importing={importing}
               onBatchImportClick={() => fileInputRef.current?.click()}
-              onToggleAddForm={toggleAddForm}
+              onClearEntriesClick={clearEntries}
             />
           </div>
         </CardHeader>
@@ -90,16 +81,6 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
             uploading={uploadingDocx}
             onUploadClick={() => docxInputRef.current?.click()}
           />
-
-          {showAddForm && (
-            <AddQuestionForm
-              values={questionForm}
-              adding={adding}
-              onFieldChange={updateQuestionFormField}
-              onSubmit={handleAddQuestion}
-              onCancel={closeQuestionForm}
-            />
-          )}
 
           <QuestionsTableCard
             columns={tableColumns}

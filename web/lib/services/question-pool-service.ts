@@ -176,4 +176,25 @@ export class QuestionPoolService {
 
     return response.json()
   }
+
+  /**
+   * Clear all question entries from a pool
+   * @param poolId - The pool ID
+   * @returns The updated pool or null if not found
+   */
+  static async clearEntries(poolId: string): Promise<QuestionPool | null> {
+    const response = await fetch(`${API_BASE_URL}/question-pools/${poolId}/clear`, {
+      method: "POST",
+    })
+
+    if (response.status === 404) {
+      return null
+    }
+
+    if (!response.ok) {
+      throw new Error(`Failed to clear pool entries: ${response.statusText}`)
+    }
+
+    return response.json()
+  }
 }
