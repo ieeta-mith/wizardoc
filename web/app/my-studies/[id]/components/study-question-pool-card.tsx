@@ -12,17 +12,17 @@ export function StudyQuestionPoolCard({ pool, poolLoading, poolError }: StudyQue
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Question Pool</CardTitle>
-        <CardDescription>Details for the pool used by this study</CardDescription>
+        <CardTitle>Template</CardTitle>
+        <CardDescription>Details for the template used by this project</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {poolLoading && <p className="text-sm text-muted-foreground">Loading question pool...</p>}
-        {poolError && <p className="text-sm text-destructive">Error loading pool: {poolError.message}</p>}
-        {!poolLoading && !poolError && !pool && <p className="text-sm text-muted-foreground">Question pool not available.</p>}
+        {poolLoading && <p className="text-sm text-muted-foreground">Loading template...</p>}
+        {poolError && <p className="text-sm text-destructive">Error loading template: {poolError.message}</p>}
+        {!poolLoading && !poolError && !pool && <p className="text-sm text-muted-foreground">Template not available.</p>}
         {pool && (
           <>
             <div>
-              <h4 className="text-sm font-medium mb-1">Pool Name</h4>
+              <h4 className="text-sm font-medium mb-1">Template Name</h4>
               <p className="text-sm text-muted-foreground">{pool.name}</p>
             </div>
             <div>

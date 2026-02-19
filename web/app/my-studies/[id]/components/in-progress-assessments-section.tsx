@@ -14,7 +14,7 @@ export function InProgressAssessmentsSection({ assessments }: InProgressAssessme
 
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-semibold text-muted-foreground">In Progress</h3>
+      <h3 className="text-sm font-semibold text-muted-foreground">In Progress Documents</h3>
       {assessments.map((assessment) => (
         <Card key={assessment.id} className={ASSESSMENT_STATUS_STYLES[assessment.status]}>
           <CardContent className="pt-6">
@@ -30,7 +30,7 @@ export function InProgressAssessmentsSection({ assessments }: InProgressAssessme
               </div>
               <div className="ml-4">
                 <Link href={`/assessment/${assessment.id}`}>
-                  <Button className="gap-2">Continue</Button>
+                  <Button className="gap-2">Continue Document</Button>
                 </Link>
               </div>
             </div>

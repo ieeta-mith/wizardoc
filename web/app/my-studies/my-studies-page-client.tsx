@@ -11,8 +11,8 @@ export function MyStudiesPageClient() {
     return (
       <div className="container py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight">My Studies</h1>
-          <p className="text-muted-foreground mt-2">Loading your studies...</p>
+          <h1 className="text-3xl font-bold tracking-tight">Projects</h1>
+          <p className="text-muted-foreground mt-2">Loading your projects...</p>
         </div>
       </div>
     )
@@ -23,7 +23,7 @@ export function MyStudiesPageClient() {
       <div className="container py-8">
         <Card className="border-destructive">
           <CardContent className="pt-6">
-            <p className="text-destructive">Error loading studies: {error.message}</p>
+            <p className="text-destructive">Error loading projects: {error.message}</p>
           </CardContent>
         </Card>
       </div>

@@ -56,7 +56,7 @@ export function AssessmentExportCard({ assessment, onExport }: AssessmentExportC
           <Link href={`/assessment/${assessment.id}`}>
             <Button className="gap-2">
               <FileText className="h-4 w-4" />
-              Continue Assessment
+              Continue Document
             </Button>
           </Link>
         )}

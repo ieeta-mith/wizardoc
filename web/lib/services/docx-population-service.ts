@@ -1,6 +1,6 @@
 import { API_BASE_URL } from "./api-base-url"
 
-const DEFAULT_FILENAME = "populated-assessment.docx"
+const DEFAULT_FILENAME = "populated-document.docx"
 
 const parseFilename = (header: string | null) => {
   if (!header) return DEFAULT_FILENAME

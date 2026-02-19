@@ -14,7 +14,7 @@ interface AssessmentsExportTabProps {
 export function AssessmentsExportTab({ assessments, studyId, onExport }: AssessmentsExportTabProps) {
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold">Assessments</h2>
+      <h2 className="text-xl font-semibold">Documents</h2>
 
       {assessments.map((assessment) => (
         <AssessmentExportCard key={assessment.id} assessment={assessment} onExport={onExport} />
@@ -24,12 +24,12 @@ export function AssessmentsExportTab({ assessments, studyId, onExport }: Assessm
         <Card className="border-dashed">
           <CardContent className="flex flex-col items-center justify-center py-16">
             <FileText className="h-12 w-12 text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No assessments yet</h3>
-            <p className="text-sm text-muted-foreground mb-4">Create an assessment to generate reports</p>
-            <Link href={`/assessment/new?studyId=${studyId}`}>
+            <h3 className="text-lg font-semibold mb-2">No documents yet</h3>
+            <p className="text-sm text-muted-foreground mb-4">Create a document to generate reports</p>
+            <Link href={`/assessment/new?projectId=${studyId}`}>
               <Button className="gap-2">
                 <Plus className="h-4 w-4" />
-                New Assessment
+                New Document
               </Button>
             </Link>
           </CardContent>

@@ -16,7 +16,7 @@ export function NewAssessmentPageClient() {
             <p className="text-destructive mb-4">{error}</p>
             {studyId && (
               <Link href={`/my-studies/${studyId}`}>
-                <Button>Back to Study</Button>
+                <Button>Back to Project</Button>
               </Link>
             )}
           </CardContent>
@@ -27,7 +27,7 @@ export function NewAssessmentPageClient() {
 
   return (
     <div className="container py-8">
-      <p>Creating new assessment...</p>
+      <p>Creating new document...</p>
     </div>
   )
 }

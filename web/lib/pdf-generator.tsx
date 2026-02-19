@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet, Font } from "@react-pdf/renderer"
+import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer"
 import type { Assessment, Study, QuestionPool } from "./types"
 
 // Define styles for the PDF
@@ -125,15 +125,15 @@ export const AssessmentPDFDocument = ({ assessment, study, questionPools }: PDFD
       <Page size="A4" style={styles.page}>
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>Risk Assessment Report</Text>
+          <Text style={styles.title}>Document Report</Text>
           <Text style={styles.subtitle}>{study?.name || "N/A"}</Text>
         </View>
 
         {/* Assessment Information */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Assessment Information</Text>
+          <Text style={styles.sectionTitle}>Document Information</Text>
           <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Assessment Name:</Text>
+            <Text style={styles.infoLabel}>Document Name:</Text>
             <Text style={styles.infoValue}>{assessment.name}</Text>
           </View>
           <View style={styles.infoRow}>
@@ -164,10 +164,10 @@ export const AssessmentPDFDocument = ({ assessment, study, questionPools }: PDFD
           </View>
         </View>
 
-        {/* Study Information */}
+        {/* Project Information */}
         {study && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Study Information</Text>
+            <Text style={styles.sectionTitle}>Project Information</Text>
             <View style={styles.infoRow}>
               <Text style={styles.infoLabel}>Phase:</Text>
               <Text style={styles.infoValue}>{study.phase}</Text>
@@ -177,15 +177,15 @@ export const AssessmentPDFDocument = ({ assessment, study, questionPools }: PDFD
               <Text style={styles.infoValue}>{study.therapeuticArea}</Text>
             </View>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Study Question:</Text>
+              <Text style={styles.infoLabel}>Project Objective:</Text>
               <Text style={styles.infoValue}>{study.studyQuestion}</Text>
             </View>
           </View>
         )}
 
-        {/* Assessment Details Table */}
+        {/* Document Details Table */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Assessment Details</Text>
+          <Text style={styles.sectionTitle}>Document Details</Text>
           <View style={styles.table}>
             {/* Table Header */}
             <View style={styles.tableHeader}>
@@ -212,7 +212,7 @@ export const AssessmentPDFDocument = ({ assessment, study, questionPools }: PDFD
         {/* Footer */}
         <View style={styles.footer}>
           <Text>
-            Generated with Risk Assessment Tool | {new Date().toLocaleDateString()} | Page 1
+            Generated with WizarDoc | {new Date().toLocaleDateString()} | Page 1
           </Text>
         </View>
       </Page>

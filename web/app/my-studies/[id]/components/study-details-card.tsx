@@ -9,12 +9,12 @@ export function StudyDetailsCard({ study }: StudyDetailsCardProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Study Details</CardTitle>
+        <CardTitle>Project Details</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
-          <h4 className="text-sm font-medium mb-1">Study Question</h4>
-          <p className="text-sm text-muted-foreground">{study.studyQuestion}</p>
+          <h4 className="text-sm font-medium mb-1">Project Objective</h4>
+          <p className="text-sm text-muted-foreground">{study.studyQuestion || "Not provided"}</p>
         </div>
         <div>
           <h4 className="text-sm font-medium mb-1">Last Updated</h4>

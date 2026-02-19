@@ -9,12 +9,12 @@ export interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
   {
     href: "/my-studies",
-    label: "Workspace",
+    label: "Projects",
     icon: FolderOpen,
   },
   {
-    href: "/question-pool",
-    label: "Template Manager",
+    href: "/templates",
+    label: "Templates",
     icon: ClipboardList,
   },
 ]

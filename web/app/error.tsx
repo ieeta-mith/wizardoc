@@ -40,7 +40,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
             Try again
           </Button>
           <Button onClick={() => (window.location.href = "/my-studies")} variant="outline" className="flex-1">
-            Go to My Studies
+            Go to Projects
           </Button>
         </CardFooter>
       </Card>

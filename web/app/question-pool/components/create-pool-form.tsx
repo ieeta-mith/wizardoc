@@ -20,12 +20,12 @@ export function CreatePoolForm({ values, creating, onChange, onSubmit, onCancel 
   return (
     <Card className="max-w-xl mx-auto">
       <CardHeader>
-        <CardTitle>Create New Pool</CardTitle>
+        <CardTitle>Create New Template</CardTitle>
       </CardHeader>
       <CardContent>
         <form className="space-y-4" onSubmit={onSubmit}>
           <div className="space-y-2">
-            <Label htmlFor="pool-name">Pool Name</Label>
+            <Label htmlFor="pool-name">Template Name</Label>
             <Input
               id="pool-name"
               value={values.name}
@@ -47,7 +47,7 @@ export function CreatePoolForm({ values, creating, onChange, onSubmit, onCancel 
               Cancel
             </Button>
             <Button type="submit" disabled={creating}>
-              {creating ? "Creating..." : "Create Pool"}
+              {creating ? "Creating..." : "Create Template"}
             </Button>
           </div>
         </form>

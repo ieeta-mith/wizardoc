@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import type { QuestionPool } from "@/lib/types"
+import type { QuestionPool, Study } from "@/lib/types"
 import type { StudyFormData } from "@/lib/schemas/study-schema"
 
 interface NewStudyFormProps {
@@ -15,7 +15,9 @@ interface NewStudyFormProps {
   isSubmitting: boolean
   pools: QuestionPool[]
   poolsLoading: boolean
-  onSaveStudy: (data: StudyFormData) => Promise<void>
+  studies: Study[]
+  studiesLoading: boolean
+  onSaveProject: (data: StudyFormData) => Promise<void>
   onLaunchWizard: (data: StudyFormData) => Promise<void>
 }
 
@@ -24,54 +26,38 @@ export function NewStudyForm({
   isSubmitting,
   pools,
   poolsLoading,
-  onSaveStudy,
+  studies,
+  studiesLoading,
+  onSaveProject,
   onLaunchWizard,
 }: NewStudyFormProps) {
   const {
     register,
     handleSubmit,
     control,
+    setValue,
+    watch,
     formState: { errors },
   } = form
+  const projectMode = watch("projectMode")
+  const selectedProjectId = watch("projectId")
+  const selectedProject = studies.find((study) => study.id === selectedProjectId)
 
   return (
-    <form onSubmit={handleSubmit(onSaveStudy)} className="space-y-6">
+    <form onSubmit={handleSubmit(onLaunchWizard)} className="space-y-6">
       <div className="space-y-2">
-        <Label htmlFor="study-name">Study Name</Label>
-        <Input id="study-name" placeholder="Enter study name" {...register("studyName")} />
-        {errors.studyName && <p className="text-sm text-destructive">{errors.studyName.message}</p>}
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="therapeutic-area">Therapeutic Area</Label>
-        <Input
-          id="therapeutic-area"
-          placeholder="e.g., Cardiology, Oncology, Neurology"
-          {...register("therapeuticArea")}
-        />
-        {errors.therapeuticArea && <p className="text-sm text-destructive">{errors.therapeuticArea.message}</p>}
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="study-question">Study Question</Label>
-        <Textarea
-          id="study-question"
-          placeholder="Describe the primary research question or objective"
-          rows={4}
-          {...register("studyQuestion")}
-        />
-        {errors.studyQuestion && <p className="text-sm text-destructive">{errors.studyQuestion.message}</p>}
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="pool">Select Pool</Label>
+        <Label htmlFor="template">Template</Label>
         <Controller
-          name="poolId"
+          name="templateId"
           control={control}
           render={({ field }) => (
-            <Select value={field.value} onValueChange={field.onChange} disabled={poolsLoading}>
-              <SelectTrigger id="pool">
-                <SelectValue placeholder={poolsLoading ? "Loading pools..." : "Choose a question pool"} />
+            <Select
+              value={field.value}
+              onValueChange={field.onChange}
+              disabled={poolsLoading || (projectMode === "existing" && Boolean(selectedProject))}
+            >
+              <SelectTrigger id="template">
+                <SelectValue placeholder={poolsLoading ? "Loading templates..." : "Choose a template"} />
               </SelectTrigger>
               <SelectContent>
                 {pools.map((pool) => (
@@ -83,17 +69,127 @@ export function NewStudyForm({
             </Select>
           )}
         />
-        {errors.poolId && <p className="text-sm text-destructive">{errors.poolId.message}</p>}
+        {projectMode === "existing" && selectedProject && (
+          <p className="text-xs text-muted-foreground">Template is inherited from the selected project.</p>
+        )}
+        {errors.templateId && <p className="text-sm text-destructive">{errors.templateId.message}</p>}
       </div>
 
+      <div className="space-y-2">
+        <Label htmlFor="project-mode">Project Context</Label>
+        <Controller
+          name="projectMode"
+          control={control}
+          render={({ field }) => (
+            <Select
+              value={field.value}
+              onValueChange={(value) => {
+                field.onChange(value)
+                if (value === "new") {
+                  setValue("projectId", "")
+                }
+                if (value === "existing") {
+                  setValue("projectName", "")
+                  setValue("therapeuticArea", "")
+                  setValue("projectQuestion", "")
+                }
+              }}
+            >
+              <SelectTrigger id="project-mode">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="new">Create a new project</SelectItem>
+                <SelectItem value="existing">Use an existing project</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
+        />
+      </div>
+
+      {projectMode === "existing" ? (
+        <div className="space-y-2">
+          <Label htmlFor="project">Project</Label>
+          <Controller
+            name="projectId"
+            control={control}
+            render={({ field }) => (
+              <Select
+                value={field.value}
+                onValueChange={(value) => {
+                  field.onChange(value)
+                  const project = studies.find((study) => study.id === value)
+                  if (project?.poolId) {
+                    setValue("templateId", project.poolId, { shouldValidate: true })
+                  }
+                }}
+                disabled={studiesLoading}
+              >
+                <SelectTrigger id="project">
+                  <SelectValue placeholder={studiesLoading ? "Loading projects..." : "Choose a project"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {studies.map((study) => (
+                    <SelectItem key={study.id} value={study.id}>
+                      {study.name || "Untitled project"}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          />
+          {!studiesLoading && studies.length === 0 && (
+            <p className="text-xs text-muted-foreground">No projects available yet. Switch to creating a new project.</p>
+          )}
+          {errors.projectId && <p className="text-sm text-destructive">{errors.projectId.message}</p>}
+        </div>
+      ) : (
+        <>
+          <div className="space-y-2">
+            <Label htmlFor="project-name">Project Name</Label>
+            <Input id="project-name" placeholder="Enter project name" {...register("projectName")} />
+            {errors.projectName && <p className="text-sm text-destructive">{errors.projectName.message}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="therapeutic-area">Therapeutic Area</Label>
+            <Input
+              id="therapeutic-area"
+              placeholder="e.g., Cardiology, Oncology, Neurology"
+              {...register("therapeuticArea")}
+            />
+            {errors.therapeuticArea && <p className="text-sm text-destructive">{errors.therapeuticArea.message}</p>}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="project-question">Project Objective</Label>
+            <Textarea
+              id="project-question"
+              placeholder="Describe the objective that applies to this project"
+              rows={4}
+              {...register("projectQuestion")}
+            />
+            {errors.projectQuestion && <p className="text-sm text-destructive">{errors.projectQuestion.message}</p>}
+          </div>
+        </>
+      )}
+
       <div className="flex gap-3 pt-4">
-        <Button type="submit" variant="outline" className="flex-1 gap-2 bg-transparent" disabled={isSubmitting}>
-          <Save className="h-4 w-4" />
-          {isSubmitting ? "Saving..." : "Save study"}
-        </Button>
-        <Button type="button" onClick={handleSubmit(onLaunchWizard)} className="flex-1 gap-2" disabled={isSubmitting}>
+        {projectMode === "new" && (
+          <Button
+            type="button"
+            variant="outline"
+            className="flex-1 gap-2 bg-transparent"
+            disabled={isSubmitting}
+            onClick={handleSubmit(onSaveProject)}
+          >
+            <Save className="h-4 w-4" />
+            {isSubmitting ? "Saving..." : "Save project"}
+          </Button>
+        )}
+        <Button type="submit" className="flex-1 gap-2" disabled={isSubmitting}>
           <Play className="h-4 w-4" />
-          {isSubmitting ? "Launching..." : "Launch risk assessment wizard"}
+          {isSubmitting ? "Creating..." : "Create document"}
         </Button>
       </div>
     </form>

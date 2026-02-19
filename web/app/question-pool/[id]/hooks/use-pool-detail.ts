@@ -31,7 +31,7 @@ export function usePoolDetail(pool: QuestionPool) {
     try {
       const updated = await QuestionPoolService.deleteQuestion(currentPool.id, questionId)
       if (!updated) {
-        setActionError("Pool not found on server.")
+        setActionError("Template not found on server.")
         return
       }
       setCurrentPool(updated)
@@ -54,7 +54,7 @@ export function usePoolDetail(pool: QuestionPool) {
     try {
       const updated = await QuestionPoolService.uploadDocx(currentPool.id, file)
       if (!updated) {
-        setActionError("Pool not found on server.")
+        setActionError("Template not found on server.")
         return
       }
       setCurrentPool(updated)
@@ -86,7 +86,7 @@ export function usePoolDetail(pool: QuestionPool) {
 
         const next = await QuestionPoolService.addQuestion(updatedPool.id, payload as Omit<Question, "id">)
         if (!next) {
-          setActionError("Pool not found on server.")
+          setActionError("Template not found on server.")
           return
         }
         updatedPool = next
@@ -108,7 +108,7 @@ export function usePoolDetail(pool: QuestionPool) {
   }
 
   const clearEntries = async () => {
-    const confirmed = window.confirm("Clear all entries from this pool? This action cannot be undone.")
+    const confirmed = window.confirm("Clear all questions from this template? This action cannot be undone.")
     if (!confirmed) return
 
     setActionError(null)
@@ -116,7 +116,7 @@ export function usePoolDetail(pool: QuestionPool) {
     try {
       const updated = await QuestionPoolService.clearEntries(currentPool.id)
       if (!updated) {
-        setActionError("Pool not found on server.")
+        setActionError("Template not found on server.")
         return
       }
       setCurrentPool(updated)

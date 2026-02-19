@@ -30,13 +30,13 @@ export function AnalyticsTab({ assessments, domainData, riskTypeData, stats }: A
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Assessment Overview</CardTitle>
-            <CardDescription>Summary of all assessments</CardDescription>
+            <CardTitle>Document Overview</CardTitle>
+            <CardDescription>Summary of all documents</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <p className="text-sm text-muted-foreground">Total Assessments</p>
+                <p className="text-sm text-muted-foreground">Total Documents</p>
                 <p className="text-2xl font-bold">{stats.total}</p>
               </div>
               <div className="space-y-1">
@@ -95,8 +95,8 @@ export function AnalyticsTab({ assessments, domainData, riskTypeData, stats }: A
 
       <Card>
         <CardHeader>
-          <CardTitle>Assessment Details</CardTitle>
-          <CardDescription>Detailed view of all assessments</CardDescription>
+          <CardTitle>Document Details</CardTitle>
+          <CardDescription>Detailed view of all documents</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>

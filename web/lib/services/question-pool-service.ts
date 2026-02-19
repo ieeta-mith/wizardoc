@@ -10,7 +10,7 @@ export class QuestionPoolService {
     const response = await fetch(`${API_BASE_URL}/question-pools`)
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch question pools: ${response.statusText}`)
+      throw new Error(`Failed to fetch templates: ${response.statusText}`)
     }
 
     return response.json()
@@ -31,7 +31,7 @@ export class QuestionPoolService {
     }
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch question pool: ${response.statusText}`)
+      throw new Error(`Failed to fetch template: ${response.statusText}`)
     }
 
     return response.json()
@@ -52,7 +52,7 @@ export class QuestionPoolService {
     })
 
     if (!response.ok) {
-      throw new Error(`Failed to create question pool: ${response.statusText}`)
+      throw new Error(`Failed to create template: ${response.statusText}`)
     }
 
     return response.json()
@@ -145,7 +145,7 @@ export class QuestionPoolService {
     }
 
     if (!response.ok) {
-      throw new Error(`Failed to delete question pool: ${response.statusText}`)
+      throw new Error(`Failed to delete template: ${response.statusText}`)
     }
 
     return true
@@ -192,7 +192,7 @@ export class QuestionPoolService {
     }
 
     if (!response.ok) {
-      throw new Error(`Failed to clear pool entries: ${response.statusText}`)
+      throw new Error(`Failed to clear template questions: ${response.statusText}`)
     }
 
     return response.json()

@@ -17,7 +17,7 @@ export function PoolDetailPageClient({ id }: PoolDetailPageClientProps) {
   if (loading) {
     return (
       <div className="container py-8">
-        <p>Loading pool details...</p>
+        <p>Loading template details...</p>
       </div>
     )
   }
@@ -27,8 +27,8 @@ export function PoolDetailPageClient({ id }: PoolDetailPageClientProps) {
       <div className="container py-8">
         <Card className="border-destructive">
           <CardContent className="pt-6">
-            <p className="text-destructive">Pool not found or error loading pool</p>
-            <Link href="/question-pool" className="mt-4 inline-block">
+            <p className="text-destructive">Template not found or error loading template</p>
+            <Link href="/templates" className="mt-4 inline-block">
               <Button>Back to Template Manager</Button>
             </Link>
           </CardContent>
@@ -41,11 +41,11 @@ export function PoolDetailPageClient({ id }: PoolDetailPageClientProps) {
     <div className="container py-8">
       <div className="mb-8">
         <Link
-          href="/question-pool"
+          href="/templates"
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to Question Pools
+          Back to Templates
         </Link>
       </div>
       <PoolDetailClient pool={pool} />

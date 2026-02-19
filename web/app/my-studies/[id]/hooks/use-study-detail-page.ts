@@ -64,7 +64,7 @@ export function useStudyDetailPage(studyId: string) {
       const { blob, filename } = await DocxPopulationService.populateAssessmentDocx(assessmentId)
       triggerDownload(blob, filename)
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to populate DOCX"
+      const message = err instanceof Error ? err.message : "Failed to generate DOCX"
       setPopulateErrors((prev) => ({ ...prev, [assessmentId]: message }))
     } finally {
       setPopulatingAssessmentId(null)

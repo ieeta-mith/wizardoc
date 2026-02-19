@@ -1,4 +1,4 @@
-import { PoolDetailPageClient } from "./pool-detail-page-client"
+import { redirect } from "next/navigation"
 
 interface PoolDetailPageProps {
   params: Promise<{ id: string }>
@@ -6,5 +6,5 @@ interface PoolDetailPageProps {
 
 export default async function PoolDetailPage({ params }: PoolDetailPageProps) {
   const { id } = await params
-  return <PoolDetailPageClient id={id} />
+  redirect(`/templates/${id}`)
 }

@@ -9,7 +9,7 @@ export class StudyService {
     const response = await fetch(`${API_BASE_URL}/studies`)
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch studies: ${response.statusText}`)
+      throw new Error(`Failed to fetch projects: ${response.statusText}`)
     }
 
     const data = await response.json()
@@ -37,7 +37,7 @@ export class StudyService {
     }
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch study: ${response.statusText}`)
+      throw new Error(`Failed to fetch project: ${response.statusText}`)
     }
 
     const data = await response.json()
@@ -70,7 +70,7 @@ export class StudyService {
     })
 
     if (!response.ok) {
-      throw new Error(`Failed to create document: ${response.statusText}`)
+      throw new Error(`Failed to create project: ${response.statusText}`)
     }
 
     const created = await response.json()
@@ -112,7 +112,7 @@ export class StudyService {
     }
 
     if (!response.ok) {
-      throw new Error(`Failed to update study: ${response.statusText}`)
+      throw new Error(`Failed to update project: ${response.statusText}`)
     }
 
     const updated = await response.json()
@@ -139,7 +139,7 @@ export class StudyService {
     }
 
     if (!response.ok) {
-      throw new Error(`Failed to delete study: ${response.statusText}`)
+      throw new Error(`Failed to delete project: ${response.statusText}`)
     }
 
     return true

@@ -34,7 +34,7 @@ export function PoolDetailToolbar({
         disabled={clearingEntries || importing}
       >
         <Trash2 className="h-4 w-4" />
-        {clearingEntries ? "Clearing..." : "Clear Entries"}
+        {clearingEntries ? "Clearing..." : "Clear Questions"}
       </Button>
     </div>
   )

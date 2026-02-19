@@ -14,7 +14,7 @@ export function PoolDetailHeader({ name, source, questionCount }: PoolDetailHead
         <p className="text-muted-foreground mt-2">{source}</p>
       </div>
       <Badge variant="secondary" className="text-base px-4 py-2">
-        Current Questions: {questionCount}
+        Questions: {questionCount}
       </Badge>
     </div>
   )

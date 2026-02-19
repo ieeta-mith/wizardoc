@@ -20,11 +20,11 @@ export function QuestionPoolCard({ pool, deletingId, onDelete }: QuestionPoolCar
       <CardContent className="space-y-4">
         <div>
           <Badge variant="secondary" className="text-sm">
-            Current Questions: {pool.questionCount}
+            Questions: {pool.questionCount}
           </Badge>
         </div>
         <div className="flex gap-2">
-          <Link href={`/question-pool/${pool.id}`} className="flex-1">
+          <Link href={`/templates/${pool.id}`} className="flex-1">
             <Button variant="outline" className="w-full bg-transparent">
               Edit
             </Button>

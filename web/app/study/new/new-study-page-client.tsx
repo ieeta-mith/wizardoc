@@ -5,7 +5,17 @@ import { NewStudyForm, NewStudyHeader } from "./components"
 import { useNewStudyPage } from "./hooks"
 
 export function NewStudyPageClient() {
-  const { form, isSubmitting, launchWizard, pools, poolsLoading, saveStudy } = useNewStudyPage()
+  const {
+    form,
+    isSubmitting,
+    launchWizard,
+    pools,
+    poolsLoading,
+    saveProject,
+    studies,
+    studiesLoading,
+    submitError,
+  } = useNewStudyPage()
 
   return (
     <div className="container max-w-3xl py-8">
@@ -13,8 +23,10 @@ export function NewStudyPageClient() {
 
       <Card>
         <CardHeader>
-          <CardTitle>New Document</CardTitle>
-          <CardDescription>Enter the document details and select which ISO/ICH question set to apply</CardDescription>
+          <CardTitle>Create New Document</CardTitle>
+          <CardDescription>
+            Choose a template first, then decide whether this document belongs to an existing project or a new one
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <NewStudyForm
@@ -22,9 +34,12 @@ export function NewStudyPageClient() {
             isSubmitting={isSubmitting}
             pools={pools}
             poolsLoading={poolsLoading}
-            onSaveStudy={saveStudy}
+            studies={studies}
+            studiesLoading={studiesLoading}
+            onSaveProject={saveProject}
             onLaunchWizard={launchWizard}
           />
+          {submitError && <p className="mt-4 text-sm text-destructive">{submitError}</p>}
         </CardContent>
       </Card>
     </div>

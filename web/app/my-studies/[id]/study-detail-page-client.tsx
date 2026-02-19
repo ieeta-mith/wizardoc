@@ -33,7 +33,7 @@ export function StudyDetailPageClient({ studyId }: StudyDetailPageClientProps) {
   if (studyLoading || assessmentsLoading) {
     return (
       <div className="container py-8">
-        <p>Loading study details...</p>
+        <p>Loading project details...</p>
       </div>
     )
   }
@@ -43,9 +43,9 @@ export function StudyDetailPageClient({ studyId }: StudyDetailPageClientProps) {
       <div className="container py-8">
         <Card className="border-destructive">
           <CardContent className="pt-6">
-            <p className="text-destructive">Study not found or error loading study</p>
+            <p className="text-destructive">Project not found or error loading project</p>
             <Link href="/my-studies" className="mt-4 inline-block">
-              <Button>Back to My Studies</Button>
+              <Button>Back to Projects</Button>
             </Link>
           </CardContent>
         </Card>
@@ -58,7 +58,7 @@ export function StudyDetailPageClient({ studyId }: StudyDetailPageClientProps) {
       <div className="container py-8">
         <Card className="border-destructive">
           <CardContent className="pt-6">
-            <p className="text-destructive">Error loading assessments: {assessmentsError.message}</p>
+            <p className="text-destructive">Error loading documents: {assessmentsError.message}</p>
           </CardContent>
         </Card>
       </div>
@@ -77,8 +77,8 @@ export function StudyDetailPageClient({ studyId }: StudyDetailPageClientProps) {
 
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>Risk Assessments</CardTitle>
-            <CardDescription>View and manage assessments for this study</CardDescription>
+            <CardTitle>Documents</CardTitle>
+            <CardDescription>View and manage documents for this project</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <CompletedAssessmentsSection

@@ -25,7 +25,7 @@ export function ExportPageClient() {
     return (
       <div className="container max-w-6xl py-8">
         <div className="flex items-center justify-center h-64">
-          <p className="text-muted-foreground">Study not found</p>
+          <p className="text-muted-foreground">Project not found</p>
         </div>
       </div>
     )

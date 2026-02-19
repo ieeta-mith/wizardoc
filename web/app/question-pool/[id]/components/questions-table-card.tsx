@@ -28,7 +28,7 @@ export function QuestionsTableCard({ columns, questions, deletingId, onDeleteQue
           {questions.length === 0 ? (
             <TableRow>
               <TableCell className="text-muted-foreground" colSpan={Math.max(columns.length + 1, 1)}>
-                No questions available.
+                No questions defined yet.
               </TableCell>
             </TableRow>
           ) : (

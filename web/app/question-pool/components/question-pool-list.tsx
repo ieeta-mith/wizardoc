@@ -13,7 +13,7 @@ export function QuestionPoolList({ pools, deletingId, onDelete }: QuestionPoolLi
     return (
       <Card>
         <CardContent className="py-6 text-center text-muted-foreground">
-          No question pools yet. Create your first pool to begin.
+          No templates yet. Create your first template to begin.
         </CardContent>
       </Card>
     )

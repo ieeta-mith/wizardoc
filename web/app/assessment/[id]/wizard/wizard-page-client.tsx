@@ -27,7 +27,7 @@ export function WizardPageClient({ assessmentId }: WizardPageClientProps) {
   if (loading) {
     return (
       <div className="container max-w-4xl py-8">
-        <p>Loading assessment...</p>
+        <p>Loading document...</p>
       </div>
     )
   }
@@ -39,8 +39,8 @@ export function WizardPageClient({ assessmentId }: WizardPageClientProps) {
   return (
     <div className="container max-w-4xl py-8">
       <WizardHeader
-        studyId={context.study.id}
-        studyName={context.study.name}
+        projectId={context.study.id}
+        projectName={context.study.name}
         currentQuestion={currentQuestion}
         totalQuestions={totalQuestions}
         progress={progress}

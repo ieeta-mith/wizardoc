@@ -31,7 +31,7 @@ export function useQuestionPoolPage() {
     setActionError(null)
 
     if (!createForm.name.trim() || !createForm.source.trim()) {
-      setActionError("Name and source are required to create a pool.")
+      setActionError("Name and source are required to create a template.")
       return
     }
 
@@ -54,7 +54,7 @@ export function useQuestionPoolPage() {
 
   const deletePool = async (id: string) => {
     setActionError(null)
-    const confirmed = window.confirm("Delete this question pool? This cannot be undone.")
+    const confirmed = window.confirm("Delete this template? This cannot be undone.")
     if (!confirmed) return
 
     setDeletingId(id)

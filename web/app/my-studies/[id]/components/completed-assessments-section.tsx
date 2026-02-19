@@ -33,7 +33,7 @@ export function CompletedAssessmentsSection({
 
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-semibold text-muted-foreground">Completed Assessments</h3>
+      <h3 className="text-sm font-semibold text-muted-foreground">Completed Documents</h3>
       {assessments.map((assessment) => {
         const isExpanded = expandedAssessmentId === assessment.id
         const answerRows = buildAssessmentAnswerRows(assessment, pool)
@@ -54,7 +54,7 @@ export function CompletedAssessmentsSection({
                       onClick={() => onToggleExpand(assessment.id)}
                     >
                       <FileText className="h-4 w-4" />
-                      {isExpanded ? "Hide Answers" : "Consult Answers"}
+                      {isExpanded ? "Hide Answers" : "View Answers"}
                       {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                     </Button>
                     <Button
@@ -64,7 +64,7 @@ export function CompletedAssessmentsSection({
                       disabled={populatingAssessmentId === assessment.id}
                     >
                       <FileText className="h-4 w-4" />
-                      {populatingAssessmentId === assessment.id ? "Populating..." : "Populate file"}
+                      {populatingAssessmentId === assessment.id ? "Generating..." : "Generate file"}
                     </Button>
                   </div>
                   {populateErrors[assessment.id] && <p className="text-xs text-destructive">{populateErrors[assessment.id]}</p>}
@@ -73,15 +73,15 @@ export function CompletedAssessmentsSection({
 
               {isExpanded && (
                 <div className="mt-4 border-t pt-4 space-y-3">
-                  {poolLoading && <p className="text-xs text-muted-foreground">Loading question pool context...</p>}
+                  {poolLoading && <p className="text-xs text-muted-foreground">Loading template context...</p>}
                   {poolError && (
-                    <p className="text-xs text-destructive">Unable to load question pool details: {poolError.message}</p>
+                    <p className="text-xs text-destructive">Unable to load template details: {poolError.message}</p>
                   )}
 
                   {answerRows.length > 0 ? (
                     <AssessmentAnswersTable rows={answerRows} />
                   ) : (
-                    <p className="text-sm text-muted-foreground">No answers available for this assessment.</p>
+                    <p className="text-sm text-muted-foreground">No answers available for this document.</p>
                   )}
                 </div>
               )}

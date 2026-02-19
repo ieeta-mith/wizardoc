@@ -22,7 +22,7 @@ export class AssessmentService {
     })
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch assessments: ${response.statusText}`)
+      throw new Error(`Failed to fetch documents: ${response.statusText}`)
     }
 
     const data = await response.json()
@@ -50,7 +50,7 @@ export class AssessmentService {
     }
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch assessment: ${response.statusText}`)
+      throw new Error(`Failed to fetch document: ${response.statusText}`)
     }
 
     const data = await response.json()
@@ -98,7 +98,7 @@ export class AssessmentService {
 
     const newAssessment = {
       studyId,
-      name: name || `Assessment ${Date.now()}`,
+      name: name || `Document ${Date.now()}`,
       progress: 0,
       totalQuestions,
       answeredQuestions: 0,
@@ -117,7 +117,7 @@ export class AssessmentService {
     })
 
     if (!response.ok) {
-      throw new Error(`Failed to create assessment: ${response.statusText}`)
+      throw new Error(`Failed to create document: ${response.statusText}`)
     }
 
     const created = await response.json()
@@ -166,7 +166,7 @@ export class AssessmentService {
     }
 
     if (!response.ok) {
-      throw new Error(`Failed to update assessment: ${response.statusText}`)
+      throw new Error(`Failed to update document: ${response.statusText}`)
     }
 
     const updated = await response.json()
@@ -207,7 +207,7 @@ export class AssessmentService {
     }
 
     if (!response.ok) {
-      throw new Error(`Failed to complete assessment: ${response.statusText}`)
+      throw new Error(`Failed to complete document: ${response.statusText}`)
     }
 
     const updated = await response.json()

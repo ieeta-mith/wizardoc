@@ -57,12 +57,12 @@ export function WizardQuestionCard({
             ) : isSaving ? (
               "Completing..."
             ) : (
-              "Complete Assessment"
+              "Complete Document"
             )}
           </Button>
           <Button onClick={onSave} variant="outline" className="gap-2 bg-transparent" disabled={isSaving}>
             <Save className="h-4 w-4" />
-            {isSaving ? "Saving..." : "Save Progress"}
+            {isSaving ? "Saving..." : "Save Draft"}
           </Button>
         </div>
       </CardContent>

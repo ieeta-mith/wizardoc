@@ -1,5 +1,5 @@
-import { QuestionPoolPageClient } from "./question-pool-page-client"
+import { redirect } from "next/navigation"
 
 export default function QuestionPoolPage() {
-  return <QuestionPoolPageClient />
+  redirect("/templates")
 }

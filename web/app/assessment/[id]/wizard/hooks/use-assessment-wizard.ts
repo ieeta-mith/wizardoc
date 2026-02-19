@@ -47,10 +47,10 @@ export function useAssessmentWizard(assessmentId: string) {
     try {
       const answersMap = buildAnswersMapByQuestionId(answers, context.questions)
       await AssessmentService.updateAnswers(assessmentId, answersMap)
-      logger.info("Assessment progress saved", { assessmentId })
+      logger.info("Document progress saved", { assessmentId })
       router.push(`/my-studies/${context.study.id}`)
     } catch (err) {
-      logger.error("Failed to save assessment", err)
+      logger.error("Failed to save document", err)
     } finally {
       setIsSaving(false)
     }
@@ -69,10 +69,10 @@ export function useAssessmentWizard(assessmentId: string) {
       const answersMap = buildAnswersMapByQuestionId(answers, context.questions)
       await AssessmentService.updateAnswers(assessmentId, answersMap)
       await AssessmentService.complete(assessmentId)
-      logger.info("Assessment completed", { assessmentId })
+      logger.info("Document completed", { assessmentId })
       router.push(`/my-studies/${context.study.id}`)
     } catch (err) {
-      logger.error("Failed to complete assessment", err)
+      logger.error("Failed to complete document", err)
     } finally {
       setIsSaving(false)
     }

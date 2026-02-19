@@ -3,8 +3,8 @@ import "./globals.css"
 import { Navigation } from "@/components/navigation"
 
 export const metadata: Metadata = {
-  title: "Document Tool - Medical Studies",
-  description: "Tool for creating risk assessment documents for observational medical studies",
+  title: "WizarDoc - Project Document Builder",
+  description: "Build questionnaire-driven documents using reusable templates and project context",
 }
 
 export default function RootLayout({

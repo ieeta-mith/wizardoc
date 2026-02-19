@@ -1,5 +1,5 @@
-import { NewStudyPageClient } from "./new-study-page-client"
+import { redirect } from "next/navigation"
 
 export default function NewStudyPage() {
-  return <NewStudyPageClient />
+  redirect("/document/new")
 }

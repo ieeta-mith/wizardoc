@@ -57,7 +57,7 @@ export function QuestionPoolPageClient() {
     <div className="container py-8">
       <QuestionPoolPageHeader
         title="Document Template Manager"
-        subtitle="Manage your question sets and documents for automatic filling and generation"
+        subtitle="Manage your reusable templates and mapped question definitions"
       />
 
       <div className="space-y-4">

@@ -62,20 +62,20 @@ export function useExportPage(assessmentId: string | null) {
     if (format === "json") {
       const content = buildAssessmentJson(assessment, study)
       const blob = new Blob([content], { type: "application/json" })
-      downloadBlob(blob, `assessment-${targetAssessmentId}-${timestamp}.json`)
+      downloadBlob(blob, `document-${targetAssessmentId}-${timestamp}.json`)
       return
     }
 
     if (format === "csv") {
       const content = buildAssessmentCsv(assessment, questionPools)
       const blob = new Blob([content], { type: "text/csv" })
-      downloadBlob(blob, `assessment-${targetAssessmentId}-${timestamp}.csv`)
+      downloadBlob(blob, `document-${targetAssessmentId}-${timestamp}.csv`)
       return
     }
 
     const pdfDoc = React.createElement(AssessmentPDFDocument, { assessment, study, questionPools })
     const blob = await pdf(pdfDoc as unknown as Parameters<typeof pdf>[0]).toBlob()
-    downloadBlob(blob, `assessment-${targetAssessmentId}-${timestamp}.pdf`)
+    downloadBlob(blob, `document-${targetAssessmentId}-${timestamp}.pdf`)
   }
 
   return {
