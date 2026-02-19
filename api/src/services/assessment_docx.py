@@ -86,22 +86,32 @@ class AssessmentDocxService:
         answer_rows: list[dict] = []
 
         for question in pool_questions:
+            question_payload = question.model_dump()
             answer = answers.get(question.id, "")
             answers_by_id[question.id] = answer
             answers_by_identifier[question.identifier] = answer
             safe_key = _apply_unique_key(_safe_identifier(question.identifier), used_keys)
             answers_by_key[safe_key] = answer
             identifier_keys[question.identifier] = safe_key
+
+            metadata = {
+                key: value
+                for key, value in question_payload.items()
+                if key not in {"id", "identifier", "text"}
+            }
+
             answer_rows.append(
                 {
-                    "id": question.id,
-                    "identifier": question.identifier,
-                    "text": question.text,
-                    "domain": question.domain,
-                    "riskType": question.riskType,
-                    "isoReference": question.isoReference,
+                    "id": question_payload.get("id"),
+                    "identifier": question_payload.get("identifier"),
+                    "text": question_payload.get("text"),
+                    "domain": metadata.get("domain"),
+                    "riskType": metadata.get("riskType"),
+                    "isoReference": metadata.get("isoReference"),
                     "answer": answer,
                     "answered": bool(answer),
+                    "metadata": metadata,
+                    **metadata,
                 }
             )
 
