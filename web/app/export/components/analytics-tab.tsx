@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import type { Assessment } from "@/lib/types"
+import type { MetadataDistribution } from "../domain"
 
 const chartConfig = {
   count: {
@@ -14,8 +15,7 @@ const chartConfig = {
 
 interface AnalyticsTabProps {
   assessments: Assessment[]
-  domainData: Array<{ domain: string; count: number; fill: string }>
-  riskTypeData: Array<{ riskType: string; count: number }>
+  metadataDistributions: MetadataDistribution[]
   stats: {
     total: number
     completedCount: number
@@ -24,7 +24,7 @@ interface AnalyticsTabProps {
   }
 }
 
-export function AnalyticsTab({ assessments, domainData, riskTypeData, stats }: AnalyticsTabProps) {
+export function AnalyticsTab({ assessments, metadataDistributions, stats }: AnalyticsTabProps) {
   return (
     <div className="space-y-6">
       <div className="grid gap-6 md:grid-cols-2">
@@ -55,43 +55,64 @@ export function AnalyticsTab({ assessments, domainData, riskTypeData, stats }: A
           </CardContent>
         </Card>
 
+        {metadataDistributions[0] ? (
+          <Card>
+            <CardHeader>
+              <CardTitle>{metadataDistributions[0].label} Distribution</CardTitle>
+              <CardDescription>Breakdown of questions by metadata value</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ChartContainer config={chartConfig} className="h-[200px]">
+                <RePieChart>
+                  <ChartTooltip content={<ChartTooltipContent />} />
+                  <Pie
+                    data={metadataDistributions[0].values}
+                    dataKey="count"
+                    nameKey="value"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                  >
+                    {metadataDistributions[0].values.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.fill} />
+                    ))}
+                  </Pie>
+                </RePieChart>
+              </ChartContainer>
+            </CardContent>
+          </Card>
+        ) : (
+          <Card>
+            <CardHeader>
+              <CardTitle>Metadata Distribution</CardTitle>
+              <CardDescription>No metadata available for charting</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">Questions do not include metadata fields yet.</p>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+
+      {metadataDistributions[1] && (
         <Card>
           <CardHeader>
-            <CardTitle>Questions by Domain</CardTitle>
-            <CardDescription>Distribution across risk domains</CardDescription>
+            <CardTitle>{metadataDistributions[1].label} Distribution</CardTitle>
+            <CardDescription>Breakdown of questions by metadata value</CardDescription>
           </CardHeader>
           <CardContent>
-            <ChartContainer config={chartConfig} className="h-[200px]">
-              <RePieChart>
+            <ChartContainer config={chartConfig} className="h-[300px]">
+              <BarChart data={metadataDistributions[1].values}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="value" angle={-45} textAnchor="end" height={100} />
+                <YAxis />
                 <ChartTooltip content={<ChartTooltipContent />} />
-                <Pie data={domainData} dataKey="count" nameKey="domain" cx="50%" cy="50%" outerRadius={80}>
-                  {domainData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.fill} />
-                  ))}
-                </Pie>
-              </RePieChart>
+                <Bar dataKey="count" fill="hsl(var(--chart-1))" radius={[8, 8, 0, 0]} />
+              </BarChart>
             </ChartContainer>
           </CardContent>
         </Card>
-      </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Risk Types Distribution</CardTitle>
-          <CardDescription>Breakdown of questions by risk type</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ChartContainer config={chartConfig} className="h-[300px]">
-            <BarChart data={riskTypeData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="riskType" angle={-45} textAnchor="end" height={100} />
-              <YAxis />
-              <ChartTooltip content={<ChartTooltipContent />} />
-              <Bar dataKey="count" fill="hsl(var(--chart-1))" radius={[8, 8, 0, 0]} />
-            </BarChart>
-          </ChartContainer>
-        </CardContent>
-      </Card>
+      )}
 
       <Card>
         <CardHeader>

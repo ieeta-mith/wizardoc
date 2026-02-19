@@ -1,4 +1,5 @@
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer"
+import { formatMetadataValue, getQuestionMetadata, toMetadataLabel } from "./question-metadata"
 import type { Assessment, Study, QuestionPool } from "./types"
 
 // Define styles for the PDF
@@ -67,23 +68,15 @@ const styles = StyleSheet.create({
     minHeight: 30,
   },
   colQuestion: {
-    width: "40%",
+    width: "35%",
     paddingRight: 5,
   },
-  colDomain: {
-    width: "15%",
-    paddingRight: 5,
-  },
-  colRiskType: {
-    width: "15%",
-    paddingRight: 5,
-  },
-  colISO: {
-    width: "10%",
+  colMetadata: {
+    width: "35%",
     paddingRight: 5,
   },
   colAnswer: {
-    width: "20%",
+    width: "30%",
   },
   footer: {
     position: "absolute",
@@ -114,11 +107,21 @@ export const AssessmentPDFDocument = ({ assessment, study, questionPools }: PDFD
     return null
   }
 
-  const answersArray = Object.entries(assessment.answers).map(([qId, answer]) => ({
-    questionId: qId,
-    answer,
-    question: getQuestionDetails(qId),
-  }))
+  const answersArray = Object.entries(assessment.answers).map(([qId, answer]) => {
+    const question = getQuestionDetails(qId)
+    const metadata = getQuestionMetadata(question)
+    const metadataSummary =
+      Object.entries(metadata)
+        .map(([key, value]) => `${toMetadataLabel(key)}: ${formatMetadataValue(value)}`)
+        .join("\n") || "N/A"
+
+    return {
+      questionId: qId,
+      answer,
+      question,
+      metadataSummary,
+    }
+  })
 
   return (
     <Document>
@@ -190,9 +193,7 @@ export const AssessmentPDFDocument = ({ assessment, study, questionPools }: PDFD
             {/* Table Header */}
             <View style={styles.tableHeader}>
               <Text style={styles.colQuestion}>Question</Text>
-              <Text style={styles.colDomain}>Domain</Text>
-              <Text style={styles.colRiskType}>Risk Type</Text>
-              <Text style={styles.colISO}>ISO Ref</Text>
+              <Text style={styles.colMetadata}>Metadata</Text>
               <Text style={styles.colAnswer}>Answer</Text>
             </View>
 
@@ -200,9 +201,7 @@ export const AssessmentPDFDocument = ({ assessment, study, questionPools }: PDFD
             {answersArray.map((item, index) => (
               <View key={item.questionId} style={index % 2 === 0 ? styles.tableRow : styles.tableRowAlt}>
                 <Text style={styles.colQuestion}>{item.question?.text || item.questionId}</Text>
-                <Text style={styles.colDomain}>{item.question?.domain || "N/A"}</Text>
-                <Text style={styles.colRiskType}>{item.question?.riskType || "N/A"}</Text>
-                <Text style={styles.colISO}>{item.question?.isoReference || "N/A"}</Text>
+                <Text style={styles.colMetadata}>{item.metadataSummary}</Text>
                 <Text style={styles.colAnswer}>{item.answer}</Text>
               </View>
             ))}

@@ -9,7 +9,7 @@ import { useExportPage } from "./hooks"
 export function ExportPageClient() {
   const searchParams = useSearchParams()
   const assessmentId = searchParams.get("assessmentId")
-  const { assessments, domainData, exportAssessment, loading, riskTypeData, stats, study } = useExportPage(assessmentId)
+  const { assessments, exportAssessment, loading, metadataDistributions, stats, study } = useExportPage(assessmentId)
 
   if (loading) {
     return (
@@ -52,7 +52,7 @@ export function ExportPageClient() {
         </TabsContent>
 
         <TabsContent value="analytics">
-          <AnalyticsTab assessments={assessments} domainData={domainData} riskTypeData={riskTypeData} stats={stats} />
+          <AnalyticsTab assessments={assessments} metadataDistributions={metadataDistributions} stats={stats} />
         </TabsContent>
       </Tabs>
     </div>

@@ -1,4 +1,5 @@
 import type { Assessment, QuestionPool, Study } from "@/lib/types"
+import { formatMetadataValue, getQuestionMetadata, getQuestionMetadataKeys, toMetadataLabel } from "@/lib/question-metadata"
 
 export const downloadBlob = (blob: Blob, filename: string) => {
   const url = URL.createObjectURL(blob)
@@ -20,12 +21,38 @@ const findQuestionAcrossPools = (questionId: string, pools: QuestionPool[]) => {
 }
 
 export const buildAssessmentCsv = (assessment: Assessment, pools: QuestionPool[]) => {
-  const headers = ["Question ID", "Domain", "Risk Type", "ISO Reference", "Answer"]
-  const rows = Object.entries(assessment.answers).map(([questionId, answer]) => {
+  const answerEntries = Object.entries(assessment.answers)
+  const metadataKeys = Array.from(
+    new Set(
+      answerEntries.flatMap(([questionId]) => {
+        const question = findQuestionAcrossPools(questionId, pools)
+        return getQuestionMetadataKeys(question)
+      })
+    )
+  )
+
+  const headers = [
+    "Question ID",
+    "Identifier",
+    "Question",
+    ...metadataKeys.map((key) => toMetadataLabel(key)),
+    "Answer",
+  ]
+
+  const rows = answerEntries.map(([questionId, answer]) => {
     const question = findQuestionAcrossPools(questionId, pools)
-    return [questionId, question?.domain || "", question?.riskType || "", question?.isoReference || "", answer]
+    const metadata = getQuestionMetadata(question)
+    return [
+      questionId,
+      question?.identifier ?? "",
+      question?.text ?? "",
+      ...metadataKeys.map((key) => formatMetadataValue(metadata[key])),
+      answer,
+    ]
   })
-  return [headers, ...rows].map((row) => row.map((cell) => `"${cell}"`).join(",")).join("\n")
+
+  const quoteCsv = (cell: unknown) => `"${String(cell ?? "").replace(/"/g, "\"\"")}"`
+  return [headers, ...rows].map((row) => row.map((cell) => quoteCsv(cell)).join(",")).join("\n")
 }
 
 export const buildAssessmentJson = (assessment: Assessment, study: Study | null) =>
@@ -39,45 +66,65 @@ export const buildAssessmentJson = (assessment: Assessment, study: Study | null)
     2
   )
 
-export const buildDomainData = (questionPools: QuestionPool[]) => {
-  const domainCounts: Record<string, number> = {}
-  questionPools.forEach((pool) => {
-    pool.questions.forEach((question) => {
-      const domain = question.domain || "Unspecified"
-      domainCounts[domain] = (domainCounts[domain] || 0) + 1
-    })
-  })
-
-  const colors = [
-    "hsl(var(--chart-1))",
-    "hsl(var(--chart-2))",
-    "hsl(var(--chart-3))",
-    "hsl(var(--chart-4))",
-    "hsl(var(--chart-5))",
-  ]
-
-  return Object.entries(domainCounts).map(([domain, count], index) => ({
-    domain,
-    count,
-    fill: colors[index % colors.length],
-  }))
+export interface MetadataDistribution {
+  key: string
+  label: string
+  values: Array<{ value: string; count: number; fill: string }>
 }
 
-export const buildRiskTypeData = (questionPools: QuestionPool[]) => {
-  const riskTypeCounts: Record<string, number> = {}
+const CHART_COLORS = [
+  "hsl(var(--chart-1))",
+  "hsl(var(--chart-2))",
+  "hsl(var(--chart-3))",
+  "hsl(var(--chart-4))",
+  "hsl(var(--chart-5))",
+]
+
+export const buildMetadataDistributionData = (
+  questionPools: QuestionPool[],
+  maxFields = 2
+): MetadataDistribution[] => {
+  const keyCounts = new Map<string, number>()
+
   questionPools.forEach((pool) => {
     pool.questions.forEach((question) => {
-      const riskType = question.riskType || "Unspecified"
-      riskTypeCounts[riskType] = (riskTypeCounts[riskType] || 0) + 1
+      getQuestionMetadataKeys(question).forEach((key) => {
+        keyCounts.set(key, (keyCounts.get(key) ?? 0) + 1)
+      })
     })
   })
 
-  return Object.entries(riskTypeCounts)
-    .map(([riskType, count]) => ({
-      riskType,
-      count,
-    }))
-    .sort((a, b) => b.count - a.count)
+  const selectedKeys = Array.from(keyCounts.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, maxFields)
+    .map(([key]) => key)
+
+  return selectedKeys.map((key) => {
+    const valueCounts: Record<string, number> = {}
+
+    questionPools.forEach((pool) => {
+      pool.questions.forEach((question) => {
+        const metadata = getQuestionMetadata(question)
+        if (!(key in metadata)) return
+        const value = formatMetadataValue(metadata[key])
+        valueCounts[value] = (valueCounts[value] || 0) + 1
+      })
+    })
+
+    const values = Object.entries(valueCounts)
+      .map(([value, count], index) => ({
+        value,
+        count,
+        fill: CHART_COLORS[index % CHART_COLORS.length],
+      }))
+      .sort((a, b) => b.count - a.count)
+
+    return {
+      key,
+      label: toMetadataLabel(key),
+      values,
+    }
+  })
 }
 
 export const buildAssessmentStats = (assessments: Assessment[]) => {

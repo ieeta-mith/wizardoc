@@ -7,7 +7,13 @@ import { AssessmentPDFDocument } from "@/lib/pdf-generator"
 import { AssessmentService } from "@/lib/services/assessment-service"
 import { QuestionPoolService } from "@/lib/services/question-pool-service"
 import type { Assessment, QuestionPool, Study } from "@/lib/types"
-import { buildAssessmentCsv, buildAssessmentJson, buildAssessmentStats, buildDomainData, buildRiskTypeData, downloadBlob } from "../domain"
+import {
+  buildAssessmentCsv,
+  buildAssessmentJson,
+  buildAssessmentStats,
+  buildMetadataDistributionData,
+  downloadBlob,
+} from "../domain"
 
 export function useExportPage(assessmentId: string | null) {
   const [study, setStudy] = useState<Study | null>(null)
@@ -49,8 +55,7 @@ export function useExportPage(assessmentId: string | null) {
     fetchData()
   }, [assessmentId])
 
-  const domainData = useMemo(() => buildDomainData(questionPools), [questionPools])
-  const riskTypeData = useMemo(() => buildRiskTypeData(questionPools), [questionPools])
+  const metadataDistributions = useMemo(() => buildMetadataDistributionData(questionPools), [questionPools])
   const stats = useMemo(() => buildAssessmentStats(assessments), [assessments])
 
   const exportAssessment = async (targetAssessmentId: string, format: "pdf" | "csv" | "json") => {
@@ -80,11 +85,10 @@ export function useExportPage(assessmentId: string | null) {
 
   return {
     assessments,
-    domainData,
     exportAssessment,
     loading,
+    metadataDistributions,
     questionPools,
-    riskTypeData,
     stats,
     study,
   }
