@@ -66,15 +66,15 @@ export class QuestionPoolService {
    */
   static async addQuestion(
     poolId: string,
-    question: Omit<Question, "id">
+    question: Record<string, unknown>
   ): Promise<QuestionPool | null> {
     const pool = await this.getById(poolId)
     if (!pool) return null
 
-    const newQuestion: Question = {
+    const newQuestion = {
       ...question,
       id: `q${Date.now()}`,
-    }
+    } as Question
 
     pool.questions.push(newQuestion)
     pool.questionCount = pool.questions.length

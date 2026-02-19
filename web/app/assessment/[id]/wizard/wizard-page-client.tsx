@@ -66,11 +66,7 @@ export function WizardPageClient({ assessmentId }: WizardPageClientProps) {
         onSave={persistAnswers}
       />
 
-      <WizardQuestionMetadata
-        domain={currentQuestionData.domain}
-        riskType={currentQuestionData.riskType}
-        isoReference={currentQuestionData.isoReference}
-      />
+      <WizardQuestionMetadata question={currentQuestionData} />
     </div>
   )
 }

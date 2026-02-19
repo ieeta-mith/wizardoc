@@ -43,7 +43,8 @@ export const buildDomainData = (questionPools: QuestionPool[]) => {
   const domainCounts: Record<string, number> = {}
   questionPools.forEach((pool) => {
     pool.questions.forEach((question) => {
-      domainCounts[question.domain] = (domainCounts[question.domain] || 0) + 1
+      const domain = question.domain || "Unspecified"
+      domainCounts[domain] = (domainCounts[domain] || 0) + 1
     })
   })
 
@@ -66,7 +67,8 @@ export const buildRiskTypeData = (questionPools: QuestionPool[]) => {
   const riskTypeCounts: Record<string, number> = {}
   questionPools.forEach((pool) => {
     pool.questions.forEach((question) => {
-      riskTypeCounts[question.riskType] = (riskTypeCounts[question.riskType] || 0) + 1
+      const riskType = question.riskType || "Unspecified"
+      riskTypeCounts[riskType] = (riskTypeCounts[riskType] || 0) + 1
     })
   })
 

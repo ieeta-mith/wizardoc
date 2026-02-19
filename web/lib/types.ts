@@ -16,11 +16,12 @@ export interface DocxFile {
 
 export interface Question {
   id: string
-  identifier: string
+  identifier?: string
   text: string
-  domain: string
-  riskType: string
-  isoReference: string
+  domain?: string
+  riskType?: string
+  isoReference?: string
+  [key: string]: unknown
 }
 
 export interface Study {
