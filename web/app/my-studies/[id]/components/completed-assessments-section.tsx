@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { ASSESSMENT_STATUS_STYLES } from "@/lib/constants/assessment"
 import type { Assessment, QuestionPool } from "@/lib/types"
 import { AssessmentAnswersTable } from "./assessment-answers-table"
+import { DocumentNameEditor } from "./document-name-editor"
 import { buildAssessmentAnswerRows } from "../domain"
 
 interface CompletedAssessmentsSectionProps {
@@ -16,6 +17,9 @@ interface CompletedAssessmentsSectionProps {
   pool: QuestionPool | null
   poolLoading: boolean
   poolError: Error | null
+  onRenameAssessment: (assessmentId: string, name: string) => Promise<boolean>
+  renamingAssessmentId: string | null
+  renameErrors: Record<string, string>
 }
 
 export function CompletedAssessmentsSection({
@@ -28,6 +32,9 @@ export function CompletedAssessmentsSection({
   pool,
   poolLoading,
   poolError,
+  onRenameAssessment,
+  renamingAssessmentId,
+  renameErrors,
 }: CompletedAssessmentsSectionProps) {
   if (assessments.length === 0) return null
 
@@ -43,7 +50,13 @@ export function CompletedAssessmentsSection({
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div className="flex-1">
-                  <h4 className="font-semibold mb-1">{assessment.name}</h4>
+                  <DocumentNameEditor
+                    assessmentId={assessment.id}
+                    name={assessment.name}
+                    onRename={onRenameAssessment}
+                    isRenaming={renamingAssessmentId === assessment.id}
+                    errorMessage={renameErrors[assessment.id]}
+                  />
                   <p className="text-sm text-muted-foreground mb-2">Created {assessment.createdAt.toLocaleDateString()}</p>
                 </div>
                 <div className="ml-4 flex flex-col items-end gap-2">

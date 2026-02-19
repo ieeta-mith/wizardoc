@@ -23,6 +23,9 @@ export function StudyDetailPageClient({ studyId }: StudyDetailPageClientProps) {
     populateDocx,
     populateErrors,
     populatingAssessmentId,
+    renameAssessment,
+    renameErrors,
+    renamingAssessmentId,
     study,
     studyError,
     studyLoading,
@@ -91,9 +94,17 @@ export function StudyDetailPageClient({ studyId }: StudyDetailPageClientProps) {
               pool={pool}
               poolLoading={poolLoading}
               poolError={poolError}
+              onRenameAssessment={renameAssessment}
+              renamingAssessmentId={renamingAssessmentId}
+              renameErrors={renameErrors}
             />
 
-            <InProgressAssessmentsSection assessments={inProgressAssessments} />
+            <InProgressAssessmentsSection
+              assessments={inProgressAssessments}
+              onRenameAssessment={renameAssessment}
+              renamingAssessmentId={renamingAssessmentId}
+              renameErrors={renameErrors}
+            />
 
             {totalAssessments === 0 && <AssessmentsEmptyState />}
           </CardContent>

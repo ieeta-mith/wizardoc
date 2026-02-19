@@ -4,12 +4,21 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { ASSESSMENT_STATUS_STYLES } from "@/lib/constants/assessment"
 import type { Assessment } from "@/lib/types"
+import { DocumentNameEditor } from "./document-name-editor"
 
 interface InProgressAssessmentsSectionProps {
   assessments: Assessment[]
+  onRenameAssessment: (assessmentId: string, name: string) => Promise<boolean>
+  renamingAssessmentId: string | null
+  renameErrors: Record<string, string>
 }
 
-export function InProgressAssessmentsSection({ assessments }: InProgressAssessmentsSectionProps) {
+export function InProgressAssessmentsSection({
+  assessments,
+  onRenameAssessment,
+  renamingAssessmentId,
+  renameErrors,
+}: InProgressAssessmentsSectionProps) {
   if (assessments.length === 0) return null
 
   return (
@@ -20,7 +29,13 @@ export function InProgressAssessmentsSection({ assessments }: InProgressAssessme
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div className="flex-1">
-                <h4 className="font-semibold mb-1">{assessment.name}</h4>
+                <DocumentNameEditor
+                  assessmentId={assessment.id}
+                  name={assessment.name}
+                  onRename={onRenameAssessment}
+                  isRenaming={renamingAssessmentId === assessment.id}
+                  errorMessage={renameErrors[assessment.id]}
+                />
                 <p className="text-sm text-muted-foreground mb-2">Created {assessment.createdAt.toLocaleDateString()}</p>
                 <div className="flex items-center gap-2 text-sm">
                   <Badge variant="outline" className="bg-background">

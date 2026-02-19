@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ArrowLeft, Pencil } from "lucide-react"
+import { ArrowLeft, Check, Pencil, X } from "lucide-react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -54,54 +54,62 @@ export function WizardHeader({
       </Link>
       <div className="flex items-center justify-between mb-4">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-3xl font-bold tracking-tight">Document Wizard</h1>
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              aria-label="Edit document name"
-              onClick={() => setIsEditingName((current) => !current)}
-            >
-              <Pencil className="h-4 w-4" />
-            </Button>
-          </div>
-          {!isEditingName && <p className="mt-1 text-sm text-muted-foreground">{documentName}</p>}
-        </div>
-        <Badge variant="secondary" className="text-base px-4 py-2">
-          {projectName}
-        </Badge>
-      </div>
-      {isEditingName && (
-        <div className="mb-4 rounded-md border p-3">
-          <div className="flex flex-col gap-2 sm:flex-row">
-            <Input
-              value={nameDraft}
-              onChange={(event) => setNameDraft(event.target.value)}
-              placeholder="Document name"
-              maxLength={120}
-            />
-            <div className="flex gap-2">
-              <Button type="button" size="sm" onClick={saveName} disabled={isRenaming}>
-                {isRenaming ? "Saving..." : "Save"}
+          <h1 className="text-3xl font-bold tracking-tight">Document Wizard</h1>
+          {isEditingName ? (
+            <div className="mt-1 flex max-w-md items-center gap-1">
+              <Input
+                value={nameDraft}
+                onChange={(event) => setNameDraft(event.target.value)}
+                placeholder="Document name"
+                maxLength={120}
+                className="h-8"
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault()
+                    void saveName()
+                  }
+                  if (event.key === "Escape") {
+                    setNameDraft(documentName)
+                    setIsEditingName(false)
+                  }
+                }}
+              />
+              <Button type="button" size="icon-sm" onClick={() => void saveName()} disabled={isRenaming}>
+                <Check className="h-4 w-4" />
               </Button>
               <Button
                 type="button"
-                size="sm"
-                variant="outline"
+                size="icon-sm"
+                variant="ghost"
                 onClick={() => {
                   setNameDraft(documentName)
                   setIsEditingName(false)
                 }}
                 disabled={isRenaming}
               >
-                Cancel
+                <X className="h-4 w-4" />
               </Button>
             </div>
-          </div>
-          {renameError && <p className="mt-2 text-xs text-destructive">{renameError}</p>}
+          ) : (
+            <div className="mt-1 flex items-center gap-1">
+              <p className="text-sm text-muted-foreground">{documentName}</p>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon-sm"
+                aria-label="Edit document name"
+                onClick={() => setIsEditingName(true)}
+              >
+                <Pencil className="h-3.5 w-3.5" />
+              </Button>
+            </div>
+          )}
+          {renameError && <p className="mt-1 text-xs text-destructive">{renameError}</p>}
         </div>
-      )}
+        <Badge variant="secondary" className="text-base px-4 py-2">
+          {projectName}
+        </Badge>
+      </div>
       <div className="space-y-2">
         <div className="flex items-center justify-between text-sm">
           <span className="text-muted-foreground">

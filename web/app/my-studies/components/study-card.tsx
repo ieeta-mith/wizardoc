@@ -26,7 +26,7 @@ export function StudyCard({ study }: StudyCardProps) {
         <div className="space-y-2">
           <div className="flex items-center gap-2 text-sm">
             <FlaskConical className="h-4 w-4 text-muted-foreground" />
-            <span className="font-medium">Area:</span>
+            <span className="font-medium">Category:</span>
             <span className="text-muted-foreground">{study.category || "Not set"}</span>
           </div>
           <p className="text-sm text-muted-foreground line-clamp-3">{study.studyQuestion || "No objective provided."}</p>
