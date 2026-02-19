@@ -3,7 +3,7 @@ import "./globals.css"
 import { Navigation } from "@/components/navigation"
 
 export const metadata: Metadata = {
-  title: "Risk Assessment Tool - Medical Studies",
+  title: "Document Tool - Medical Studies",
   description: "Tool for creating risk assessment documents for observational medical studies",
 }
 

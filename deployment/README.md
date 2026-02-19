@@ -63,12 +63,13 @@ The application uses a **multi-container architecture** with Docker Compose:
 
 **Use this for:**
 - Local development
-- Running only the database
+- Running backend + database in containers
 - Testing with local frontend/backend
 
 **What it does:**
-- Runs PostgreSQL only
-- Exposes database port (5432)
+- Runs MongoDB + API (+ optional Web/Proxy)
+- Exposes MongoDB port (27017)
+- Exposes API port (8000)
 - Allows local API/Web to connect
 
 ## 🚀 Quick Start
@@ -94,23 +95,20 @@ Access the application:
 - **API Docs**: http://localhost/api/docs
 - **Health Check**: http://localhost/health
 
-### Development with Database Only
+### Development with Backend + Database
 
 ```bash
-# Start PostgreSQL only
+# Start MongoDB + API
 cd deployment
-docker compose -f docker-compose.dev.yml up -d
+docker compose -f docker-compose.dev.yml up -d mongo api
 
-# Database is now accessible at localhost:5432
+# Database is now accessible at localhost:27017
+# API is now accessible at localhost:8000
 ```
 
 Then run API and Web locally:
 ```bash
-# Terminal 1 - API
-cd ../api
-uv run fastapi dev src/main.py
-
-# Terminal 2 - Web
+# Terminal - Web
 cd ../web
 npm run dev
 ```

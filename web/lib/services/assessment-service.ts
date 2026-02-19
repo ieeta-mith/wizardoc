@@ -1,8 +1,7 @@
 import type { Assessment, Study, QuestionPool, Question } from "@/lib/types"
 import { StudyService } from "./study-service"
 import { QuestionPoolService } from "./question-pool-service"
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "/api"
+import { API_BASE_URL } from "./api-base-url"
 
 export interface AssessmentContext {
   assessment: Assessment

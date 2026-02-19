@@ -36,7 +36,7 @@ export function QuestionPoolPageClient() {
   if (loading) {
     return (
       <div className="container py-8">
-        <QuestionPoolPageHeader title="Question Pool Manager" subtitle="Loading question pools..." />
+        <QuestionPoolPageHeader title="Document Template Manager" subtitle="Loading templates..." />
       </div>
     )
   }
@@ -46,7 +46,7 @@ export function QuestionPoolPageClient() {
       <div className="container py-8">
         <Card className="border-destructive">
           <CardContent className="pt-6">
-            <p className="text-destructive">Error loading pools: {error.message}</p>
+            <p className="text-destructive">Error loading templates: {error.message}</p>
           </CardContent>
         </Card>
       </div>
@@ -56,8 +56,8 @@ export function QuestionPoolPageClient() {
   return (
     <div className="container py-8">
       <QuestionPoolPageHeader
-        title="Question Pool Manager"
-        subtitle="Manage your ISO/ICH question sets for risk assessments"
+        title="Document Template Manager"
+        subtitle="Manage your question sets and documents for automatic filling and generation"
       />
 
       <div className="space-y-4">
@@ -77,7 +77,7 @@ export function QuestionPoolPageClient() {
           <div className="flex justify-center pt-4">
             <Button size="lg" className="gap-2" onClick={() => setShowCreateForm(true)}>
               <Plus className="h-4 w-4" />
-              Create New Pool
+              Create New Template
             </Button>
           </div>
         )}

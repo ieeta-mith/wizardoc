@@ -1,0 +1,68 @@
+"use client"
+
+import { useAssessmentWizard } from "./hooks"
+import { WizardErrorState, WizardHeader, WizardQuestionCard, WizardQuestionMetadata } from "./components"
+
+interface WizardPageClientProps {
+  assessmentId: string
+}
+
+export function WizardPageClient({ assessmentId }: WizardPageClientProps) {
+  const {
+    answers,
+    context,
+    currentQuestion,
+    currentQuestionData,
+    error,
+    goToNextQuestion,
+    goToPreviousQuestion,
+    isSaving,
+    loading,
+    progress,
+    totalQuestions,
+    updateCurrentAnswer,
+    persistAnswers,
+  } = useAssessmentWizard(assessmentId)
+
+  if (loading) {
+    return (
+      <div className="container max-w-4xl py-8">
+        <p>Loading assessment...</p>
+      </div>
+    )
+  }
+
+  if (error || !context || !currentQuestionData) {
+    return <WizardErrorState />
+  }
+
+  return (
+    <div className="container max-w-4xl py-8">
+      <WizardHeader
+        studyId={context.study.id}
+        studyName={context.study.name}
+        currentQuestion={currentQuestion}
+        totalQuestions={totalQuestions}
+        progress={progress}
+      />
+
+      <WizardQuestionCard
+        currentQuestion={currentQuestion}
+        totalQuestions={totalQuestions}
+        questionText={currentQuestionData.text}
+        answer={answers[currentQuestion] || ""}
+        isSaving={isSaving}
+        onAnswerChange={updateCurrentAnswer}
+        onPrevious={goToPreviousQuestion}
+        onNext={goToNextQuestion}
+        onSave={persistAnswers}
+      />
+
+      <WizardQuestionMetadata
+        domain={currentQuestionData.domain}
+        riskType={currentQuestionData.riskType}
+        isoReference={currentQuestionData.isoReference}
+      />
+    </div>
+  )
+}

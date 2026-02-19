@@ -14,7 +14,7 @@ export function Navigation() {
       <div className="container flex h-16 items-center">
         <div className="mr-8 flex items-center gap-2">
           <FileText className="h-6 w-6 text-primary" />
-          <span className="text-lg font-semibold">Risk Assessment Tool</span>
+          <span className="text-lg font-semibold">WizarDoc</span>
         </div>
         <nav className="flex items-center gap-6">
           {NAV_ITEMS.map((item) => {

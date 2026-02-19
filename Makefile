@@ -68,7 +68,7 @@ web-install: ## Install web deps
 	cd web && npm install
 
 web-dev: ## Run Next.js dev server
-	cd web && npm run dev
+	cd web && NEXT_PUBLIC_API_URL=$${NEXT_PUBLIC_API_URL:-http://localhost:8000/api} npm run dev
 
 web-lint: ## Lint frontend
 	cd web && npm run lint

@@ -29,7 +29,7 @@ export function PoolDetailPageClient({ id }: PoolDetailPageClientProps) {
           <CardContent className="pt-6">
             <p className="text-destructive">Pool not found or error loading pool</p>
             <Link href="/question-pool" className="mt-4 inline-block">
-              <Button>Back to Question Pools</Button>
+              <Button>Back to Template Manager</Button>
             </Link>
           </CardContent>
         </Card>

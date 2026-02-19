@@ -1,6 +1,5 @@
 import type { QuestionPool, Question } from "@/lib/types"
-
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "/api"
+import { API_BASE_URL } from "./api-base-url"
 
 export class QuestionPoolService {
   /**

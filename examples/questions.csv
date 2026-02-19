@@ -1,4 +1,4 @@
-identifier,text,domain,isoReference,coisa1,coisa2
+identifier,text,domain,reference,coisa1,coisa2
 use_case_id,Use case identifier [from submission form],ADMINISTRATIVE DETAILS,GREG SOP Annex I,1,2
 case_title,Use case title,ADMINISTRATIVE DETAILS,GREG SOP Annex I,1,2
 case_lead,"Use Case Lead (name, email)",ADMINISTRATIVE DETAILS,GREG SOP Annex I,1,2
