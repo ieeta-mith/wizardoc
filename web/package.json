@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "node scripts/patch-iam-sidebar-key-warning.js"
   },
   "dependencies": {
+    "@bioinformatics-ua/iam-sidebar": "^2.0.0-alpha.21",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "1.2.2",
     "@radix-ui/react-alert-dialog": "1.1.4",

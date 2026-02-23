@@ -1,0 +1,22 @@
+identifier,text,info,Section,Subsection,reference
+use_case_id,Use case identifier [from submission form],,ADMINISTRATIVE DETAILS,General,GREG SOP Annex I
+case_title,Use case title,,ADMINISTRATIVE DETAILS,General,GREG SOP Annex I
+case_lead,Use Case Lead,,ADMINISTRATIVE DETAILS,General,GREG SOP Annex I
+completeness,Check of completeness of Use Case form conducted by,,ADMINISTRATIVE DETAILS,General,GREG SOP Annex I
+initial,Date of initial feasibility request,,ADMINISTRATIVE DETAILS,General,GREG SOP Annex I
+responsible,Person(s) responsible for the Feasibility Assessment,,ADMINISTRATIVE DETAILS,General,GREG SOP Annex I
+req_analyses,Required analyses,e.g. Incidence/Prevalence; Cohort study,ASSESSMENT OF METHODS REQUIREMENTS/FEASIBILITY,Assessment criteria,GREG SOP Annex I
+std_analytics,Standard analytics available,e.g. yes (analytical package); no (cohort study would be using PS matching/weighting),ASSESSMENT OF METHODS REQUIREMENTS/FEASIBILITY,Assessment criteria,GREG SOP Annex I
+guidelines_avail,Guidelines/standard methods available?,Are there any guidelines/recommendations of state-of-the-art methods that will be used or tested against?,ASSESSMENT OF METHODS REQUIREMENTS/FEASIBILITY,Assessment criteria,GREG SOP Annex I
+rec_proposed_methods,RECOMMENDATIONS/PROPOSED METHODS,"Which analytical methods would you recommend to use for this study? What would be their limitations? Is the analytical method (incl. statistical code/packages) available or would it needed to be developed?",ASSESSMENT OF METHODS REQUIREMENTS/FEASIBILITY,RECOMMENDATIONS/PROPOSED METHODS,GREG SOP Annex I
+req_fte,Required FTE,e.g. %FTE of X staff members working on the study,ASSESSMENT OF RESOURCES/TIMELINES FEASIBILITY,Assessment criteria,GREG SOP Annex I
+data_costs,Data costs,e.g. X databases,ASSESSMENT OF RESOURCES/TIMELINES FEASIBILITY,Assessment criteria,GREG SOP Annex I
+add_resources,Additional resources?,Is there a specific contribution (FC/in-kind) available if this use case would be conducted?,ASSESSMENT OF RESOURCES/TIMELINES FEASIBILITY,Assessment criteria,GREG SOP Annex I
+extra_effort,Would any extra efford be needed that incures additional costs?,"e.g. mapping of non-OMOP data, mapping medical devices",ASSESSMENT OF RESOURCES/TIMELINES FEASIBILITY,Assessment criteria,GREG SOP Annex I
+timeline,Timeline,What would be the estimated timeline for completion of the study?,ASSESSMENT OF RESOURCES/TIMELINES FEASIBILITY,Assessment criteria,GREG SOP Annex I
+rec_est_resources,RECOMMENDATIONS/ESTIMATED RESOURCES,What would be feasible timelines for completion of the study and how many resources would be needed?,ASSESSMENT OF RESOURCES/TIMELINES FEASIBILITY,RECOMMENDATIONS/ESTIMATED RESOURCES,GREG SOP Annex I
+start_date,Start date:,DD/MM/YYYY,ASSESSMENT OF DATA FEASIBILITY,General,GREG SOP Annex I
+health_setting,Healthcare setting suitability,"To be completed with the UC setting needs, e.g., primary care",ASSESSMENT OF DATA FEASIBILITY,Feasibility Assessment Process,GREG SOP Annex I
+temp_suitability,Temporal suitability,"To be completed with the UC temporal needs, e.g., data from > 2021, data from <2010",ASSESSMENT OF DATA FEASIBILITY,Feasibility Assessment Process,GREG SOP Annex I
+geo_suitability,Geographical suitability,"To be completed with the UC geographical needs, e.g., data from southern European countries",ASSESSMENT OF DATA FEASIBILITY,Feasibility Assessment Process,GREG SOP Annex I
+data_domains,Presence of necessary data domains,"To be completed with the UC data domains needs, e.g., conditions, drugs, and procedures.",ASSESSMENT OF DATA FEASIBILITY,Feasibility Assessment Process,GREG SOP Annex I
