@@ -18,6 +18,7 @@ export interface Question {
   id: string
   identifier?: string
   text: string
+  info?: string
   [key: string]: unknown
 }
 

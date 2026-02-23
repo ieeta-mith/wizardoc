@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, Save } from "lucide-react"
+import { CircleHelp, ChevronLeft, ChevronRight, Save } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
@@ -7,6 +7,7 @@ interface WizardQuestionCardProps {
   currentQuestion: number
   totalQuestions: number
   questionText?: string
+  questionInfo?: string
   answer: string
   isSaving: boolean
   onAnswerChange: (value: string) => void
@@ -19,6 +20,7 @@ export function WizardQuestionCard({
   currentQuestion,
   totalQuestions,
   questionText,
+  questionInfo,
   answer,
   isSaving,
   onAnswerChange,
@@ -26,11 +28,32 @@ export function WizardQuestionCard({
   onNext,
   onSave,
 }: WizardQuestionCardProps) {
+  const normalizedQuestionInfo = questionInfo?.trim()
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className="text-xl">
-          Question {currentQuestion + 1}
+          <span className="inline-flex items-center gap-2">
+            <span>Question {currentQuestion + 1}</span>
+            {normalizedQuestionInfo ? (
+              <span className="group relative inline-flex">
+                <button
+                  type="button"
+                  aria-label="Show question details"
+                  className="inline-flex items-center text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <CircleHelp className="h-4 w-4" />
+                </button>
+                <span
+                  role="tooltip"
+                  className="pointer-events-none absolute left-1/2 top-full z-10 mt-2 hidden w-80 -translate-x-1/2 rounded-md border bg-popover px-3 py-2 text-xs font-normal text-popover-foreground shadow-md group-hover:block group-focus-within:block"
+                >
+                  {normalizedQuestionInfo}
+                </span>
+              </span>
+            ) : null}
+          </span>
           <span className="block text-sm font-normal text-muted-foreground mt-2">{questionText}</span>
         </CardTitle>
       </CardHeader>

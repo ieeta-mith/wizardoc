@@ -7,6 +7,7 @@ class Question(BaseModel):
     id: str
     identifier: str
     text: str
+    info: str | None = None
     
     model_config = ConfigDict(extra="allow")
 
