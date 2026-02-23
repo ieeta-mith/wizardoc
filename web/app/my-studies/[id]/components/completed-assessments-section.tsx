@@ -1,4 +1,5 @@
-import { ChevronDown, ChevronUp, FileText } from "lucide-react"
+import Link from "next/link"
+import { ChevronDown, ChevronUp, FileText, Pencil } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { ASSESSMENT_STATUS_STYLES } from "@/lib/constants/assessment"
@@ -70,6 +71,12 @@ export function CompletedAssessmentsSection({
                       {isExpanded ? "Hide Answers" : "View Answers"}
                       {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                     </Button>
+                    <Link href={`/assessment/${assessment.id}`}>
+                      <Button className="gap-2">
+                        <Pencil className="h-4 w-4" />
+                        Edit Document
+                      </Button>
+                    </Link>
                     <Button
                       variant="outline"
                       className="gap-2 bg-background"
