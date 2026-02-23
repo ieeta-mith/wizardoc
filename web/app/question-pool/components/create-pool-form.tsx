@@ -34,12 +34,12 @@ export function CreatePoolForm({ values, creating, onChange, onSubmit, onCancel 
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="pool-source">Source / Standard</Label>
+            <Label htmlFor="pool-source">Source</Label>
             <Input
               id="pool-source"
               value={values.source}
               onChange={(event) => onChange("source", event.target.value)}
-              placeholder="e.g., ISO 14155"
+              placeholder="e.g., ISO 14155, GREG SOP Annex I"
             />
           </div>
           <div className="flex justify-end gap-2">
