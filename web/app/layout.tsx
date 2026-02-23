@@ -18,9 +18,9 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <div className="flex min-h-screen">
             <SidebarWrapper />
-            <div className="flex-1 flex flex-col">
+            <div className="flex min-w-0 flex-1 flex-col">
               <Navigation />
-            <main className="flex-1 container mx-auto py-8 px-4">{children}</main>
+            <main className="container mx-auto flex-1 min-w-0 px-4 py-8">{children}</main>
           </div>
         </div>
       </body>
