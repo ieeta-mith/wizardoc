@@ -6,7 +6,7 @@ export class StudyService {
    * Get all studies
    */
   static async getAll(): Promise<Study[]> {
-    const response = await fetch(`${API_BASE_URL}/studies`)
+    const response = await fetch(`${API_BASE_URL}/studies/`)
 
     if (!response.ok) {
       throw new Error(`Failed to fetch projects: ${response.statusText}`)
@@ -61,7 +61,7 @@ export class StudyService {
       updatedAt: new Date().toISOString(),
     }
 
-    const response = await fetch(`${API_BASE_URL}/studies`, {
+    const response = await fetch(`${API_BASE_URL}/studies/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -16,4 +16,4 @@ COPY ./src /code/src
 RUN uv sync --no-cache
 
 # Run the application.
-CMD ["/code/.venv/bin/fastapi", "run", "src/main.py", "--port", "80", "--host", "0.0.0.0", "--proxy-headers"]
+CMD ["/code/.venv/bin/fastapi", "run", "src/main.py", "--port", "80", "--host", "0.0.0.0", "--proxy-headers", "--forwarded-allow-ips", "*"]

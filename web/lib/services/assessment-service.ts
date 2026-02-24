@@ -17,7 +17,7 @@ export class AssessmentService {
    * @returns Array of assessments
    */
   static async getByStudyId(studyId: string): Promise<Assessment[]> {
-    const response = await fetch(`${API_BASE_URL}/assessments?studyId=${studyId}`, {
+    const response = await fetch(`${API_BASE_URL}/assessments/?studyId=${studyId}`, {
       cache: "no-store",
     })
 
@@ -108,7 +108,7 @@ export class AssessmentService {
       updatedAt: new Date().toISOString(),
     }
 
-    const response = await fetch(`${API_BASE_URL}/assessments`, {
+    const response = await fetch(`${API_BASE_URL}/assessments/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

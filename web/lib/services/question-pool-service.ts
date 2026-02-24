@@ -7,7 +7,7 @@ export class QuestionPoolService {
    * @returns Array of question pools
    */
   static async getAll(): Promise<QuestionPool[]> {
-    const response = await fetch(`${API_BASE_URL}/question-pools`)
+    const response = await fetch(`${API_BASE_URL}/question-pools/`)
 
     if (!response.ok) {
       throw new Error(`Failed to fetch templates: ${response.statusText}`)
@@ -43,7 +43,7 @@ export class QuestionPoolService {
    * @returns The created pool
    */
   static async create(data: Omit<QuestionPool, "id">): Promise<QuestionPool> {
-    const response = await fetch(`${API_BASE_URL}/question-pools`, {
+    const response = await fetch(`${API_BASE_URL}/question-pools/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

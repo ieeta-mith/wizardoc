@@ -2,17 +2,26 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
 export function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
+  const { pathname, basePath } = request.nextUrl
+  const appBasePath = basePath || ""
+  const normalizedPath =
+    appBasePath && pathname.startsWith(appBasePath)
+      ? pathname.slice(appBasePath.length) || "/"
+      : pathname
 
   // Redirect root to my-studies
-  if (pathname === "/") {
-    return NextResponse.redirect(new URL("/my-studies", request.url))
+  if (normalizedPath === "/") {
+    const url = request.nextUrl.clone()
+    url.pathname = `${appBasePath}/my-studies`
+    return NextResponse.redirect(url)
   }
 
   // Redirect /assessment/:id to /assessment/:id/wizard (but not /assessment/new)
-  const assessmentMatch = pathname.match(/^\/assessment\/([^/]+)$/)
+  const assessmentMatch = normalizedPath.match(/^\/assessment\/([^/]+)$/)
   if (assessmentMatch && assessmentMatch[1] !== "new") {
-    return NextResponse.redirect(new URL(`${pathname}/wizard`, request.url))
+    const url = request.nextUrl.clone()
+    url.pathname = `${appBasePath}${normalizedPath}/wizard`
+    return NextResponse.redirect(url)
   }
 
   return NextResponse.next()
