@@ -42,10 +42,7 @@ export default function SidebarWrapper( config : SidebarWrapperProps) {
                 keycloakUrl: process.env.NEXT_PUBLIC_KEYCLOAK_URL || 'http://localhost:8080',
                 communityKey: process.env.NEXT_PUBLIC_COMMUNITY_KEY || 'iam-community',
                 requireAuthentication: true,
-                devMode: {
-                    enabled: true
-                },
-        ...config,
+                ...config,
             }}
         />
     );
