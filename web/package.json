@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "next lint",
-    "postinstall": "node scripts/patch-iam-sidebar-key-warning.js"
+    "lint": "next lint"
   },
   "dependencies": {
     "@bioinformatics-ua/iam-sidebar": "^2.0.0-alpha.21",

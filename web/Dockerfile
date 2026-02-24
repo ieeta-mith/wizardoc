@@ -1,8 +1,13 @@
 # Production build for Next.js app
 FROM node:20-alpine AS deps
+ARG BUILD_NPM_TOKEN
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+
+RUN test -n "$BUILD_NPM_TOKEN" \
+    && printf "@bioinformatics-ua:registry=https://npm.pkg.github.com\n//npm.pkg.github.com/:_authToken=%s\n" "$BUILD_NPM_TOKEN" > .npmrc \
+    && npm ci \
+    && rm -f .npmrc
 
 FROM node:20-alpine AS builder
 WORKDIR /app
