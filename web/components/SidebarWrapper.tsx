@@ -21,17 +21,7 @@ interface SidebarWrapperProps {
 }
 
 export default function SidebarWrapper( config : SidebarWrapperProps) {
-    const [isMounted, setIsMounted] = useState(false);
-
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
-
-    if (!isMounted) {
-        // Avoid hydration mismatch: sidebar reads persisted state from localStorage on the client.
-        return <div className="w-16 shrink-0" aria-hidden="true" />;
-    }
-
+    
     return (
         <Sidebar
             config={{
