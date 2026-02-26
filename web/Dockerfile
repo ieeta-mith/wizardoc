@@ -16,12 +16,27 @@ WORKDIR /app
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* seed.sh ./
 RUN BUILD_NPM_TOKEN=${BUILD_NPM_TOKEN} ./seed.sh
 
-RUN \
-    if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-    elif [ -f package-lock.json ]; then npm ci; \
-    elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
-    else echo "Lockfile not found." && exit 1; \
-    fi
+RUN set -eux; \
+        install_deps() { \
+            if [ -f yarn.lock ]; then \
+                yarn --frozen-lockfile --network-timeout 600000; \
+            elif [ -f package-lock.json ]; then \
+                npm ci --fetch-retries=5 --fetch-retry-mintimeout=20000 --fetch-retry-maxtimeout=120000 --fetch-timeout=600000; \
+            elif [ -f pnpm-lock.yaml ]; then \
+                yarn global add pnpm && pnpm i --frozen-lockfile --fetch-timeout 600000; \
+            else \
+                echo "Lockfile not found."; \
+                exit 1; \
+            fi; \
+        }; \
+        for attempt in 1 2 3; do \
+            install_deps && break; \
+            if [ "$attempt" -eq 3 ]; then \
+                echo "Dependency install failed after 3 attempts."; \
+                exit 1; \
+            fi; \
+            sleep $((attempt * 10)); \
+        done
 
 
 # Rebuild the source code only when needed
