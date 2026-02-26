@@ -24,6 +24,7 @@ export interface Question {
 
 export interface Study {
   id: string
+  owner_id?: string | null
   name?: string | null
   phase?: string | null
   category?: string | null
@@ -34,7 +35,7 @@ export interface Study {
   updatedAt: Date
 }
 
-export type StudyCreate = Omit<Study, "id" | "createdAt" | "updatedAt">
+export type StudyCreate = Omit<Study, "id" | "owner_id" | "createdAt" | "updatedAt">
 
 export interface Assessment {
   id: string
@@ -47,4 +48,11 @@ export interface Assessment {
   answers: Record<string, string>
   createdAt: Date
   updatedAt: Date
+}
+
+export interface CurrentUser {
+  id: string
+  username?: string | null
+  email?: string | null
+  is_admin: boolean
 }

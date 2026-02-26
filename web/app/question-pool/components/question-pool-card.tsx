@@ -8,9 +8,10 @@ interface QuestionPoolCardProps {
   pool: QuestionPool
   deletingId: string | null
   onDelete: (poolId: string) => void
+  canManageTemplates: boolean
 }
 
-export function QuestionPoolCard({ pool, deletingId, onDelete }: QuestionPoolCardProps) {
+export function QuestionPoolCard({ pool, deletingId, onDelete, canManageTemplates }: QuestionPoolCardProps) {
   return (
     <Card className="relative">
       <CardHeader>
@@ -26,17 +27,19 @@ export function QuestionPoolCard({ pool, deletingId, onDelete }: QuestionPoolCar
         <div className="flex gap-2">
           <Link href={`/templates/${pool.id}`} className="flex-1">
             <Button variant="outline" className="w-full bg-transparent">
-              Edit
+              {canManageTemplates ? "Edit" : "View"}
             </Button>
           </Link>
-          <Button
-            variant="destructive"
-            className="flex-1"
-            onClick={() => onDelete(pool.id)}
-            disabled={deletingId === pool.id}
-          >
-            {deletingId === pool.id ? "Deleting..." : "Delete"}
-          </Button>
+          {canManageTemplates && (
+            <Button
+              variant="destructive"
+              className="flex-1"
+              onClick={() => onDelete(pool.id)}
+              disabled={deletingId === pool.id}
+            >
+              {deletingId === pool.id ? "Deleting..." : "Delete"}
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>

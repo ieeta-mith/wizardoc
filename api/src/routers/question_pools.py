@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, File, HTTPException, Response, UploadFile
 from motor.motor_asyncio import AsyncIOMotorDatabase
-from src.core.deps import get_db
+from src.core.deps import AuthenticatedUser, get_db, require_admin_user
 from src.models.question_pool import QuestionPool, QuestionPoolCreate, QuestionPoolUpdate
 from src.services.question_pool import QuestionPoolService
 
@@ -23,14 +23,19 @@ async def get_question_pool(pool_id: str, db: AsyncIOMotorDatabase = Depends(get
 
 @router.post("/", response_model=QuestionPool, status_code=201)
 async def create_question_pool(
-    payload: QuestionPoolCreate, db: AsyncIOMotorDatabase = Depends(get_db)
+    payload: QuestionPoolCreate,
+    db: AsyncIOMotorDatabase = Depends(get_db),
+    _: AuthenticatedUser = Depends(require_admin_user),
 ):
     return await service.create(db, payload)
 
 
 @router.put("/{pool_id}", response_model=QuestionPool)
 async def update_question_pool(
-    pool_id: str, payload: QuestionPoolUpdate, db: AsyncIOMotorDatabase = Depends(get_db)
+    pool_id: str,
+    payload: QuestionPoolUpdate,
+    db: AsyncIOMotorDatabase = Depends(get_db),
+    _: AuthenticatedUser = Depends(require_admin_user),
 ):
     updated = await service.update(db, pool_id, payload)
     if not updated:
@@ -39,7 +44,11 @@ async def update_question_pool(
 
 
 @router.delete("/{pool_id}", response_model=QuestionPool)
-async def delete_question_pool(pool_id: str, db: AsyncIOMotorDatabase = Depends(get_db)):
+async def delete_question_pool(
+    pool_id: str,
+    db: AsyncIOMotorDatabase = Depends(get_db),
+    _: AuthenticatedUser = Depends(require_admin_user),
+):
     deleted = await service.delete(db, pool_id)
     if not deleted:
         raise HTTPException(status_code=404, detail="Question pool not found")
@@ -48,7 +57,9 @@ async def delete_question_pool(pool_id: str, db: AsyncIOMotorDatabase = Depends(
 
 @router.post("/{pool_id}/clear", response_model=QuestionPool)
 async def clear_question_pool_entries(
-    pool_id: str, db: AsyncIOMotorDatabase = Depends(get_db)
+    pool_id: str,
+    db: AsyncIOMotorDatabase = Depends(get_db),
+    _: AuthenticatedUser = Depends(require_admin_user),
 ):
     updated = await service.clear_entries(db, pool_id)
     if not updated:
@@ -61,6 +72,7 @@ async def upload_question_pool_docx(
     pool_id: str,
     file: UploadFile = File(...),
     db: AsyncIOMotorDatabase = Depends(get_db),
+    _: AuthenticatedUser = Depends(require_admin_user),
 ):
     if not file.filename or not file.filename.lower().endswith(".docx"):
         raise HTTPException(status_code=400, detail="Only .docx files are supported")
@@ -71,6 +83,7 @@ async def upload_question_pool_docx(
     if not updated:
         raise HTTPException(status_code=404, detail="Question pool not found")
     return updated
+
 
 @router.get("/{pool_id}/docx")
 async def download_question_pool_docx(

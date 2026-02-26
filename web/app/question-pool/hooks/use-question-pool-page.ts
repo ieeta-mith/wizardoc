@@ -10,7 +10,7 @@ const EMPTY_CREATE_FORM: CreatePoolFormValues = {
   source: "",
 }
 
-export function useQuestionPoolPage() {
+export function useQuestionPoolPage(canManageTemplates: boolean) {
   const { pools, loading, error, refresh } = useQuestionPools()
   const [showCreateForm, setShowCreateForm] = useState(false)
   const [creating, setCreating] = useState(false)
@@ -29,6 +29,11 @@ export function useQuestionPoolPage() {
 
   const createPool = async () => {
     setActionError(null)
+
+    if (!canManageTemplates) {
+      setActionError("Only admins can create templates.")
+      return
+    }
 
     if (!createForm.name.trim() || !createForm.source.trim()) {
       setActionError("Name and source are required to create a template.")
@@ -54,6 +59,12 @@ export function useQuestionPoolPage() {
 
   const deletePool = async (id: string) => {
     setActionError(null)
+
+    if (!canManageTemplates) {
+      setActionError("Only admins can delete templates.")
+      return
+    }
+
     const confirmed = window.confirm("Delete this template? This cannot be undone.")
     if (!confirmed) return
 

@@ -9,10 +9,17 @@ interface QuestionsTableCardProps {
   columns: TableColumn[]
   questions: Question[]
   deletingId: string | null
+  canManageTemplates: boolean
   onDeleteQuestion: (questionId: string) => void
 }
 
-export function QuestionsTableCard({ columns, questions, deletingId, onDeleteQuestion }: QuestionsTableCardProps) {
+export function QuestionsTableCard({
+  columns,
+  questions,
+  deletingId,
+  canManageTemplates,
+  onDeleteQuestion,
+}: QuestionsTableCardProps) {
   return (
     <div className="rounded-md border">
       <Table>
@@ -21,13 +28,16 @@ export function QuestionsTableCard({ columns, questions, deletingId, onDeleteQue
             {columns.map((column) => (
               <TableHead key={column.key}>{column.label}</TableHead>
             ))}
-            <TableHead className="w-[100px]"></TableHead>
+            {canManageTemplates && <TableHead className="w-[100px]"></TableHead>}
           </TableRow>
         </TableHeader>
         <TableBody>
           {questions.length === 0 ? (
             <TableRow>
-              <TableCell className="text-muted-foreground" colSpan={Math.max(columns.length + 1, 1)}>
+              <TableCell
+                className="text-muted-foreground"
+                colSpan={Math.max(columns.length + (canManageTemplates ? 1 : 0), 1)}
+              >
                 No questions defined yet.
               </TableCell>
             </TableRow>
@@ -39,16 +49,18 @@ export function QuestionsTableCard({ columns, questions, deletingId, onDeleteQue
                     {formatQuestionCellValue(getObjectValue(question, column.key))}
                   </TableCell>
                 ))}
-                <TableCell>
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    onClick={() => onDeleteQuestion(question.id)}
-                    disabled={deletingId === question.id}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </TableCell>
+                {canManageTemplates && (
+                  <TableCell>
+                    <Button
+                      variant="destructive"
+                      size="sm"
+                      onClick={() => onDeleteQuestion(question.id)}
+                      disabled={deletingId === question.id}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </TableCell>
+                )}
               </TableRow>
             ))
           )}

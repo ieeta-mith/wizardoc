@@ -1,15 +1,25 @@
-import { Upload } from "lucide-react"
+import { Download, Upload } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { formatFileSize, formatUploadedAt } from "../../domain"
 import type { DocxFile } from "@/lib/types"
 
 interface DocxFilePanelProps {
   file: DocxFile | null | undefined
+  downloading: boolean
   uploading: boolean
+  canManageTemplates: boolean
+  onDownloadClick: () => void
   onUploadClick: () => void
 }
 
-export function DocxFilePanel({ file, uploading, onUploadClick }: DocxFilePanelProps) {
+export function DocxFilePanel({
+  file,
+  downloading,
+  uploading,
+  canManageTemplates,
+  onDownloadClick,
+  onUploadClick,
+}: DocxFilePanelProps) {
   return (
     <div className="mb-6 rounded-md border border-dashed px-4 py-3">
       <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
@@ -23,10 +33,24 @@ export function DocxFilePanel({ file, uploading, onUploadClick }: DocxFilePanelP
             <p className="text-xs text-muted-foreground">No DOCX file uploaded yet.</p>
           )}
         </div>
-        <Button variant="outline" size="sm" className="gap-2" onClick={onUploadClick} disabled={uploading}>
-          <Upload className="h-4 w-4" />
-          {uploading ? "Uploading..." : file ? "Replace DOCX" : "Upload DOCX"}
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-2"
+            onClick={onDownloadClick}
+            disabled={!file || downloading}
+          >
+            <Download className="h-4 w-4" />
+            {downloading ? "Downloading..." : "Download DOCX"}
+          </Button>
+          {canManageTemplates && (
+            <Button variant="outline" size="sm" className="gap-2" onClick={onUploadClick} disabled={uploading}>
+              <Upload className="h-4 w-4" />
+              {uploading ? "Uploading..." : file ? "Replace DOCX" : "Upload DOCX"}
+            </Button>
+          )}
+        </div>
       </div>
     </div>
   )

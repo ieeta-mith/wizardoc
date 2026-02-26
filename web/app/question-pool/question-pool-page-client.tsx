@@ -3,6 +3,7 @@
 import { Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { useCurrentUser } from "@/hooks/use-current-user"
 import {
   ActionErrorAlert,
   CreatePoolForm,
@@ -12,6 +13,7 @@ import {
 import { useQuestionPoolPage } from "@/app/question-pool/hooks"
 
 export function QuestionPoolPageClient() {
+  const { isAdmin, loading: userLoading, error: userError } = useCurrentUser()
   const {
     actionError,
     createForm,
@@ -26,7 +28,7 @@ export function QuestionPoolPageClient() {
     setShowCreateForm,
     showCreateForm,
     updateCreateFormField,
-  } = useQuestionPoolPage()
+  } = useQuestionPoolPage(isAdmin)
 
   const handleCreatePool = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -62,10 +64,23 @@ export function QuestionPoolPageClient() {
 
       <div className="space-y-4">
         {actionError && <ActionErrorAlert message={actionError} />}
+        {userError && <ActionErrorAlert message={userError.message} />}
+        {!userLoading && !isAdmin && (
+          <Card>
+            <CardContent className="pt-6 text-sm text-muted-foreground">
+              Read-only mode: only administrators can create, edit, or delete templates.
+            </CardContent>
+          </Card>
+        )}
 
-        <QuestionPoolList pools={pools} deletingId={deletingId} onDelete={deletePool} />
+        <QuestionPoolList
+          pools={pools}
+          deletingId={deletingId}
+          onDelete={deletePool}
+          canManageTemplates={isAdmin}
+        />
 
-        {showCreateForm ? (
+        {isAdmin && showCreateForm ? (
           <CreatePoolForm
             values={createForm}
             creating={creating}
@@ -73,14 +88,14 @@ export function QuestionPoolPageClient() {
             onSubmit={handleCreatePool}
             onCancel={resetCreateForm}
           />
-        ) : (
+        ) : isAdmin ? (
           <div className="flex justify-center pt-4">
             <Button size="lg" className="gap-2" onClick={() => setShowCreateForm(true)}>
               <Plus className="h-4 w-4" />
               Create New Template
             </Button>
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   )

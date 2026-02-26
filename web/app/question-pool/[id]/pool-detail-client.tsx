@@ -7,7 +7,12 @@ import { ActionErrorAlert } from "../components"
 import { DocxFilePanel, PoolDetailHeader, PoolDetailToolbar, QuestionsTableCard } from "./components"
 import { usePoolDetail } from "./hooks"
 
-export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
+interface PoolDetailClientProps {
+  pool: QuestionPool
+  canManageTemplates: boolean
+}
+
+export function PoolDetailClient({ pool, canManageTemplates }: PoolDetailClientProps) {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const docxInputRef = useRef<HTMLInputElement | null>(null)
   const {
@@ -17,13 +22,15 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
     currentPool,
     deleteQuestion,
     deletingId,
+    downloadDocx,
+    downloadingDocx,
     importBatchCsv,
     importing,
     questions,
     tableColumns,
     uploadDocx,
     uploadingDocx,
-  } = usePoolDetail(pool)
+  } = usePoolDetail(pool, canManageTemplates)
 
   const handleBatchImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -70,15 +77,24 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
             <PoolDetailToolbar
               clearingEntries={clearingEntries}
               importing={importing}
+              canManageTemplates={canManageTemplates}
               onBatchImportClick={() => fileInputRef.current?.click()}
               onClearEntriesClick={clearEntries}
             />
           </div>
         </CardHeader>
         <CardContent>
+          {!canManageTemplates && (
+            <p className="mb-4 text-sm text-muted-foreground">
+              Read-only mode: only administrators can modify this template.
+            </p>
+          )}
           <DocxFilePanel
             file={currentPool.docxFile}
+            downloading={downloadingDocx}
             uploading={uploadingDocx}
+            canManageTemplates={canManageTemplates}
+            onDownloadClick={downloadDocx}
             onUploadClick={() => docxInputRef.current?.click()}
           />
 
@@ -86,6 +102,7 @@ export function PoolDetailClient({ pool }: { pool: QuestionPool }) {
             columns={tableColumns}
             questions={questions}
             deletingId={deletingId}
+            canManageTemplates={canManageTemplates}
             onDeleteQuestion={deleteQuestion}
           />
         </CardContent>

@@ -6,9 +6,10 @@ interface QuestionPoolListProps {
   pools: QuestionPool[]
   deletingId: string | null
   onDelete: (poolId: string) => void
+  canManageTemplates: boolean
 }
 
-export function QuestionPoolList({ pools, deletingId, onDelete }: QuestionPoolListProps) {
+export function QuestionPoolList({ pools, deletingId, onDelete, canManageTemplates }: QuestionPoolListProps) {
   if (pools.length === 0) {
     return (
       <Card>
@@ -22,7 +23,13 @@ export function QuestionPoolList({ pools, deletingId, onDelete }: QuestionPoolLi
   return (
     <div className="grid gap-4 md:grid-cols-2">
       {pools.map((pool) => (
-        <QuestionPoolCard key={pool.id} pool={pool} deletingId={deletingId} onDelete={onDelete} />
+        <QuestionPoolCard
+          key={pool.id}
+          pool={pool}
+          deletingId={deletingId}
+          onDelete={onDelete}
+          canManageTemplates={canManageTemplates}
+        />
       ))}
     </div>
   )
