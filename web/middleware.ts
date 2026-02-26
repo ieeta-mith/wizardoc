@@ -9,15 +9,6 @@ export function middleware(request: NextRequest) {
       ? pathname.slice(appBasePath.length) || "/"
       : pathname
 
-  // Redirect root to my-studies
-  if (normalizedPath === "/") {
-    const url = request.nextUrl.clone()
-    // Next applies basePath to middleware redirects automatically.
-    // Keep pathname app-relative to avoid duplicated prefixes.
-    url.pathname = "/my-studies"
-    return NextResponse.redirect(url)
-  }
-
   // Redirect /assessment/:id to /assessment/:id/wizard (but not /assessment/new)
   const assessmentMatch = normalizedPath.match(/^\/assessment\/([^/]+)$/)
   if (assessmentMatch && assessmentMatch[1] !== "new") {

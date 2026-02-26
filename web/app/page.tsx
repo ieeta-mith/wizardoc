@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation"
+import { MyStudiesPageClient } from "./my-studies/my-studies-page-client"
 
 export default function Page() {
-  redirect("/my-studies")
+  return <MyStudiesPageClient />
 }
