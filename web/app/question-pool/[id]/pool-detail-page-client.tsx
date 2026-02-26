@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { useCurrentUser } from "@/hooks/use-current-user"
 import { useQuestionPool } from "@/hooks/use-question-pools"
 import { PoolDetailClient } from "./pool-detail-client"
 
@@ -13,6 +14,7 @@ interface PoolDetailPageClientProps {
 
 export function PoolDetailPageClient({ id }: PoolDetailPageClientProps) {
   const { pool, loading, error } = useQuestionPool(id)
+  const { isAdmin } = useCurrentUser()
 
   if (loading) {
     return (
@@ -48,7 +50,7 @@ export function PoolDetailPageClient({ id }: PoolDetailPageClientProps) {
           Back to Templates
         </Link>
       </div>
-      <PoolDetailClient pool={pool} />
+      <PoolDetailClient pool={pool} canManageTemplates={isAdmin} />
     </div>
   )
 }

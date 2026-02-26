@@ -49,3 +49,10 @@ export interface Assessment {
   createdAt: Date
   updatedAt: Date
 }
+
+export interface CurrentUser {
+  id: string
+  username?: string | null
+  email?: string | null
+  is_admin: boolean
+}

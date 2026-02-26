@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 interface PoolDetailToolbarProps {
   clearingEntries: boolean
   importing: boolean
+  canManageTemplates: boolean
   onBatchImportClick: () => void
   onClearEntriesClick: () => void
 }
@@ -11,9 +12,14 @@ interface PoolDetailToolbarProps {
 export function PoolDetailToolbar({
   clearingEntries,
   importing,
+  canManageTemplates,
   onBatchImportClick,
   onClearEntriesClick,
 }: PoolDetailToolbarProps) {
+  if (!canManageTemplates) {
+    return null
+  }
+
   return (
     <div className="flex gap-2">
       <Button

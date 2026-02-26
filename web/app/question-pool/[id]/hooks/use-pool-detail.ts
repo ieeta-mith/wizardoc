@@ -5,7 +5,7 @@ import { QuestionPoolService } from "@/lib/services/question-pool-service"
 import type { Question, QuestionPool } from "@/lib/types"
 import { buildQuestionTableColumns, getObjectValue, parseCsvQuestions, toImportQuestionPayload } from "../../domain"
 
-export function usePoolDetail(pool: QuestionPool) {
+export function usePoolDetail(pool: QuestionPool, canManageTemplates: boolean) {
   const [currentPool, setCurrentPool] = useState(pool)
   const [questions, setQuestions] = useState(pool.questions || [])
   const [importing, setImporting] = useState(false)
@@ -27,6 +27,12 @@ export function usePoolDetail(pool: QuestionPool) {
 
   const deleteQuestion = async (questionId: string) => {
     setActionError(null)
+
+    if (!canManageTemplates) {
+      setActionError("Only admins can remove questions from templates.")
+      return
+    }
+
     setDeletingId(questionId)
     try {
       const updated = await QuestionPoolService.deleteQuestion(currentPool.id, questionId)
@@ -44,6 +50,11 @@ export function usePoolDetail(pool: QuestionPool) {
   }
 
   const uploadDocx = async (file: File) => {
+    if (!canManageTemplates) {
+      setActionError("Only admins can upload DOCX templates.")
+      return
+    }
+
     if (!file.name.toLowerCase().endsWith(".docx")) {
       setActionError("Please select a .docx file.")
       return
@@ -68,6 +79,12 @@ export function usePoolDetail(pool: QuestionPool) {
 
   const importBatchCsv = async (file: File) => {
     setActionError(null)
+
+    if (!canManageTemplates) {
+      setActionError("Only admins can import questions into templates.")
+      return
+    }
+
     setImporting(true)
     try {
       const csvText = await file.text()
@@ -108,6 +125,11 @@ export function usePoolDetail(pool: QuestionPool) {
   }
 
   const clearEntries = async () => {
+    if (!canManageTemplates) {
+      setActionError("Only admins can clear template questions.")
+      return
+    }
+
     const confirmed = window.confirm("Clear all questions from this template? This action cannot be undone.")
     if (!confirmed) return
 

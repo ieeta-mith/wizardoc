@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from src.core.db import lifespan
-from src.routers import studies, question_pools, assessments
+from src.routers import assessments, auth, question_pools, studies
 
 
 app = FastAPI(
@@ -38,3 +38,4 @@ async def health_check(request: Request):
 app.include_router(question_pools.router, prefix="/api/question-pools", tags=["question-pools"])
 app.include_router(studies.router, prefix="/api/studies", tags=["studies"])
 app.include_router(assessments.router, prefix="/api/assessments", tags=["assessments"])
+app.include_router(auth.router, prefix="/api/auth", tags=["auth"])

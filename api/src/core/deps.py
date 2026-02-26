@@ -1,7 +1,7 @@
 from urllib.parse import urljoin
 
 import httpx
-from fastapi import HTTPException, Request
+from fastapi import Depends, HTTPException, Request
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from pydantic import BaseModel
 from src.core.settings import settings
@@ -11,6 +11,7 @@ class AuthenticatedUser(BaseModel):
     id: str
     username: str | None = None
     email: str | None = None
+    is_admin: bool = False
 
 
 def _build_auth_status_url(base_url: str) -> str:
@@ -19,6 +20,65 @@ def _build_auth_status_url(base_url: str) -> str:
 
 def get_db(request: Request) -> AsyncIOMotorDatabase:
     return request.app.state.mongo_db
+
+
+def _normalize_role(role: str) -> str:
+    return role.strip().lower().replace("_", "-")
+
+
+def _extract_role_names(raw_roles: object) -> set[str]:
+    if raw_roles is None:
+        return set()
+
+    if isinstance(raw_roles, str):
+        return {_normalize_role(raw_roles)}
+
+    if isinstance(raw_roles, (list, tuple, set)):
+        roles: set[str] = set()
+        for item in raw_roles:
+            roles.update(_extract_role_names(item))
+        return roles
+
+    if isinstance(raw_roles, dict):
+        roles: set[str] = set()
+        for key in ("name", "role", "slug", "code", "value"):
+            value = raw_roles.get(key)
+            if isinstance(value, str):
+                roles.add(_normalize_role(value))
+        return roles
+
+    return set()
+
+
+def _is_admin_from_payload(payload: dict, user_data: dict) -> bool:
+    for key in ("is_admin", "isAdmin"):
+        user_flag = user_data.get(key)
+        if isinstance(user_flag, bool):
+            return user_flag
+        payload_flag = payload.get(key)
+        if isinstance(payload_flag, bool):
+            return payload_flag
+
+    role_candidates = (
+        user_data.get("roles"),
+        user_data.get("role"),
+        user_data.get("groups"),
+        user_data.get("authorities"),
+        payload.get("roles"),
+        payload.get("role"),
+    )
+    role_names: set[str] = set()
+    for candidate in role_candidates:
+        role_names.update(_extract_role_names(candidate))
+
+    if not role_names:
+        return False
+
+    admin_roles = {"admin", "administrator", "super-admin", "superadmin"}
+    return any(
+        role in admin_roles or role.endswith("-admin") or role.endswith(":admin")
+        for role in role_names
+    )
 
 
 async def get_authenticated_user(request: Request) -> AuthenticatedUser:
@@ -72,4 +132,13 @@ async def get_authenticated_user(request: Request) -> AuthenticatedUser:
         id=user_id,
         username=user_data.get("username"),
         email=user_data.get("email"),
+        is_admin=_is_admin_from_payload(payload, user_data),
     )
+
+
+async def require_admin_user(
+    user: AuthenticatedUser = Depends(get_authenticated_user),
+) -> AuthenticatedUser:
+    if not user.is_admin:
+        raise HTTPException(status_code=403, detail="Admin privileges required")
+    return user
