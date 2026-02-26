@@ -22,6 +22,8 @@ export function PoolDetailClient({ pool, canManageTemplates }: PoolDetailClientP
     currentPool,
     deleteQuestion,
     deletingId,
+    downloadDocx,
+    downloadingDocx,
     importBatchCsv,
     importing,
     questions,
@@ -89,8 +91,10 @@ export function PoolDetailClient({ pool, canManageTemplates }: PoolDetailClientP
           )}
           <DocxFilePanel
             file={currentPool.docxFile}
+            downloading={downloadingDocx}
             uploading={uploadingDocx}
             canManageTemplates={canManageTemplates}
+            onDownloadClick={downloadDocx}
             onUploadClick={() => docxInputRef.current?.click()}
           />
 

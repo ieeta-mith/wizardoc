@@ -11,6 +11,7 @@ export function usePoolDetail(pool: QuestionPool, canManageTemplates: boolean) {
   const [importing, setImporting] = useState(false)
   const [clearingEntries, setClearingEntries] = useState(false)
   const [uploadingDocx, setUploadingDocx] = useState(false)
+  const [downloadingDocx, setDownloadingDocx] = useState(false)
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const [actionError, setActionError] = useState<string | null>(null)
 
@@ -124,6 +125,23 @@ export function usePoolDetail(pool: QuestionPool, canManageTemplates: boolean) {
     }
   }
 
+  const downloadDocx = async () => {
+    if (!currentPool.docxFile) {
+      setActionError("No DOCX file is available for this template.")
+      return
+    }
+
+    setActionError(null)
+    setDownloadingDocx(true)
+    try {
+      await QuestionPoolService.downloadDocx(currentPool.id)
+    } catch (err) {
+      setActionError((err as Error).message)
+    } finally {
+      setDownloadingDocx(false)
+    }
+  }
+
   const clearEntries = async () => {
     if (!canManageTemplates) {
       setActionError("Only admins can clear template questions.")
@@ -157,6 +175,8 @@ export function usePoolDetail(pool: QuestionPool, canManageTemplates: boolean) {
     currentPool,
     deleteQuestion,
     deletingId,
+    downloadDocx,
+    downloadingDocx,
     importBatchCsv,
     importing,
     questions,

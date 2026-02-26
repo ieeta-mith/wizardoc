@@ -2,6 +2,12 @@ import type { QuestionPool, Question } from "@/lib/types"
 import { API_BASE_URL } from "./api-base-url"
 
 export class QuestionPoolService {
+  private static parseFilenameFromContentDisposition(contentDisposition: string | null): string | null {
+    if (!contentDisposition) return null
+    const match = contentDisposition.match(/filename="?([^"]+)"?/)
+    return match?.[1] ?? null
+  }
+
   /**
    * Get all question pools
    * @returns Array of question pools
@@ -175,6 +181,35 @@ export class QuestionPoolService {
     }
 
     return response.json()
+  }
+
+  /**
+   * Download DOCX file for a question pool
+   * @param poolId - The pool ID
+   */
+  static async downloadDocx(poolId: string): Promise<void> {
+    const response = await fetch(`${API_BASE_URL}/question-pools/${poolId}/docx`, {
+      cache: "no-store",
+      credentials: "include",
+    })
+
+    if (!response.ok) {
+      throw new Error(`Failed to download DOCX: ${response.statusText}`)
+    }
+
+    const blob = await response.blob()
+    const contentDisposition = response.headers.get("content-disposition")
+    const filename =
+      this.parseFilenameFromContentDisposition(contentDisposition) || `template-${poolId}.docx`
+
+    const blobUrl = window.URL.createObjectURL(blob)
+    const anchor = document.createElement("a")
+    anchor.href = blobUrl
+    anchor.download = filename
+    document.body.appendChild(anchor)
+    anchor.click()
+    document.body.removeChild(anchor)
+    window.URL.revokeObjectURL(blobUrl)
   }
 
   /**
