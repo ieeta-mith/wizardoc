@@ -12,6 +12,7 @@ class Settings(BaseSettings):
 
     MONGODB_URI: str
     MONGODB_DB_NAME: str = "risktool"
+    API_IAM_SERVER_URL: str | None = None
 
 
 settings = Settings()  # type: ignore

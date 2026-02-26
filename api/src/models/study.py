@@ -31,5 +31,6 @@ class StudyUpdate(BaseModel):
 
 class Study(StudyBase):
     id: str
+    owner_id: str | None = None
     createdAt: datetime
     updatedAt: datetime
