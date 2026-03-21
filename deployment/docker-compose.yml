@@ -15,14 +15,26 @@ services:
     environment:
       MONGODB_URI: ${MONGODB_URI:-mongodb://root:password@mongo:27017/?authSource=admin}
       MONGODB_DB_NAME: ${MONGODB_DB_NAME:-risktool}
+      API_DEV_MODE: ${API_DEV_MODE:-true}
+      API_DEV_USER_ID: ${API_DEV_USER_ID:-dev-user}
+      API_DEV_USERNAME: ${API_DEV_USERNAME:-dev}
+      API_DEV_EMAIL: ${API_DEV_EMAIL:-dev@example.com}
+      API_DEV_IS_ADMIN: ${API_DEV_IS_ADMIN:-true}
     depends_on:
       - mongo
 
   web:
     build:
       context: ../web
+      args:
+        BUILD_NPM_TOKEN: ${BUILD_NPM_TOKEN}
+        NEXT_PUBLIC_API_URL: /api
+        NEXT_PUBLIC_STANDALONE_MODE: ${NEXT_PUBLIC_STANDALONE_MODE:-true}
+        NEXT_PUBLIC_SIDEBAR_DEV_MODE: ${NEXT_PUBLIC_SIDEBAR_DEV_MODE:-true}
     environment:
       NEXT_PUBLIC_API_URL: /api
+      NEXT_PUBLIC_STANDALONE_MODE: ${NEXT_PUBLIC_STANDALONE_MODE:-true}
+      NEXT_PUBLIC_SIDEBAR_DEV_MODE: ${NEXT_PUBLIC_SIDEBAR_DEV_MODE:-true}
       NEXT_PUBLIC_ENABLE_VERCEL_ANALYTICS: "false"
     depends_on:
       - api

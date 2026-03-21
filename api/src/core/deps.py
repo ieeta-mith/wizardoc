@@ -81,7 +81,19 @@ def _is_admin_from_payload(payload: dict, user_data: dict) -> bool:
     )
 
 
+def _build_dev_user() -> AuthenticatedUser:
+    return AuthenticatedUser(
+        id=settings.API_DEV_USER_ID,
+        username=settings.API_DEV_USERNAME,
+        email=settings.API_DEV_EMAIL,
+        is_admin=settings.API_DEV_IS_ADMIN,
+    )
+
+
 async def get_authenticated_user(request: Request) -> AuthenticatedUser:
+    if settings.API_DEV_MODE:
+        return _build_dev_user()
+
     if not settings.API_IAM_SERVER_URL:
         raise HTTPException(
             status_code=500,

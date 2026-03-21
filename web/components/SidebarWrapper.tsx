@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Sidebar, User, Plugin} from '@bioinformatics-ua/iam-sidebar';
+import { Sidebar, User, Plugin } from '@bioinformatics-ua/iam-sidebar';
 
 interface SidebarWrapperProps {
     config?: {
@@ -14,24 +13,32 @@ interface SidebarWrapperProps {
         requireAuthentication?: boolean;
         devMode?: {
             enabled: boolean;
-            user: User;
-            plugins: Plugin[];
+            user?: User;
+            plugins?: Plugin[];
         }
     };
 }
 
-export default function SidebarWrapper( config : SidebarWrapperProps) {
-    
+export default function SidebarWrapper({ config }: SidebarWrapperProps) {
+    const standaloneMode =
+        process.env.NEXT_PUBLIC_STANDALONE_MODE?.toLowerCase() === 'true';
+
+    const sidebarDevMode =
+        process.env.NEXT_PUBLIC_SIDEBAR_DEV_MODE?.toLowerCase() === 'true';
+
     return (
         <Sidebar
             config={{
                 collapsed: false,
                 theme: 'dark',
                 keyboardShortcuts: true,
-                standaloneMode: process.env.NEXT_PUBLIC_STANDALONE_MODE?.toLowerCase() === 'true',
+                standaloneMode,
                 keycloakUrl: process.env.NEXT_PUBLIC_KEYCLOAK_URL || 'http://localhost:8080',
                 communityKey: process.env.NEXT_PUBLIC_COMMUNITY_KEY || 'iam-community',
-                requireAuthentication: true,
+                requireAuthentication: !(standaloneMode || sidebarDevMode),
+                devMode: {
+                    enabled: sidebarDevMode,
+                },
                 ...config,
             }}
         />
