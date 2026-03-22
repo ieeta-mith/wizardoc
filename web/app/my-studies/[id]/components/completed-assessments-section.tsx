@@ -49,8 +49,8 @@ export function CompletedAssessmentsSection({
         return (
           <Card key={assessment.id} className={ASSESSMENT_STATUS_STYLES[assessment.status]}>
             <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
+              <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+                <div className="min-w-0 flex-1 xl:min-w-[14rem]">
                   <DocumentNameEditor
                     assessmentId={assessment.id}
                     name={assessment.name}
@@ -60,26 +60,26 @@ export function CompletedAssessmentsSection({
                   />
                   <p className="text-sm text-muted-foreground mb-2">Created {assessment.createdAt.toLocaleDateString()}</p>
                 </div>
-                <div className="ml-4 flex flex-col items-end gap-2">
-                  <div className="flex gap-2">
+                <div className="flex w-full flex-col gap-2 xl:ml-4 xl:w-auto xl:items-end">
+                  <div className="flex w-full flex-col gap-2 xl:w-auto xl:flex-row xl:flex-wrap xl:justify-end">
                     <Button
                       variant="outline"
-                      className="gap-2 bg-background"
+                      className="w-full justify-center gap-2 bg-background xl:w-auto"
                       onClick={() => onToggleExpand(assessment.id)}
                     >
                       <FileText className="h-4 w-4" />
                       {isExpanded ? "Hide Answers" : "View Answers"}
                       {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                     </Button>
-                    <Link href={`/assessment/${assessment.id}`}>
-                      <Button className="gap-2">
+                    <Button asChild className="w-full justify-center gap-2 xl:w-auto">
+                      <Link href={`/assessment/${assessment.id}`}>
                         <Pencil className="h-4 w-4" />
                         Edit Document
-                      </Button>
-                    </Link>
+                      </Link>
+                    </Button>
                     <Button
                       variant="outline"
-                      className="gap-2 bg-background"
+                      className="w-full justify-center gap-2 bg-background xl:w-auto"
                       onClick={() => onPopulateDocx(assessment.id)}
                       disabled={populatingAssessmentId === assessment.id}
                     >

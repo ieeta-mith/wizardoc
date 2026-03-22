@@ -6,7 +6,11 @@ import { useAssessmentContext } from "@/hooks/use-assessment"
 import { usePersistedState } from "@/hooks/use-persisted-state"
 import { AssessmentService } from "@/lib/services/assessment-service"
 import { logger } from "@/lib/utils/logger"
-import { buildAnswersMapByQuestionId, calculateWizardProgress } from "../domain/wizard"
+import {
+  buildAnswersByQuestionIndex,
+  buildAnswersMapByQuestionId,
+  calculateWizardProgress,
+} from "../domain/wizard"
 
 export function useAssessmentWizard(assessmentId: string) {
   const router = useRouter()
@@ -32,6 +36,15 @@ export function useAssessmentWizard(assessmentId: string) {
       setDocumentName(context.assessment.name)
     }
   }, [context?.assessment?.name])
+
+  useEffect(() => {
+    if (!context) return
+
+    const persistedAnswerCount = Object.keys(answers).length
+    if (persistedAnswerCount > 0) return
+
+    setAnswers(buildAnswersByQuestionIndex(context.assessment.answers ?? {}, context.questions))
+  }, [answers, context, setAnswers])
 
   const totalQuestions = context?.questions.length ?? 0
   const progress = calculateWizardProgress(currentQuestion, totalQuestions)
@@ -82,7 +95,7 @@ export function useAssessmentWizard(assessmentId: string) {
     setIsSaving(true)
     try {
       const answersMap = buildAnswersMapByQuestionId(answers, context.questions)
-      await AssessmentService.updateAnswers(assessmentId, answersMap)
+      await AssessmentService.saveDraft(assessmentId, answersMap)
       logger.info("Document progress saved", { assessmentId })
       router.push(`/my-studies/${context.study.id}`)
     } catch (err) {

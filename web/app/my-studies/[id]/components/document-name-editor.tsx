@@ -71,9 +71,9 @@ export function DocumentNameEditor({
           </Button>
         </div>
       ) : (
-        <div className="flex items-center gap-1">
-          <h4 className="font-semibold">{name}</h4>
-          <Button type="button" variant="ghost" size="icon-sm" onClick={() => setIsEditing(true)}>
+        <div className="flex min-w-0 items-start gap-1">
+          <h4 className="min-w-0 break-words font-semibold leading-tight">{name}</h4>
+          <Button type="button" variant="ghost" size="icon-sm" className="shrink-0" onClick={() => setIsEditing(true)}>
             <Pencil className="h-3.5 w-3.5" />
           </Button>
         </div>
