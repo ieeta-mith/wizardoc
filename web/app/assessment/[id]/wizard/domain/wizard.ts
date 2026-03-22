@@ -1,5 +1,19 @@
 import type { Question } from "@/lib/types"
 
+export const buildAnswersByQuestionIndex = (
+  answersByQuestionId: Record<string, string>,
+  questions: Question[]
+): Record<number, string> =>
+  questions.reduce(
+    (acc, question, index) => {
+      const answer = answersByQuestionId[question.id]
+      if (answer === undefined) return acc
+      acc[index] = answer
+      return acc
+    },
+    {} as Record<number, string>
+  )
+
 export const buildAnswersMapByQuestionId = (
   answersByIndex: Record<number, string>,
   questions: Question[]

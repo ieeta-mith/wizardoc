@@ -137,7 +137,8 @@ export class AssessmentService {
    */
   static async updateAnswers(
     id: string,
-    answers: Record<string, string>
+    answers: Record<string, string>,
+    options?: { status?: Assessment["status"] }
   ): Promise<Assessment | null> {
     const assessment = await this.getById(id)
     if (!assessment) return null
@@ -150,6 +151,7 @@ export class AssessmentService {
       answers,
       answeredQuestions,
       progress,
+      status: options?.status ?? assessment.status,
       updatedAt: new Date().toISOString(),
     }
 
@@ -176,6 +178,10 @@ export class AssessmentService {
       createdAt: new Date(updated.createdAt),
       updatedAt: new Date(updated.updatedAt),
     }
+  }
+
+  static async saveDraft(id: string, answers: Record<string, string>): Promise<Assessment | null> {
+    return this.updateAnswers(id, answers, { status: "in-progress" })
   }
 
   /**
