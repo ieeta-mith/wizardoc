@@ -1,6 +1,5 @@
-import Link from "next/link"
-import { FileText, Plus } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { FileText } from "lucide-react"
+import { NewDocumentButton } from "@/components/new-document-button"
 import { Card, CardContent } from "@/components/ui/card"
 import type { Assessment } from "@/lib/types"
 import { AssessmentExportCard } from "./assessment-export-card"
@@ -26,12 +25,7 @@ export function AssessmentsExportTab({ assessments, studyId, onExport }: Assessm
             <FileText className="h-12 w-12 text-muted-foreground mb-4" />
             <h3 className="text-lg font-semibold mb-2">No documents yet</h3>
             <p className="text-sm text-muted-foreground mb-4">Create a document to generate reports</p>
-            <Link href={`/assessment/new?projectId=${studyId}`}>
-              <Button className="gap-2">
-                <Plus className="h-4 w-4" />
-                New Document
-              </Button>
-            </Link>
+            <NewDocumentButton studyId={studyId} />
           </CardContent>
         </Card>
       )}

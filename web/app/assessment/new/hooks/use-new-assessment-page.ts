@@ -26,7 +26,6 @@ export function useNewAssessmentPage() {
 
       if (!createPromise) {
         createPromise = (async () => {
-          logger.info("Creating document for project", { studyId })
           const assessment = await AssessmentService.create(studyId)
 
           if (!assessment || !assessment.id) {
@@ -34,7 +33,6 @@ export function useNewAssessmentPage() {
             throw new Error("Invalid response from server")
           }
 
-          logger.info("New document created", { assessmentId: assessment.id, studyId })
           return assessment.id
         })()
 
