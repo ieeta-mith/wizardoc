@@ -1,6 +1,6 @@
-import { ArrowLeft, Plus } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { NewDocumentButton } from "@/components/new-document-button"
 
 interface ExportPageHeaderProps {
   studyId: string
@@ -21,12 +21,7 @@ export function ExportPageHeader({ studyId }: ExportPageHeaderProps) {
           <h1 className="text-3xl font-bold tracking-tight">Export & Reports</h1>
           <p className="text-muted-foreground mt-2">Generate reports and analyze document data</p>
         </div>
-        <Link href={`/assessment/new?projectId=${studyId}`}>
-          <Button className="gap-2">
-            <Plus className="h-4 w-4" />
-            New Document
-          </Button>
-        </Link>
+        <NewDocumentButton studyId={studyId} />
       </div>
     </div>
   )

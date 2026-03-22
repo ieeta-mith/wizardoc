@@ -1,7 +1,7 @@
-import { ArrowLeft, Calendar, FlaskConical, Plus } from "lucide-react"
+import { ArrowLeft, Calendar, FlaskConical } from "lucide-react"
 import Link from "next/link"
+import { NewDocumentButton } from "@/components/new-document-button"
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import type { Study } from "@/lib/types"
 
 interface StudyDetailHeaderProps {
@@ -35,12 +35,7 @@ export function StudyDetailHeader({ study }: StudyDetailHeaderProps) {
             </div>
           </div>
         </div>
-        <Link href={`/assessment/new?projectId=${study.id}`}>
-          <Button className="gap-2">
-            <Plus className="h-4 w-4" />
-            New Document
-          </Button>
-        </Link>
+        <NewDocumentButton studyId={study.id} />
       </div>
     </div>
   )

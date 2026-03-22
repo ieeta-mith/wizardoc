@@ -61,7 +61,6 @@ export function useNewStudyPage() {
       }
 
       const assessment = await AssessmentService.create(studyId)
-      logger.info("Document wizard launched", { studyId, assessmentId: assessment.id })
       router.push(`/assessment/${assessment.id}/wizard`)
     } catch (error) {
       logger.error("Failed to create document", error)
