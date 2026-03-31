@@ -1,0 +1,33 @@
+services:
+  wizardoc-api:
+    build:
+      context: ../api
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      - MONGODB_URI=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:${MONGO_PORT}/?authSource=admin
+      - MONGODB_DB_NAME=wizardoc
+    networks:
+      - database_network
+      - core_plugin_network
+      - proxy_network
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  wizardoc-web:
+    build:
+      context: ../web
+      dockerfile: Dockerfile
+      args:
+        BUILD_NPM_TOKEN: ${BUILD_NPM_TOKEN}
+        NEXT_PUBLIC_API_URL: /wizardoc/api
+        NEXT_PUBLIC_KEYCLOAK_URL: ${KEYCLOAK_PROXY_URL}
+        NEXT_PUBLIC_COMMUNITY_KEY: ${COMMUNITY_KEY}
+        NEXT_PUBLIC_STANDALONE_MODE: ${SINGLE_COMMUNITY_MODE}
+    restart: unless-stopped
+    networks:
+      - proxy_network
+    depends_on:
+      wizardoc-api:
+        condition: service_started
