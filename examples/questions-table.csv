@@ -1,0 +1,3 @@
+identifier,text,info,type,columns,Section,Subsection,reference
+use_case_id,Use case identifier [from submission form],,,,ADMINISTRATIVE DETAILS,General,GREG SOP Annex I
+risk_table,Fill in the risk assessment table,,table,"[{""key"":""risk"",""label"":""Risk""},{""key"":""likelihood"",""label"":""Likelihood""},{""key"":""impact"",""label"":""Impact""}]",ASSESSMENT OF DATA FEASIBILITY,Feasibility Assessment Process,GREG SOP Annex I
