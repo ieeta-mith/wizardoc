@@ -1,4 +1,5 @@
 import { Plus, Trash2 } from "lucide-react"
+import { useMemo, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import type { TableColumn } from "@/lib/types"
@@ -14,32 +15,36 @@ interface WizardTableInputProps {
   onChange: (json: string) => void
 }
 
-function emptyRow(columns: TableColumn[]): TableRow {
+function emptyRow(columns: TableColumn[], id = crypto.randomUUID()): TableRow {
   return columns.reduce<TableRow>((acc, col) => {
     acc[col.key] = ""
     return acc
-  }, { _id: crypto.randomUUID() })
+  }, { _id: id })
 }
 
-function parseRows(value: string, columns: TableColumn[]): TableRow[] {
-  if (!value) return [emptyRow(columns)]
+function parseRows(value: string, columns: TableColumn[], defaultRowId: string): TableRow[] {
+  if (!value) return [emptyRow(columns, defaultRowId)]
   try {
     const parsed = JSON.parse(value)
     if (Array.isArray(parsed) && parsed.length > 0) {
-      // Ensure every row has a stable _id (rows coming from backend won't have one)
-      return parsed.map((row: Record<string, string>) => ({
-        _id: row._id ?? crypto.randomUUID(),
+      // Keep keys stable across renders to avoid remounting inputs and losing focus.
+      return parsed.map((row: Record<string, string>, index: number) => ({
+        _id: row._id ?? `row-${index}`,
         ...row,
       }))
     }
   } catch {
     // fall through
   }
-  return [emptyRow(columns)]
+  return [emptyRow(columns, defaultRowId)]
 }
 
 export function WizardTableInput({ columns, value, onChange }: WizardTableInputProps) {
-  const rows = parseRows(value, columns)
+  const defaultRowIdRef = useRef<string>(crypto.randomUUID())
+  const rows = useMemo(
+    () => parseRows(value, columns, defaultRowIdRef.current),
+    [columns, value]
+  )
 
   const updateRow = (rowIndex: number, colKey: string, cellValue: string) => {
     const next = rows.map((row, i) =>
