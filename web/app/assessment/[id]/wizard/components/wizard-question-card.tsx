@@ -2,12 +2,13 @@ import { CircleHelp, ChevronLeft, ChevronRight, Save } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
+import type { Question } from "@/lib/types"
+import { WizardTableInput } from "./wizard-table-input"
 
 interface WizardQuestionCardProps {
   currentQuestion: number
   totalQuestions: number
-  questionText?: string
-  questionInfo?: string
+  question?: Question
   answer: string
   isSaving: boolean
   onAnswerChange: (value: string) => void
@@ -19,8 +20,7 @@ interface WizardQuestionCardProps {
 export function WizardQuestionCard({
   currentQuestion,
   totalQuestions,
-  questionText,
-  questionInfo,
+  question,
   answer,
   isSaving,
   onAnswerChange,
@@ -28,7 +28,14 @@ export function WizardQuestionCard({
   onNext,
   onSave,
 }: WizardQuestionCardProps) {
-  const normalizedQuestionInfo = questionInfo?.trim()
+  const normalizedQuestionInfo = question?.info?.trim()
+  const isTable = question?.type === "table"
+  // columns may arrive as a JSON string when the question pool was imported from CSV
+  // before the JSON-parsing fix was in place. Parse defensively.
+  const rawColumns = question?.columns ?? []
+  const columns = Array.isArray(rawColumns)
+    ? rawColumns
+    : (() => { try { return JSON.parse(rawColumns as string) } catch { return [] } })()
 
   return (
     <Card>
@@ -54,17 +61,21 @@ export function WizardQuestionCard({
               </span>
             ) : null}
           </span>
-          <span className="block text-sm font-normal text-muted-foreground mt-2">{questionText}</span>
+          <span className="block text-sm font-normal text-muted-foreground mt-2">{question?.text}</span>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        <Textarea
-          placeholder="Enter your answer here..."
-          value={answer}
-          onChange={(event) => onAnswerChange(event.target.value)}
-          rows={8}
-          className="resize-none"
-        />
+        {isTable && columns.length > 0 ? (
+          <WizardTableInput columns={columns} value={answer} onChange={onAnswerChange} />
+        ) : (
+          <Textarea
+            placeholder="Enter your answer here..."
+            value={answer}
+            onChange={(event) => onAnswerChange(event.target.value)}
+            rows={8}
+            className="resize-none"
+          />
+        )}
 
         <div className="flex gap-3">
           <Button onClick={onPrevious} variant="outline" disabled={currentQuestion === 0} className="gap-2">

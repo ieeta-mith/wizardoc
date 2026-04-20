@@ -57,8 +57,7 @@ export function WizardPageClient({ assessmentId }: WizardPageClientProps) {
       <WizardQuestionCard
         currentQuestion={currentQuestion}
         totalQuestions={totalQuestions}
-        questionText={currentQuestionData.text}
-        questionInfo={currentQuestionData.info}
+        question={currentQuestionData}
         answer={answers[currentQuestion] || ""}
         isSaving={isSaving}
         onAnswerChange={updateCurrentAnswer}
