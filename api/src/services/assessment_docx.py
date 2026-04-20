@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import json
 import os
 import re
 from motor.motor_asyncio import AsyncIOMotorDatabase
@@ -80,7 +81,7 @@ class AssessmentDocxService:
 
         answers_by_id: dict[str, str] = {}
         answers_by_identifier: dict[str, str] = {}
-        answers_by_key: dict[str, str] = {}
+        answers_by_key: dict[str, object] = {}
         identifier_keys: dict[str, str] = {}
         used_keys: set[str] = set()
         answer_rows: list[dict] = []
@@ -91,7 +92,6 @@ class AssessmentDocxService:
             answers_by_id[question.id] = answer
             answers_by_identifier[question.identifier] = answer
             safe_key = _apply_unique_key(_safe_identifier(question.identifier), used_keys)
-            answers_by_key[safe_key] = answer
             identifier_keys[question.identifier] = safe_key
 
             metadata = {
@@ -100,6 +100,25 @@ class AssessmentDocxService:
                 if key not in {"id", "identifier", "text"}
             }
 
+            is_table = question_payload.get("type") == "table"
+            table_data: list[dict] = []
+            if is_table and answer:
+                try:
+                    parsed = json.loads(answer)
+                    if isinstance(parsed, list):
+                        table_data = [r for r in parsed if isinstance(r, dict)]
+                except (json.JSONDecodeError, ValueError):
+                    table_data = []
+
+            # For table questions expose the parsed list under every lookup key so that
+            # template authors can use {%tr for row in identifier %}...{%tr endfor %}.
+            # For text questions expose the raw string as before.
+            template_value: object = table_data if is_table else answer
+            answers_by_key[safe_key] = template_value
+            if is_table:
+                answers_by_id[question.id] = table_data  # type: ignore[assignment]
+                answers_by_identifier[question.identifier] = table_data  # type: ignore[assignment]
+
             answer_rows.append(
                 {
                     "id": question_payload.get("id"),
@@ -107,6 +126,8 @@ class AssessmentDocxService:
                     "text": question_payload.get("text"),
                     "answer": answer,
                     "answered": bool(answer),
+                    "is_table": is_table,
+                    "table_data": table_data,
                     "metadata": metadata,
                     **metadata,
                 }

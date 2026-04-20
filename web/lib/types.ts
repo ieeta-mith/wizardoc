@@ -14,11 +14,18 @@ export interface DocxFile {
   uploadedAt: string
 }
 
+export interface TableColumn {
+  key: string
+  label: string
+}
+
 export interface Question {
   id: string
   identifier?: string
   text: string
   info?: string
+  type?: string
+  columns?: TableColumn[]
   [key: string]: unknown
 }
 
