@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 import { useAssessmentContext } from "@/hooks/use-assessment"
 import { usePersistedState } from "@/hooks/use-persisted-state"
 import { AssessmentService } from "@/lib/services/assessment-service"
+import type { AnswerProvenance } from "@/lib/types"
 import { logger } from "@/lib/utils/logger"
 import {
   buildAnswersByQuestionIndex,
@@ -21,6 +22,7 @@ export function useAssessmentWizard(assessmentId: string) {
     `assessment-${assessmentId}-answers`,
     {}
   )
+  const [provenance, setProvenance] = useState<Record<number, AnswerProvenance>>({})
   const [isSaving, setIsSaving] = useState(false)
   const [isRenaming, setIsRenaming] = useState(false)
   const [renameError, setRenameError] = useState<string | null>(null)
@@ -51,10 +53,11 @@ export function useAssessmentWizard(assessmentId: string) {
   const currentQuestionData = context?.questions[currentQuestion]
 
   const updateCurrentAnswer = (value: string) => {
-    setAnswers({
-      ...answers,
-      [currentQuestion]: value,
-    })
+    setAnswers((prev) => ({ ...prev, [currentQuestion]: value }))
+  }
+
+  const setAnswerProvenance = (questionIndex: number, prov: AnswerProvenance) => {
+    setProvenance((prev) => ({ ...prev, [questionIndex]: prov }))
   }
 
   const goToPreviousQuestion = () => {
@@ -90,12 +93,24 @@ export function useAssessmentWizard(assessmentId: string) {
     }
   }
 
+  const _buildProvenanceMap = (): Record<string, AnswerProvenance> => {
+    if (!context) return {}
+    return Object.entries(provenance).reduce(
+      (acc, [indexStr, prov]) => {
+        const question = context.questions[Number(indexStr)]
+        if (question) acc[question.id] = prov
+        return acc
+      },
+      {} as Record<string, AnswerProvenance>
+    )
+  }
+
   const persistAnswers = async () => {
     if (!context) return
     setIsSaving(true)
     try {
       const answersMap = buildAnswersMapByQuestionId(answers, context.questions)
-      await AssessmentService.saveDraft(assessmentId, answersMap)
+      await AssessmentService.saveDraft(assessmentId, answersMap, _buildProvenanceMap())
       logger.info("Document progress saved", { assessmentId })
       router.push(`/my-studies/${context.study.id}`)
     } catch (err) {
@@ -116,7 +131,9 @@ export function useAssessmentWizard(assessmentId: string) {
     setIsSaving(true)
     try {
       const answersMap = buildAnswersMapByQuestionId(answers, context.questions)
-      await AssessmentService.updateAnswers(assessmentId, answersMap)
+      await AssessmentService.updateAnswers(assessmentId, answersMap, {
+        answerProvenance: _buildProvenanceMap(),
+      })
       await AssessmentService.complete(assessmentId)
       logger.info("Document completed", { assessmentId })
       router.push(`/my-studies/${context.study.id}`)
@@ -140,8 +157,10 @@ export function useAssessmentWizard(assessmentId: string) {
     isRenaming,
     loading,
     progress,
+    provenance,
     renameDocument,
     renameError,
+    setAnswerProvenance,
     setCurrentQuestion,
     totalQuestions,
     updateCurrentAnswer,

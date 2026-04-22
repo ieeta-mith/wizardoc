@@ -1,0 +1,19 @@
+model:
+  # Ollama base URL — override via OLLAMA_BASE_URL env var
+  base_url: "http://host.docker.internal:11434"
+  # Chat model — override via OLLAMA_CHAT_MODEL env var
+  chat_model: "llama3.1:8b"
+  # Embedding model — override via OLLAMA_EMBED_MODEL env var
+  embed_model: "nomic-embed-text"
+  temperature: 0.2
+  max_tokens: 1024
+
+retrieval:
+  # Number of chunks returned per query
+  top_k: 4
+  # Approximate token budget for context in the prompt
+  context_tokens: 2000
+
+session:
+  # Idle TTL in seconds (2 hours)
+  ttl_seconds: 7200

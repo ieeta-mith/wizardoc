@@ -1,5 +1,8 @@
 from datetime import datetime
+from typing import Literal
 from pydantic import BaseModel, ConfigDict
+
+AnswerProvenance = Literal["user", "ai", "ai-edited"]
 
 
 class AssessmentBase(BaseModel):
@@ -10,6 +13,8 @@ class AssessmentBase(BaseModel):
     answeredQuestions: int
     status: str
     answers: dict[str, str]
+    # Maps question ID → how the answer was authored (omitted = "user")
+    answerProvenance: dict[str, AnswerProvenance] = {}
 
     model_config = ConfigDict(populate_by_name=True)
 
@@ -25,6 +30,7 @@ class AssessmentUpdate(BaseModel):
     answeredQuestions: int | None = None
     status: str | None = None
     answers: dict[str, str] | None = None
+    answerProvenance: dict[str, AnswerProvenance] | None = None
 
 
 class Assessment(AssessmentBase):

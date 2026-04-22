@@ -2,8 +2,10 @@ import { CircleHelp, ChevronLeft, ChevronRight, Save } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
-import type { Question } from "@/lib/types"
+import type { AnswerProvenance, Question } from "@/lib/types"
+import type { SuggestParams } from "@/lib/services/ai-service"
 import { WizardTableInput } from "./wizard-table-input"
+import { WizardAiPanel } from "./wizard-ai-panel"
 
 interface WizardQuestionCardProps {
   currentQuestion: number
@@ -11,10 +13,16 @@ interface WizardQuestionCardProps {
   question?: Question
   answer: string
   isSaving: boolean
+  currentProvenance?: AnswerProvenance
   onAnswerChange: (value: string) => void
+  onProvenanceChange: (prov: AnswerProvenance) => void
   onPrevious: () => void
   onNext: () => void
   onSave: () => void
+  // AI assistance (optional)
+  aiSessionId?: string | null
+  previousAnswers?: Record<string, string>
+  studyMetadata?: Record<string, string | null | undefined>
 }
 
 export function WizardQuestionCard({
@@ -23,19 +31,32 @@ export function WizardQuestionCard({
   question,
   answer,
   isSaving,
+  currentProvenance,
   onAnswerChange,
+  onProvenanceChange,
   onPrevious,
   onNext,
   onSave,
+  aiSessionId,
+  previousAnswers = {},
+  studyMetadata = {},
 }: WizardQuestionCardProps) {
   const normalizedQuestionInfo = question?.info?.trim()
   const isTable = question?.type === "table"
-  // columns may arrive as a JSON string when the question pool was imported from CSV
-  // before the JSON-parsing fix was in place. Parse defensively.
   const rawColumns = question?.columns ?? []
   const columns = Array.isArray(rawColumns)
     ? rawColumns
     : (() => { try { return JSON.parse(rawColumns as string) } catch { return [] } })()
+
+  const suggestParams: SuggestParams | null =
+    aiSessionId && question && !isTable
+      ? {
+          questionText: question.text,
+          questionIdentifier: question.identifier,
+          previousAnswers,
+          studyMetadata,
+        }
+      : null
 
   return (
     <Card>
@@ -64,16 +85,32 @@ export function WizardQuestionCard({
           <span className="block text-sm font-normal text-muted-foreground mt-2">{question?.text}</span>
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-4">
         {isTable && columns.length > 0 ? (
           <WizardTableInput columns={columns} value={answer} onChange={onAnswerChange} />
         ) : (
           <Textarea
             placeholder="Enter your answer here..."
             value={answer}
-            onChange={(event) => onAnswerChange(event.target.value)}
+            onChange={(event) => {
+              onAnswerChange(event.target.value)
+              // Preserve AI provenance if the user edits an AI-accepted answer
+              onProvenanceChange(currentProvenance === "ai" ? "ai-edited" : "user")
+            }}
             rows={8}
             className="resize-none"
+          />
+        )}
+
+        {suggestParams && (
+          <WizardAiPanel
+            key={question?.id}
+            sessionId={aiSessionId!}
+            params={suggestParams}
+            onAccept={(text, prov) => {
+              onAnswerChange(text)
+              onProvenanceChange(prov)
+            }}
           />
         )}
 
