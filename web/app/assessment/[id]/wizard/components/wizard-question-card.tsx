@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react"
 import { CircleHelp, ChevronLeft, ChevronRight, Save } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -41,12 +42,23 @@ export function WizardQuestionCard({
   previousAnswers = {},
   studyMetadata = {},
 }: WizardQuestionCardProps) {
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null)
+  const [draftAnswer, setDraftAnswer] = useState(answer)
   const normalizedQuestionInfo = question?.info?.trim()
   const isTable = question?.type === "table"
   const rawColumns = question?.columns ?? []
   const columns = Array.isArray(rawColumns)
     ? rawColumns
     : (() => { try { return JSON.parse(rawColumns as string) } catch { return [] } })()
+
+  useEffect(() => {
+    setDraftAnswer(answer)
+  }, [answer, question?.id])
+
+  const handleAnswerChange = (value: string) => {
+    setDraftAnswer(value)
+    onAnswerChange(value)
+  }
 
   const suggestParams: SuggestParams | null =
     aiSessionId && question && !isTable
@@ -87,13 +99,14 @@ export function WizardQuestionCard({
       </CardHeader>
       <CardContent className="space-y-4">
         {isTable && columns.length > 0 ? (
-          <WizardTableInput columns={columns} value={answer} onChange={onAnswerChange} />
+          <WizardTableInput columns={columns} value={draftAnswer} onChange={handleAnswerChange} />
         ) : (
           <Textarea
+            ref={textareaRef}
             placeholder="Enter your answer here..."
-            value={answer}
+            value={draftAnswer}
             onChange={(event) => {
-              onAnswerChange(event.target.value)
+              handleAnswerChange(event.target.value)
               // Preserve AI provenance if the user edits an AI-accepted answer
               onProvenanceChange(currentProvenance === "ai" ? "ai-edited" : "user")
             }}
@@ -108,8 +121,13 @@ export function WizardQuestionCard({
             sessionId={aiSessionId!}
             params={suggestParams}
             onAccept={(text, prov) => {
+              setDraftAnswer(text)
               onAnswerChange(text)
               onProvenanceChange(prov)
+              requestAnimationFrame(() => {
+                textareaRef.current?.focus()
+                textareaRef.current?.setSelectionRange(text.length, text.length)
+              })
             }}
           />
         )}
