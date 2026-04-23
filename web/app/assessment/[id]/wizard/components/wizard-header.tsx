@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { ArrowLeft, Check, Pencil, X } from "lucide-react"
-import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
+import { withBasePath } from "@/lib/base-path"
 
 interface WizardHeaderProps {
   projectId: string
@@ -45,13 +45,13 @@ export function WizardHeader({
 
   return (
     <div className="mb-8">
-      <Link
-        href={`/my-studies/${projectId}`}
+      <a
+        href={withBasePath(`/my-studies/${projectId}`)}
         className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to Project
-      </Link>
+      </a>
       <div className="flex items-center justify-between mb-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Document Wizard</h1>
