@@ -1,6 +1,6 @@
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { withBasePath } from "@/lib/base-path"
 
 export function WizardErrorState() {
   return (
@@ -10,7 +10,7 @@ export function WizardErrorState() {
           <p className="text-center text-muted-foreground">Document not found or no questions available.</p>
           <div className="flex justify-center mt-4">
             <Button asChild>
-              <a href={withBasePath("/my-studies")}>Back to Projects</a>
+              <Link href="/my-studies">Back to Projects</Link>
             </Button>
           </div>
         </CardContent>

@@ -1,12 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { useAssessmentContext } from "@/hooks/use-assessment"
 import { usePersistedState } from "@/hooks/use-persisted-state"
 import { AssessmentService } from "@/lib/services/assessment-service"
 import type { AnswerProvenance } from "@/lib/types"
 import { logger } from "@/lib/utils/logger"
-import { withBasePath } from "@/lib/base-path"
 import {
   buildAnswersByQuestionIndex,
   buildAnswersMapByQuestionId,
@@ -14,6 +14,7 @@ import {
 } from "../domain/wizard"
 
 export function useAssessmentWizard(assessmentId: string) {
+  const router = useRouter()
   const { context, loading, error } = useAssessmentContext(assessmentId)
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [documentName, setDocumentName] = useState("")
@@ -40,12 +41,10 @@ export function useAssessmentWizard(assessmentId: string) {
 
   useEffect(() => {
     if (!context) return
-
-    const persistedAnswerCount = Object.keys(answers).length
-    if (persistedAnswerCount > 0) return
-
+    if (Object.keys(answers).length > 0) return
     setAnswers(buildAnswersByQuestionIndex(context.assessment.answers ?? {}, context.questions))
-  }, [answers, context, setAnswers])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [context]) // intentionally omit `answers` — seed once when context first loads
 
   const totalQuestions = context?.questions.length ?? 0
   const progress = calculateWizardProgress(currentQuestion, totalQuestions)
@@ -57,10 +56,6 @@ export function useAssessmentWizard(assessmentId: string) {
 
   const setAnswerProvenance = (questionIndex: number, prov: AnswerProvenance) => {
     setProvenance((prev) => ({ ...prev, [questionIndex]: prov }))
-  }
-
-  const navigateTo = (path: string) => {
-    window.location.assign(withBasePath(path))
   }
 
   const goToPreviousQuestion = () => {
@@ -115,7 +110,7 @@ export function useAssessmentWizard(assessmentId: string) {
       const answersMap = buildAnswersMapByQuestionId(answers, context.questions)
       await AssessmentService.saveDraft(assessmentId, answersMap, _buildProvenanceMap())
       logger.info("Document progress saved", { assessmentId })
-      navigateTo(`/my-studies/${context.study.id}`)
+      router.push(`/my-studies/${context.study.id}`)
     } catch (err) {
       logger.error("Failed to save document", err)
     } finally {
@@ -139,7 +134,7 @@ export function useAssessmentWizard(assessmentId: string) {
       })
       await AssessmentService.complete(assessmentId)
       logger.info("Document completed", { assessmentId })
-      navigateTo(`/my-studies/${context.study.id}`)
+      router.push(`/my-studies/${context.study.id}`)
     } catch (err) {
       logger.error("Failed to complete document", err)
     } finally {
