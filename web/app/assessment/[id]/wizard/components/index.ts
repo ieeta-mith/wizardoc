@@ -1,3 +1,5 @@
+export * from "./wizard-ai-panel"
+export * from "./wizard-ai-setup"
 export * from "./wizard-error-state"
 export * from "./wizard-header"
 export * from "./wizard-question-card"

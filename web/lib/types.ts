@@ -44,6 +44,8 @@ export interface Study {
 
 export type StudyCreate = Omit<Study, "id" | "owner_id" | "createdAt" | "updatedAt">
 
+export type AnswerProvenance = "user" | "ai" | "ai-edited"
+
 export interface Assessment {
   id: string
   studyId: string
@@ -53,6 +55,7 @@ export interface Assessment {
   answeredQuestions: number
   status: "in-progress" | "completed"
   answers: Record<string, string>
+  answerProvenance: Record<string, AnswerProvenance>
   createdAt: Date
   updatedAt: Date
 }
