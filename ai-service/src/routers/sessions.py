@@ -33,6 +33,7 @@ class SuggestRequest(BaseModel):
     question_identifier: str | None = None
     previous_answers: dict[str, str] = {}
     study_metadata: dict[str, str | None] = {}
+    current_draft: str | None = None
 
 
 # --------------------------------------------------------------------------- #
@@ -125,22 +126,40 @@ def _build_prompt(body: SuggestRequest, context_text: str) -> str:
     prev = "\n".join(f"- {k}: {v}" for k, v in body.previous_answers.items()) or "None"
     meta = "\n".join(f"- {k}: {v}" for k, v in body.study_metadata.items() if v) or "None"
     ctx = context_text or "No reference documents uploaded."
+    draft = body.current_draft.strip() if body.current_draft and body.current_draft.strip() else None
 
-    return textwrap.dedent(f"""
-        You are an expert clinical trial document assistant.
+    parts = [
+        textwrap.dedent(f"""
+            You are an expert clinical trial document assistant.
 
-        ## Reference documents
-        {ctx}
+            ## Reference documents
+            {ctx}
 
-        ## Study metadata
-        {meta}
+            ## Study metadata
+            {meta}
 
-        ## Previous answers in this document
-        {prev}
+            ## Previous answers in this document
+            {prev}
 
-        ## Current question
-        {body.question_text}
+            ## Current question
+            {body.question_text}
+        """).strip()
+    ]
 
+    if draft:
+        parts.append(textwrap.dedent(f"""
+            ## User's current draft
+            \"\"\"{draft}\"\"\"
+        """).strip())
+
+    suggestion_constraint = (
+        "Each suggestion must build upon, complete, or refine the user's current draft — "
+        "it must be coherent with what the user has already written and must not contradict it."
+        if draft else
+        "Each suggestion must be relevant to the question and consistent with the study context."
+    )
+
+    parts.append(textwrap.dedent(f"""
         Respond ONLY with a valid JSON object — no prose before or after — using this exact schema:
         {{
           "guidance": "<one short paragraph explaining what a good answer should cover>",
@@ -155,7 +174,10 @@ def _build_prompt(body: SuggestRequest, context_text: str) -> str:
         }}
 
         Provide 1 to 3 suggestions ranked by relevance. Keep each suggestion concise.
-    """).strip()
+        {suggestion_constraint}
+    """).strip())
+
+    return "\n\n".join(parts)
 
 
 async def _stream_sse(messages: list[dict]):

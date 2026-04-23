@@ -41,6 +41,7 @@ export interface SuggestParams {
   questionIdentifier?: string
   previousAnswers: Record<string, string>
   studyMetadata: Record<string, string | null | undefined>
+  currentDraft?: string
 }
 
 export class AiService {
@@ -79,6 +80,7 @@ export class AiService {
         study_metadata: Object.fromEntries(
           Object.entries(params.studyMetadata).filter(([, v]) => v != null)
         ),
+        current_draft: params.currentDraft || null,
       }),
     })
 

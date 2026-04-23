@@ -67,6 +67,7 @@ export function WizardQuestionCard({
           questionIdentifier: question.identifier,
           previousAnswers,
           studyMetadata,
+          currentDraft: draftAnswer || undefined,
         }
       : null
 
