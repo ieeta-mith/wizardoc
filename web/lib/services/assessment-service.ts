@@ -234,6 +234,27 @@ export class AssessmentService {
   }
 
   /**
+   * Delete an assessment
+   * @param id - The assessment ID
+   * @returns True if deleted, false if not found
+   */
+  static async delete(id: string): Promise<boolean> {
+    const response = await fetch(`${API_BASE_URL}/assessments/${id}`, {
+      method: "DELETE",
+    })
+
+    if (response.status === 404) {
+      return false
+    }
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete document: ${response.statusText}`)
+    }
+
+    return true
+  }
+
+  /**
    * Complete an assessment
    * @param id - The assessment ID
    * @returns The completed assessment or null if not found

@@ -7,7 +7,6 @@ from pydantic import BaseModel, ConfigDict, Field
 
 class StudyBase(BaseModel):
     name: str | None = None
-    phase: str | None = None
     category: str | None = None
     studyQuestion: str | None = None
     poolId: str
@@ -22,7 +21,6 @@ class StudyCreate(StudyBase):
 
 class StudyUpdate(BaseModel):
     name: str | None = None
-    phase: str | None = None
     category: str | None = None
     studyQuestion: str | None = None
     poolId: str | None = None
