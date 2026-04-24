@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from src.core.db import lifespan
-from src.routers import assessments, auth, question_pools, studies
+from src.routers import assessments, auth, question_pools, studies, users
 
 
 app = FastAPI(
@@ -39,3 +39,4 @@ app.include_router(question_pools.router, prefix="/api/question-pools", tags=["q
 app.include_router(studies.router, prefix="/api/studies", tags=["studies"])
 app.include_router(assessments.router, prefix="/api/assessments", tags=["assessments"])
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
+app.include_router(users.router, prefix="/api/users", tags=["users"])
