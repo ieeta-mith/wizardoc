@@ -1,18 +1,18 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import { useStudies } from "@/hooks/use-studies"
-import { EmptyStudiesState, MyStudiesHeader, StudiesGrid } from "./components"
+import { useDocuments } from "@/hooks/use-documents"
+import { DocumentCard, EmptyStudiesState, MyStudiesHeader } from "./components"
 
 export function MyStudiesPageClient() {
-  const { studies, loading, error, refresh } = useStudies()
+  const { items, loading, error, refresh } = useDocuments()
 
   if (loading) {
     return (
       <div className="container py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight">Projects</h1>
-          <p className="text-muted-foreground mt-2">Loading your projects...</p>
+          <h1 className="text-3xl font-bold tracking-tight">Documents</h1>
+          <p className="text-muted-foreground mt-2">Loading your documents...</p>
         </div>
       </div>
     )
@@ -23,7 +23,7 @@ export function MyStudiesPageClient() {
       <div className="container py-8">
         <Card className="border-destructive">
           <CardContent className="pt-6">
-            <p className="text-destructive">Error loading projects: {error.message}</p>
+            <p className="text-destructive">Error loading documents: {error.message}</p>
           </CardContent>
         </Card>
       </div>
@@ -33,8 +33,20 @@ export function MyStudiesPageClient() {
   return (
     <div className="container py-8">
       <MyStudiesHeader />
-      <StudiesGrid studies={studies} onDeleteSuccess={refresh} onEditSuccess={refresh} />
-      {studies.length === 0 && <EmptyStudiesState />}
+      {items.length === 0 ? (
+        <EmptyStudiesState />
+      ) : (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {items.map(({ assessment, study }) => (
+            <DocumentCard
+              key={assessment.id}
+              item={{ assessment, study }}
+              onDeleteSuccess={refresh}
+              onRenameSuccess={refresh}
+            />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

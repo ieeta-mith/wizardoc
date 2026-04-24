@@ -1,3 +1,4 @@
+export * from "./document-card"
 export * from "./empty-studies-state"
 export * from "./my-studies-header"
 export * from "./studies-grid"

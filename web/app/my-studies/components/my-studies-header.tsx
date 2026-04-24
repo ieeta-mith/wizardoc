@@ -6,8 +6,8 @@ export function MyStudiesHeader() {
   return (
     <div className="mb-8 flex items-center justify-between">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Projects</h1>
-        <p className="text-muted-foreground mt-2">Group and manage your generated documents by project</p>
+        <h1 className="text-3xl font-bold tracking-tight">Documents</h1>
+        <p className="text-muted-foreground mt-2">Your generated documents</p>
       </div>
       <Link href="/document/new">
         <Button size="lg" className="gap-2">
