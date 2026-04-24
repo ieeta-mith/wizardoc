@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { useNewAssessmentPage } from "./hooks"
 
 export function NewAssessmentPageClient() {
-  const { error, studyId } = useNewAssessmentPage()
+  const { error } = useNewAssessmentPage()
 
   if (error) {
     return (
@@ -14,11 +14,9 @@ export function NewAssessmentPageClient() {
         <Card className="border-destructive">
           <CardContent className="pt-6">
             <p className="text-destructive mb-4">{error}</p>
-            {studyId && (
-              <Link href={`/my-studies/${studyId}`}>
-                <Button>Back to Project</Button>
-              </Link>
-            )}
+            <Button asChild>
+              <Link href="/my-studies">Back to Documents</Link>
+            </Button>
           </CardContent>
         </Card>
       </div>

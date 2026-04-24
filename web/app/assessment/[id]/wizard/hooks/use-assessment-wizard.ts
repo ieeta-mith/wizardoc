@@ -110,7 +110,7 @@ export function useAssessmentWizard(assessmentId: string) {
       const answersMap = buildAnswersMapByQuestionId(answers, context.questions)
       await AssessmentService.saveDraft(assessmentId, answersMap, _buildProvenanceMap())
       logger.info("Document progress saved", { assessmentId })
-      router.push(`/my-studies/${context.study.id}`)
+      router.push("/my-studies")
     } catch (err) {
       logger.error("Failed to save document", err)
     } finally {
@@ -134,7 +134,7 @@ export function useAssessmentWizard(assessmentId: string) {
       })
       await AssessmentService.complete(assessmentId)
       logger.info("Document completed", { assessmentId })
-      router.push(`/my-studies/${context.study.id}`)
+      router.push("/my-studies")
     } catch (err) {
       logger.error("Failed to complete document", err)
     } finally {

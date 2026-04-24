@@ -111,8 +111,7 @@ export function WizardPageClient({ assessmentId }: WizardPageClientProps) {
       )}
 
       <WizardHeader
-        projectId={context.study.id}
-        projectName={context.study.name}
+        templateName={context.pool.name}
         documentName={documentName}
         isRenaming={isRenaming}
         renameError={renameError}

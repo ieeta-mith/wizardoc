@@ -7,8 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Progress } from "@/components/ui/progress"
 
 interface WizardHeaderProps {
-  projectId: string
-  projectName?: string | null
+  templateName?: string | null
   documentName: string
   isRenaming: boolean
   renameError: string | null
@@ -19,8 +18,7 @@ interface WizardHeaderProps {
 }
 
 export function WizardHeader({
-  projectId,
-  projectName,
+  templateName,
   documentName,
   isRenaming,
   renameError,
@@ -46,11 +44,11 @@ export function WizardHeader({
   return (
     <div className="mb-8">
       <Link
-        href={`/my-studies/${projectId}`}
+        href="/my-studies"
         className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4"
       >
         <ArrowLeft className="h-4 w-4" />
-        Back to Project
+        Back to Documents
       </Link>
       <div className="flex items-center justify-between mb-4">
         <div>
@@ -107,7 +105,7 @@ export function WizardHeader({
           {renameError && <p className="mt-1 text-xs text-destructive">{renameError}</p>}
         </div>
         <Badge variant="secondary" className="text-base px-4 py-2">
-          {projectName}
+          {templateName}
         </Badge>
       </div>
       <div className="space-y-2">

@@ -31,6 +31,9 @@ export function useNewStudyPage() {
       const study = await StudyService.create({
         name: data.name.trim(),
         poolId: data.templateId,
+        metadata: {
+          documentFirst: true,
+        },
       })
       const assessment = await AssessmentService.create(study.id, data.name.trim())
       router.push(`/assessment/${assessment.id}/wizard`)
