@@ -175,12 +175,14 @@ export function DocumentCard({
                       {answersOpen ? "Hide Answers" : "Answers"}
                     </DropdownMenuItem>
                   )}
-                  <DropdownMenuItem asChild>
-                    <Link href={`/assessment/${assessment.id}/wizard`}>
-                      <Pencil className="h-4 w-4" />
-                      {isInProgress ? "Continue" : "Edit"}
-                    </Link>
-                  </DropdownMenuItem>
+                  {!isInProgress && (
+                    <DropdownMenuItem asChild>
+                      <Link href={`/assessment/${assessment.id}/wizard`}>
+                        <Pencil className="h-4 w-4" />
+                        Edit
+                      </Link>
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuItem
                     onClick={() => {
                       setDraftName(assessment.name)
