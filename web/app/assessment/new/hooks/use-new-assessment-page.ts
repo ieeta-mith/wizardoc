@@ -15,7 +15,7 @@ export function useNewAssessmentPage() {
 
   useEffect(() => {
     if (!studyId) {
-      setError("No project ID provided")
+      setError("No backing document context provided")
       return
     }
 

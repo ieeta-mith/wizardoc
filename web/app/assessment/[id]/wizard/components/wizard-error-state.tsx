@@ -10,7 +10,7 @@ export function WizardErrorState() {
           <p className="text-center text-muted-foreground">Document not found or no questions available.</p>
           <div className="flex justify-center mt-4">
             <Button asChild>
-              <Link href="/my-studies">Back to Projects</Link>
+              <Link href="/my-studies">Back to Documents</Link>
             </Button>
           </div>
         </CardContent>

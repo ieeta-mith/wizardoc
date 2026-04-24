@@ -1,4 +1,4 @@
-import { FolderOpen, ClipboardList, LucideIcon } from "lucide-react"
+import { FileText, ClipboardList, LucideIcon } from "lucide-react"
 
 export interface NavItem {
   href: string
@@ -9,8 +9,8 @@ export interface NavItem {
 export const NAV_ITEMS: NavItem[] = [
   {
     href: "/my-studies",
-    label: "Projects",
-    icon: FolderOpen,
+    label: "Documents",
+    icon: FileText,
   },
   {
     href: "/templates",
