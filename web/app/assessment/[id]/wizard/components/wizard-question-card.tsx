@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react"
-import { CircleHelp, ChevronLeft, ChevronRight, Save } from "lucide-react"
+import { CircleHelp, ChevronLeft, ChevronRight, Loader2, Save, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import type { AnswerProvenance, Question } from "@/lib/types"
-import type { SuggestParams } from "@/lib/services/ai-service"
+import { AiService, type AiSuggestionEvent, type SuggestParams } from "@/lib/services/ai-service"
 import { WizardTableInput } from "./wizard-table-input"
 import { WizardAiPanel } from "./wizard-ai-panel"
 
@@ -20,11 +20,19 @@ interface WizardQuestionCardProps {
   onPrevious: () => void
   onNext: () => void
   onSave: () => void
-  // AI assistance (optional)
   aiSessionId?: string | null
   previousAnswers?: Record<string, string>
   studyMetadata?: Record<string, string | null | undefined>
 }
+
+interface AiState {
+  guidance: string
+  suggestions: AiSuggestionEvent[]
+  loading: boolean
+  error: string | null
+}
+
+const initialAiState: AiState = { guidance: "", suggestions: [], loading: false, error: null }
 
 export function WizardQuestionCard({
   currentQuestion,
@@ -44,6 +52,9 @@ export function WizardQuestionCard({
 }: WizardQuestionCardProps) {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null)
   const [draftAnswer, setDraftAnswer] = useState(answer)
+  const [aiState, setAiState] = useState<AiState>(initialAiState)
+  const [dismissed, setDismissed] = useState<Set<number>>(new Set())
+
   const normalizedQuestionInfo = question?.info?.trim()
   const isTable = question?.type === "table"
   const rawColumns = question?.columns ?? []
@@ -54,6 +65,11 @@ export function WizardQuestionCard({
   useEffect(() => {
     setDraftAnswer(answer)
   }, [answer, question?.id])
+
+  useEffect(() => {
+    setAiState(initialAiState)
+    setDismissed(new Set())
+  }, [question?.id])
 
   const handleAnswerChange = (value: string) => {
     setDraftAnswer(value)
@@ -70,6 +86,29 @@ export function WizardQuestionCard({
           currentDraft: draftAnswer || undefined,
         }
       : null
+
+  const fetchSuggestion = async () => {
+    if (!suggestParams || !aiSessionId) return
+    setAiState({ ...initialAiState, loading: true })
+    setDismissed(new Set())
+    try {
+      for await (const event of AiService.suggest(aiSessionId, suggestParams)) {
+        if (event.type === "guidance") {
+          setAiState((prev) => ({ ...prev, guidance: event.text }))
+        } else if (event.type === "suggestion") {
+          setAiState((prev) => ({ ...prev, suggestions: [...prev.suggestions, event] }))
+        } else if (event.type === "done") {
+          setAiState((prev) => ({ ...prev, loading: false }))
+        } else if (event.type === "error") {
+          setAiState((prev) => ({ ...prev, loading: false, error: event.detail }))
+        }
+      }
+    } catch {
+      setAiState((prev) => ({ ...prev, loading: false, error: "Failed to fetch suggestion." }))
+    }
+  }
+
+  const hasAiContent = !!aiState.guidance || aiState.suggestions.length > 0
 
   return (
     <Card>
@@ -102,34 +141,59 @@ export function WizardQuestionCard({
         {isTable && columns.length > 0 ? (
           <WizardTableInput columns={columns} value={draftAnswer} onChange={handleAnswerChange} />
         ) : (
-          <Textarea
-            ref={textareaRef}
-            placeholder="Enter your answer here..."
-            value={draftAnswer}
-            onChange={(event) => {
-              handleAnswerChange(event.target.value)
-              // Preserve AI provenance if the user edits an AI-accepted answer
-              onProvenanceChange(currentProvenance === "ai" ? "ai-edited" : "user")
-            }}
-            rows={8}
-            className="resize-none"
-          />
+          <div className="relative">
+            <Textarea
+              ref={textareaRef}
+              placeholder="Enter your answer here..."
+              value={draftAnswer}
+              onChange={(event) => {
+                handleAnswerChange(event.target.value)
+                onProvenanceChange(currentProvenance === "ai" ? "ai-edited" : "user")
+              }}
+              rows={8}
+              className="resize-none pb-10"
+            />
+            {suggestParams && (
+              <div className="absolute bottom-2 right-2">
+                {aiState.loading ? (
+                  <span className="flex items-center gap-1.5 rounded-md bg-background px-2 py-1 text-xs text-muted-foreground shadow-sm border">
+                    <Loader2 className="h-3 w-3 animate-spin" />
+                    Thinking…
+                  </span>
+                ) : (
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="outline"
+                    className="h-7 text-xs gap-1 bg-background"
+                    onClick={fetchSuggestion}
+                  >
+                    <Sparkles className="h-3 w-3" />
+                    {hasAiContent ? "Re-suggest" : "Suggest answer"}
+                  </Button>
+                )}
+              </div>
+            )}
+          </div>
         )}
 
-        {suggestParams && (
+        {(hasAiContent || !!aiState.error) && (
           <WizardAiPanel
-            key={question?.id}
-            sessionId={aiSessionId!}
-            params={suggestParams}
+            guidance={aiState.guidance}
+            suggestions={aiState.suggestions}
+            dismissed={dismissed}
+            error={aiState.error}
             onAccept={(text, prov) => {
               setDraftAnswer(text)
               onAnswerChange(text)
               onProvenanceChange(prov)
+              setAiState(initialAiState)
               requestAnimationFrame(() => {
                 textareaRef.current?.focus()
                 textareaRef.current?.setSelectionRange(text.length, text.length)
               })
             }}
+            onDismiss={(rank) => setDismissed((prev) => new Set(prev).add(rank))}
           />
         )}
 
