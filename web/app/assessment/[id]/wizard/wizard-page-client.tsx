@@ -97,7 +97,6 @@ export function WizardPageClient({ assessmentId }: WizardPageClientProps) {
 
   const studyMetadata: Record<string, string | null | undefined> = {
     name: context.study.name,
-    phase: context.study.phase,
     category: context.study.category,
     studyQuestion: context.study.studyQuestion,
   }

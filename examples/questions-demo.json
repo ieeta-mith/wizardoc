@@ -1,0 +1,170 @@
+[
+  {
+    "identifier": "use_case_id",
+    "text": "Use case identifier [from submission form]",
+    "info": "",
+    "section": "ADMINISTRATIVE DETAILS",
+    "subsection": "General",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "case_title",
+    "text": "Use case title",
+    "info": "",
+    "section": "ADMINISTRATIVE DETAILS",
+    "subsection": "General",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "case_lead",
+    "text": "Use Case Lead",
+    "info": "",
+    "section": "ADMINISTRATIVE DETAILS",
+    "subsection": "General",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "completeness",
+    "text": "Check of completeness of Use Case form conducted by",
+    "info": "",
+    "section": "ADMINISTRATIVE DETAILS",
+    "subsection": "General",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "initial",
+    "text": "Date of initial feasibility request",
+    "info": "",
+    "section": "ADMINISTRATIVE DETAILS",
+    "subsection": "General",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "responsible",
+    "text": "Person(s) responsible for the Feasibility Assessment",
+    "info": "",
+    "section": "ADMINISTRATIVE DETAILS",
+    "subsection": "General",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "req_analyses",
+    "text": "Required analyses",
+    "info": "e.g. Incidence/Prevalence; Cohort study",
+    "section": "ASSESSMENT OF METHODS REQUIREMENTS/FEASIBILITY",
+    "subsection": "Assessment criteria",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "std_analytics",
+    "text": "Standard analytics available",
+    "info": "e.g. yes (analytical package); no (cohort study would be using PS matching/weighting)",
+    "section": "ASSESSMENT OF METHODS REQUIREMENTS/FEASIBILITY",
+    "subsection": "Assessment criteria",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "guidelines_avail",
+    "text": "Guidelines/standard methods available?",
+    "info": "Are there any guidelines/recommendations of state-of-the-art methods that will be used or tested against?",
+    "section": "ASSESSMENT OF METHODS REQUIREMENTS/FEASIBILITY",
+    "subsection": "Assessment criteria",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "rec_proposed_methods",
+    "text": "RECOMMENDATIONS/PROPOSED METHODS",
+    "info": "Which analytical methods would you recommend to use for this study? What would be their limitations? Is the analytical method (incl. statistical code/packages) available or would it needed to be developed?",
+    "section": "ASSESSMENT OF METHODS REQUIREMENTS/FEASIBILITY",
+    "subsection": "RECOMMENDATIONS/PROPOSED METHODS",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "req_fte",
+    "text": "Required FTE",
+    "info": "e.g. %FTE of X staff members working on the study",
+    "section": "ASSESSMENT OF RESOURCES/TIMELINES FEASIBILITY",
+    "subsection": "Assessment criteria",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "data_costs",
+    "text": "Data costs",
+    "info": "e.g. X databases",
+    "section": "ASSESSMENT OF RESOURCES/TIMELINES FEASIBILITY",
+    "subsection": "Assessment criteria",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "add_resources",
+    "text": "Additional resources?",
+    "info": "Is there a specific contribution (FC/in-kind) available if this use case would be conducted?",
+    "section": "ASSESSMENT OF RESOURCES/TIMELINES FEASIBILITY",
+    "subsection": "Assessment criteria",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "extra_effort",
+    "text": "Would any extra effort be needed that incurs additional costs?",
+    "info": "e.g. mapping of non-OMOP data, mapping medical devices",
+    "section": "ASSESSMENT OF RESOURCES/TIMELINES FEASIBILITY",
+    "subsection": "Assessment criteria",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "timeline",
+    "text": "Timeline",
+    "info": "What would be the estimated timeline for completion of the study?",
+    "section": "ASSESSMENT OF RESOURCES/TIMELINES FEASIBILITY",
+    "subsection": "Assessment criteria",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "rec_est_resources",
+    "text": "RECOMMENDATIONS/ESTIMATED RESOURCES",
+    "info": "What would be feasible timelines for completion of the study and how many resources would be needed?",
+    "section": "ASSESSMENT OF RESOURCES/TIMELINES FEASIBILITY",
+    "subsection": "RECOMMENDATIONS/ESTIMATED RESOURCES",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "start_date",
+    "text": "Start date:",
+    "info": "DD/MM/YYYY",
+    "section": "ASSESSMENT OF DATA FEASIBILITY",
+    "subsection": "General",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "health_setting",
+    "text": "Healthcare setting suitability",
+    "info": "To be completed with the UC setting needs, e.g., primary care",
+    "section": "ASSESSMENT OF DATA FEASIBILITY",
+    "subsection": "Feasibility Assessment Process",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "temp_suitability",
+    "text": "Temporal suitability",
+    "info": "To be completed with the UC temporal needs, e.g., data from > 2021, data from <2010",
+    "section": "ASSESSMENT OF DATA FEASIBILITY",
+    "subsection": "Feasibility Assessment Process",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "geo_suitability",
+    "text": "Geographical suitability",
+    "info": "To be completed with the UC geographical needs, e.g., data from southern European countries",
+    "section": "ASSESSMENT OF DATA FEASIBILITY",
+    "subsection": "Feasibility Assessment Process",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "data_domains",
+    "text": "Presence of necessary data domains",
+    "info": "To be completed with the UC data domains needs, e.g., conditions, drugs, and procedures.",
+    "section": "ASSESSMENT OF DATA FEASIBILITY",
+    "subsection": "Feasibility Assessment Process",
+    "reference": "GREG SOP Annex I"
+  }
+]

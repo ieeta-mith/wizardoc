@@ -1,0 +1,26 @@
+[
+  {
+    "identifier": "use_case_id",
+    "text": "Use case identifier [from submission form]",
+    "info": "",
+    "type": "",
+    "columns": null,
+    "section": "ADMINISTRATIVE DETAILS",
+    "subsection": "General",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "risk_table",
+    "text": "Fill in the risk assessment table",
+    "info": "",
+    "type": "table",
+    "columns": [
+      { "key": "risk", "label": "Risk" },
+      { "key": "likelihood", "label": "Likelihood" },
+      { "key": "impact", "label": "Impact" }
+    ],
+    "section": "ASSESSMENT OF DATA FEASIBILITY",
+    "subsection": "Feasibility Assessment Process",
+    "reference": "GREG SOP Annex I"
+  }
+]

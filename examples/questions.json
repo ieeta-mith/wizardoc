@@ -1,0 +1,38 @@
+[
+  {
+    "identifier": "use_case_id",
+    "text": "Use case identifier [from submission form]",
+    "domain": "ADMINISTRATIVE DETAILS",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "case_title",
+    "text": "Use case title",
+    "domain": "ADMINISTRATIVE DETAILS",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "case_lead",
+    "text": "Use Case Lead (name, email)",
+    "domain": "ADMINISTRATIVE DETAILS",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "completeness",
+    "text": "Check of completeness of Use Case form conducted by (name, email)",
+    "domain": "ADMINISTRATIVE DETAILS",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "initial",
+    "text": "Date of initial feasibility request [DD/MM/YYYY]",
+    "domain": "ADMINISTRATIVE DETAILS",
+    "reference": "GREG SOP Annex I"
+  },
+  {
+    "identifier": "responsible",
+    "text": "Person(s) responsible for the Feasibility Assessment (name, email)",
+    "domain": "ADMINISTRATIVE DETAILS",
+    "reference": "GREG SOP Annex I"
+  }
+]

@@ -33,7 +33,6 @@ export interface Study {
   id: string
   owner_id?: string | null
   name?: string | null
-  phase?: string | null
   category?: string | null
   studyQuestion?: string | null
   poolId: string

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { QuestionPoolService } from "@/lib/services/question-pool-service"
 import type { Question, QuestionPool } from "@/lib/types"
-import { buildQuestionTableColumns, getObjectValue, parseCsvQuestions, toImportQuestionPayload } from "../../domain"
+import { buildQuestionTableColumns, getObjectValue, parseJsonQuestions, toImportQuestionPayload } from "../../domain"
 
 export function usePoolDetail(pool: QuestionPool, canManageTemplates: boolean) {
   const [currentPool, setCurrentPool] = useState(pool)
@@ -78,7 +78,7 @@ export function usePoolDetail(pool: QuestionPool, canManageTemplates: boolean) {
     }
   }
 
-  const importBatchCsv = async (file: File) => {
+  const importBatchJson = async (file: File) => {
     setActionError(null)
 
     if (!canManageTemplates) {
@@ -88,10 +88,10 @@ export function usePoolDetail(pool: QuestionPool, canManageTemplates: boolean) {
 
     setImporting(true)
     try {
-      const csvText = await file.text()
-      const parsedQuestions = parseCsvQuestions(csvText)
+      const jsonText = await file.text()
+      const parsedQuestions = parseJsonQuestions(jsonText)
       if (parsedQuestions.length === 0) {
-        setActionError("No questions found in CSV.")
+        setActionError("No questions found in JSON.")
         return
       }
 
@@ -112,7 +112,7 @@ export function usePoolDetail(pool: QuestionPool, canManageTemplates: boolean) {
       }
 
       if (importedCount === 0) {
-        setActionError("No valid rows found in CSV. Required columns: identifier and text.")
+        setActionError("No valid entries found in JSON. Required fields: identifier and text.")
         return
       }
 
@@ -177,7 +177,7 @@ export function usePoolDetail(pool: QuestionPool, canManageTemplates: boolean) {
     deletingId,
     downloadDocx,
     downloadingDocx,
-    importBatchCsv,
+    importBatchJson,
     importing,
     questions,
     tableColumns,

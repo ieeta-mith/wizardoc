@@ -1,0 +1,58 @@
+[
+  {
+    "identifier": "device_name",
+    "text": "Device / software name (commercial or project name)",
+    "domain": "DEVICE CONTEXT",
+    "riskType": "NA",
+    "isoReference": "ISO 14971:2019 5"
+  },
+  {
+    "identifier": "device_description",
+    "text": "Brief device description",
+    "domain": "DEVICE CONTEXT",
+    "riskType": "SAFETY",
+    "isoReference": "ISO 14971:2019 5"
+  },
+  {
+    "identifier": "intended_use",
+    "text": "Intended use / purpose",
+    "domain": "DEVICE CONTEXT",
+    "riskType": "PERFORMANCE",
+    "isoReference": "ISO 14971:2019 5"
+  },
+  {
+    "identifier": "indications_for_use",
+    "text": "Indications for use (who/when/where it should be used)",
+    "domain": "DEVICE CONTEXT",
+    "riskType": "SAFETY",
+    "isoReference": "ISO 14971:2019 5"
+  },
+  {
+    "identifier": "intended_users",
+    "text": "Intended users and required training",
+    "domain": "DEVICE CONTEXT",
+    "riskType": "USABILITY",
+    "isoReference": "ISO 14971:2019 5"
+  },
+  {
+    "identifier": "patient_population",
+    "text": "Target patient population",
+    "domain": "DEVICE CONTEXT",
+    "riskType": "SAFETY",
+    "isoReference": "ISO 14971:2019 5"
+  },
+  {
+    "identifier": "use_environment",
+    "text": "Use environment(s) (home, ward, ICU, ambulance, outdoor, etc.)",
+    "domain": "DEVICE CONTEXT",
+    "riskType": "SAFETY",
+    "isoReference": "ISO 14971:2019 5"
+  },
+  {
+    "identifier": "interfaces_dependencies",
+    "text": "External interfaces/dependencies",
+    "domain": "DEVICE CONTEXT",
+    "riskType": "SECURITY",
+    "isoReference": "ISO 14971:2019 5"
+  }
+]

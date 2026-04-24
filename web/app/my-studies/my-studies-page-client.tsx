@@ -5,7 +5,7 @@ import { useStudies } from "@/hooks/use-studies"
 import { EmptyStudiesState, MyStudiesHeader, StudiesGrid } from "./components"
 
 export function MyStudiesPageClient() {
-  const { studies, loading, error } = useStudies()
+  const { studies, loading, error, refresh } = useStudies()
 
   if (loading) {
     return (
@@ -33,7 +33,7 @@ export function MyStudiesPageClient() {
   return (
     <div className="container py-8">
       <MyStudiesHeader />
-      <StudiesGrid studies={studies} />
+      <StudiesGrid studies={studies} onDeleteSuccess={refresh} onEditSuccess={refresh} />
       {studies.length === 0 && <EmptyStudiesState />}
     </div>
   )
