@@ -1,4 +1,4 @@
-import type { Assessment, Study, QuestionPool, Question } from "@/lib/types"
+import type { Assessment, AnswerProvenance, Study, QuestionPool, Question } from "@/lib/types"
 import { StudyService } from "./study-service"
 import { QuestionPoolService } from "./question-pool-service"
 import { API_BASE_URL } from "./api-base-url"
@@ -138,7 +138,10 @@ export class AssessmentService {
   static async updateAnswers(
     id: string,
     answers: Record<string, string>,
-    options?: { status?: Assessment["status"] }
+    options?: {
+      status?: Assessment["status"]
+      answerProvenance?: Record<string, AnswerProvenance>
+    }
   ): Promise<Assessment | null> {
     const assessment = await this.getById(id)
     if (!assessment) return null
@@ -152,6 +155,7 @@ export class AssessmentService {
       answeredQuestions,
       progress,
       status: options?.status ?? assessment.status,
+      answerProvenance: options?.answerProvenance ?? assessment.answerProvenance ?? {},
       updatedAt: new Date().toISOString(),
     }
 
@@ -180,8 +184,12 @@ export class AssessmentService {
     }
   }
 
-  static async saveDraft(id: string, answers: Record<string, string>): Promise<Assessment | null> {
-    return this.updateAnswers(id, answers, { status: "in-progress" })
+  static async saveDraft(
+    id: string,
+    answers: Record<string, string>,
+    answerProvenance?: Record<string, AnswerProvenance>
+  ): Promise<Assessment | null> {
+    return this.updateAnswers(id, answers, { status: "in-progress", answerProvenance })
   }
 
   /**
@@ -223,6 +231,27 @@ export class AssessmentService {
       createdAt: new Date(updated.createdAt),
       updatedAt: new Date(updated.updatedAt),
     }
+  }
+
+  /**
+   * Delete an assessment
+   * @param id - The assessment ID
+   * @returns True if deleted, false if not found
+   */
+  static async delete(id: string): Promise<boolean> {
+    const response = await fetch(`${API_BASE_URL}/assessments/${id}`, {
+      method: "DELETE",
+    })
+
+    if (response.status === 404) {
+      return false
+    }
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete document: ${response.statusText}`)
+    }
+
+    return true
   }
 
   /**

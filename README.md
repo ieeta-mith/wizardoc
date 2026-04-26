@@ -95,14 +95,44 @@ That means local routes should be opened under `/wizardoc`, not `/`.
 
 ## Docker / Full Stack Run
 
-To run the full stack with MongoDB, API, web, and reverse proxy:
+Two Compose files are available depending on your goal.
+
+### Development (`docker-compose.dev.yml`) — no IAM required
+
+Runs a self-contained stack (MongoDB + API + web + proxy) that **bypasses IAM/Keycloak authentication**. The API uses a hardcoded dev user (`dev`/`dev@example.com`, admin) so you can work without any external auth service.
+
+```bash
+cd wizardoc/deployment
+docker compose -f docker-compose.dev.yml up --build
+```
+
+Access points:
+- App: `http://localhost:8080/wizardoc`
+- API docs: `http://localhost:8000/docs`
+- MongoDB: `localhost:27017` (user `root`, password `password`)
+
+To run only the backend (skips the web build, which requires `BUILD_NPM_TOKEN`):
+
+```bash
+docker compose -f docker-compose.dev.yml up --build mongo api
+```
+
+> **Stale volume tip:** If you get a MongoDB authentication error, a volume from a previous run may have different credentials. Fix with:
+> ```bash
+> docker compose -f docker-compose.dev.yml down -v
+> docker compose -f docker-compose.dev.yml up --build
+> ```
+
+### Production (`docker-compose.yml`) — full IAM integration
+
+Runs the full stack integrated with the portal's IAM/Keycloak. Requires the IAM service to be reachable and properly configured.
 
 ```bash
 cd wizardoc/deployment
 docker compose up --build
 ```
 
-Default access points:
+Access points:
 - App: `http://localhost/wizardoc`
 - API docs: `http://localhost/api/docs`
 - Health check: `http://localhost/health`

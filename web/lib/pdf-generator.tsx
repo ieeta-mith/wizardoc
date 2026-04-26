@@ -172,10 +172,6 @@ export const AssessmentPDFDocument = ({ assessment, study, questionPools }: PDFD
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Project Information</Text>
             <View style={styles.infoRow}>
-              <Text style={styles.infoLabel}>Phase:</Text>
-              <Text style={styles.infoValue}>{study.phase}</Text>
-            </View>
-            <View style={styles.infoRow}>
               <Text style={styles.infoLabel}>Category:</Text>
               <Text style={styles.infoValue}>{study.category}</Text>
             </View>

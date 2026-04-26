@@ -1,10 +1,5 @@
-import { StudyDetailPageClient } from "./study-detail-page-client"
+import { redirect } from "next/navigation"
 
-interface StudyDetailPageProps {
-  params: Promise<{ id: string }>
-}
-
-export default async function StudyDetailPage({ params }: StudyDetailPageProps) {
-  const { id } = await params
-  return <StudyDetailPageClient studyId={id} />
+export default function StudyDetailPage() {
+  redirect("/my-studies")
 }

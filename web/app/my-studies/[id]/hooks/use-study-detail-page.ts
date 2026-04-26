@@ -6,12 +6,13 @@ import { useStudy } from "@/hooks/use-studies"
 import { AssessmentService } from "@/lib/services/assessment-service"
 import { DocxPopulationService } from "@/lib/services/docx-population-service"
 import { QuestionPoolService } from "@/lib/services/question-pool-service"
-import type { QuestionPool } from "@/lib/types"
+import { StudyService } from "@/lib/services/study-service"
+import type { QuestionPool, StudyCreate } from "@/lib/types"
 import { triggerDownload } from "../domain"
 
 export function useStudyDetailPage(studyId: string) {
-  const { study, loading: studyLoading, error: studyError } = useStudy(studyId)
-  const { assessments, loading: assessmentsLoading, error: assessmentsError } = useAssessmentsByStudy(studyId)
+  const { study, loading: studyLoading, error: studyError, refresh: refreshStudy } = useStudy(studyId)
+  const { assessments, loading: assessmentsLoading, error: assessmentsError, refresh: refreshAssessments } = useAssessmentsByStudy(studyId)
   const [pool, setPool] = useState<QuestionPool | null>(null)
   const [poolLoading, setPoolLoading] = useState(false)
   const [poolError, setPoolError] = useState<Error | null>(null)
@@ -21,6 +22,15 @@ export function useStudyDetailPage(studyId: string) {
   const [renamedAssessmentNames, setRenamedAssessmentNames] = useState<Record<string, string>>({})
   const [renameErrors, setRenameErrors] = useState<Record<string, string>>({})
   const [populateErrors, setPopulateErrors] = useState<Record<string, string>>({})
+
+  // Study edit/delete state
+  const [isSavingStudy, setIsSavingStudy] = useState(false)
+  const [studyEditError, setStudyEditError] = useState<string | null>(null)
+  const [isDeletingStudy, setIsDeletingStudy] = useState(false)
+
+  // Assessment delete state
+  const [deletingAssessmentId, setDeletingAssessmentId] = useState<string | null>(null)
+  const [assessmentDeleteErrors, setAssessmentDeleteErrors] = useState<Record<string, string>>({})
 
   useEffect(() => {
     if (!study?.poolId) {
@@ -107,12 +117,63 @@ export function useStudyDetailPage(studyId: string) {
     }
   }
 
+  const updateStudy = async (data: Partial<StudyCreate>): Promise<boolean> => {
+    setIsSavingStudy(true)
+    setStudyEditError(null)
+    try {
+      const updated = await StudyService.update(studyId, data)
+      if (!updated) {
+        setStudyEditError("Project not found.")
+        return false
+      }
+      await refreshStudy()
+      return true
+    } catch (err) {
+      setStudyEditError(err instanceof Error ? err.message : "Failed to update project.")
+      return false
+    } finally {
+      setIsSavingStudy(false)
+    }
+  }
+
+  const deleteStudy = async (): Promise<boolean> => {
+    setIsDeletingStudy(true)
+    try {
+      await StudyService.delete(studyId)
+      return true
+    } catch {
+      return false
+    } finally {
+      setIsDeletingStudy(false)
+    }
+  }
+
+  const deleteAssessment = async (assessmentId: string): Promise<void> => {
+    setDeletingAssessmentId(assessmentId)
+    setAssessmentDeleteErrors((prev) => ({ ...prev, [assessmentId]: "" }))
+    try {
+      await AssessmentService.delete(assessmentId)
+      await refreshAssessments()
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to delete document."
+      setAssessmentDeleteErrors((prev) => ({ ...prev, [assessmentId]: message }))
+    } finally {
+      setDeletingAssessmentId(null)
+    }
+  }
+
   return {
+    assessmentDeleteErrors,
     assessmentsError,
     assessmentsLoading,
     completedAssessments,
+    deleteAssessment,
+    deleteStudy,
+    deletingAssessmentId,
     expandedAssessmentId,
     inProgressAssessments,
+    isDeletingStudy,
+    isSavingStudy,
     pool,
     poolError,
     poolLoading,
@@ -123,9 +184,11 @@ export function useStudyDetailPage(studyId: string) {
     renameErrors,
     renamingAssessmentId,
     study,
+    studyEditError,
     studyError,
     studyLoading,
     toggleAssessmentExpanded,
     totalAssessments: assessmentsWithNames.length,
+    updateStudy,
   }
 }

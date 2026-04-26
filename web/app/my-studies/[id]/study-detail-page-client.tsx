@@ -1,9 +1,20 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { AssessmentsEmptyState, CompletedAssessmentsSection, InProgressAssessmentsSection, StudyDetailHeader, StudyDetailsCard, StudyQuestionPoolCard } from "./components"
+import { ConfirmDeleteDialog } from "@/components/confirm-delete-dialog"
+import { StudyFormDialog } from "@/components/study-form-dialog"
+import {
+  AssessmentsEmptyState,
+  CompletedAssessmentsSection,
+  InProgressAssessmentsSection,
+  StudyDetailHeader,
+  StudyDetailsCard,
+  StudyQuestionPoolCard,
+} from "./components"
 import { useStudyDetailPage } from "./hooks"
 
 interface StudyDetailPageClientProps {
@@ -11,12 +22,19 @@ interface StudyDetailPageClientProps {
 }
 
 export function StudyDetailPageClient({ studyId }: StudyDetailPageClientProps) {
+  const router = useRouter()
   const {
+    assessmentDeleteErrors,
     assessmentsError,
     assessmentsLoading,
     completedAssessments,
+    deleteAssessment,
+    deleteStudy,
+    deletingAssessmentId,
     expandedAssessmentId,
     inProgressAssessments,
+    isDeletingStudy,
+    isSavingStudy,
     pool,
     poolError,
     poolLoading,
@@ -27,11 +45,31 @@ export function StudyDetailPageClient({ studyId }: StudyDetailPageClientProps) {
     renameErrors,
     renamingAssessmentId,
     study,
+    studyEditError,
     studyError,
     studyLoading,
     toggleAssessmentExpanded,
     totalAssessments,
+    updateStudy,
   } = useStudyDetailPage(studyId)
+
+  const [studyEditOpen, setStudyEditOpen] = useState(false)
+  const [studyDeleteOpen, setStudyDeleteOpen] = useState(false)
+  const [pendingDeleteAssessmentId, setPendingDeleteAssessmentId] = useState<string | null>(null)
+
+  const handleDeleteStudy = async () => {
+    const success = await deleteStudy()
+    if (success) {
+      setStudyDeleteOpen(false)
+      router.push("/my-studies")
+    }
+  }
+
+  const handleDeleteAssessment = async () => {
+    if (!pendingDeleteAssessmentId) return
+    await deleteAssessment(pendingDeleteAssessmentId)
+    setPendingDeleteAssessmentId(null)
+  }
 
   if (studyLoading || assessmentsLoading) {
     return (
@@ -70,7 +108,11 @@ export function StudyDetailPageClient({ studyId }: StudyDetailPageClientProps) {
 
   return (
     <div className="container py-8">
-      <StudyDetailHeader study={study} />
+      <StudyDetailHeader
+        study={study}
+        onEditClick={() => setStudyEditOpen(true)}
+        onDeleteClick={() => setStudyDeleteOpen(true)}
+      />
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-1 space-y-6">
@@ -97,6 +139,9 @@ export function StudyDetailPageClient({ studyId }: StudyDetailPageClientProps) {
               onRenameAssessment={renameAssessment}
               renamingAssessmentId={renamingAssessmentId}
               renameErrors={renameErrors}
+              onDeleteAssessment={setPendingDeleteAssessmentId}
+              deletingAssessmentId={deletingAssessmentId}
+              assessmentDeleteErrors={assessmentDeleteErrors}
             />
 
             <InProgressAssessmentsSection
@@ -104,12 +149,44 @@ export function StudyDetailPageClient({ studyId }: StudyDetailPageClientProps) {
               onRenameAssessment={renameAssessment}
               renamingAssessmentId={renamingAssessmentId}
               renameErrors={renameErrors}
+              onDeleteAssessment={setPendingDeleteAssessmentId}
+              deletingAssessmentId={deletingAssessmentId}
+              assessmentDeleteErrors={assessmentDeleteErrors}
             />
 
             {totalAssessments === 0 && <AssessmentsEmptyState />}
           </CardContent>
         </Card>
       </div>
+
+      {study && (
+        <StudyFormDialog
+          study={study}
+          open={studyEditOpen}
+          onOpenChange={setStudyEditOpen}
+          onSave={updateStudy}
+          isSaving={isSavingStudy}
+          error={studyEditError}
+        />
+      )}
+
+      <ConfirmDeleteDialog
+        open={studyDeleteOpen}
+        onOpenChange={setStudyDeleteOpen}
+        title="Delete Project"
+        description={`Are you sure you want to delete "${study.name}"? This will permanently delete the project and all its documents.`}
+        onConfirm={handleDeleteStudy}
+        isDeleting={isDeletingStudy}
+      />
+
+      <ConfirmDeleteDialog
+        open={pendingDeleteAssessmentId !== null}
+        onOpenChange={(val) => { if (!val) setPendingDeleteAssessmentId(null) }}
+        title="Delete Document"
+        description="Are you sure you want to delete this document? This action cannot be undone."
+        onConfirm={handleDeleteAssessment}
+        isDeleting={deletingAssessmentId !== null}
+      />
     </div>
   )
 }

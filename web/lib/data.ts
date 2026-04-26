@@ -73,7 +73,6 @@ export const mockStudies: Study[] = [
   {
     id: "1",
     name: "Study 1",
-    phase: "Phase III",
     category: "Cardiology",
     studyQuestion: "A study about something interesting. Lorem ipsum dolor sit amet, consectetur adipisci.",
     poolId: "1",
@@ -93,6 +92,7 @@ export const mockAssessments: Assessment[] = [
     answeredQuestions: 4,
     status: "completed",
     answers: {},
+    answerProvenance: {},
     createdAt: new Date("2024-01-16"),
     updatedAt: new Date("2024-01-18"),
   },
@@ -105,6 +105,7 @@ export const mockAssessments: Assessment[] = [
     answeredQuestions: 1,
     status: "in-progress",
     answers: {},
+    answerProvenance: {},
     createdAt: new Date("2024-01-19"),
     updatedAt: new Date("2024-01-20"),
   },

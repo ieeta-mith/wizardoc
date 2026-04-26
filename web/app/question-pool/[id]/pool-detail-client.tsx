@@ -24,7 +24,7 @@ export function PoolDetailClient({ pool, canManageTemplates }: PoolDetailClientP
     deletingId,
     downloadDocx,
     downloadingDocx,
-    importBatchCsv,
+    importBatchJson,
     importing,
     questions,
     tableColumns,
@@ -36,7 +36,7 @@ export function PoolDetailClient({ pool, canManageTemplates }: PoolDetailClientP
     const file = event.target.files?.[0]
     event.target.value = ""
     if (!file) return
-    await importBatchCsv(file)
+    await importBatchJson(file)
   }
 
   const handleDocxUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +63,7 @@ export function PoolDetailClient({ pool, canManageTemplates }: PoolDetailClientP
             <input
               ref={fileInputRef}
               type="file"
-              accept=".csv,text/csv"
+              accept=".json,application/json"
               className="hidden"
               onChange={handleBatchImport}
             />

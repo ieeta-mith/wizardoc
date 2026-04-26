@@ -14,11 +14,18 @@ export interface DocxFile {
   uploadedAt: string
 }
 
+export interface TableColumn {
+  key: string
+  label: string
+}
+
 export interface Question {
   id: string
   identifier?: string
   text: string
   info?: string
+  type?: string
+  columns?: TableColumn[]
   [key: string]: unknown
 }
 
@@ -26,7 +33,6 @@ export interface Study {
   id: string
   owner_id?: string | null
   name?: string | null
-  phase?: string | null
   category?: string | null
   studyQuestion?: string | null
   poolId: string
@@ -37,6 +43,8 @@ export interface Study {
 
 export type StudyCreate = Omit<Study, "id" | "owner_id" | "createdAt" | "updatedAt">
 
+export type AnswerProvenance = "user" | "ai" | "ai-edited"
+
 export interface Assessment {
   id: string
   studyId: string
@@ -46,6 +54,7 @@ export interface Assessment {
   answeredQuestions: number
   status: "in-progress" | "completed"
   answers: Record<string, string>
+  answerProvenance: Record<string, AnswerProvenance>
   createdAt: Date
   updatedAt: Date
 }
