@@ -2,10 +2,13 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { useDocuments } from "@/hooks/use-documents"
+import { useCurrentUser } from "@/hooks/use-current-user"
 import { DocumentCard, EmptyStudiesState, MyStudiesHeader } from "./components"
 
 export function MyStudiesPageClient() {
   const { items, loading, error, refresh } = useDocuments()
+  const { user } = useCurrentUser()
+
   const documentCountByStudyId = items.reduce((counts, item) => {
     counts.set(item.study.id, (counts.get(item.study.id) ?? 0) + 1)
     return counts
@@ -48,6 +51,7 @@ export function MyStudiesPageClient() {
               backingStudyDocumentCount={documentCountByStudyId.get(study.id) ?? 0}
               onDeleteSuccess={refresh}
               onRenameSuccess={refresh}
+              currentUserId={user?.id ?? null}
             />
           ))}
         </div>

@@ -1,4 +1,4 @@
-import type { Study, StudyCreate } from "@/lib/types"
+import type { ShareableUser, Study, StudyCreate } from "@/lib/types"
 import { API_BASE_URL } from "./api-base-url"
 
 export class StudyService {
@@ -122,6 +122,31 @@ export class StudyService {
       createdAt: new Date(updated.createdAt),
       updatedAt: new Date(updated.updatedAt),
     }
+  }
+
+  static async share(id: string, user: ShareableUser): Promise<Study> {
+    const displayName = [user.firstName, user.lastName].filter(Boolean).join(" ") || user.username || null
+    const response = await fetch(`${API_BASE_URL}/studies/${id}/share`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: user.id, email: user.email ?? null, name: displayName }),
+    })
+    if (!response.ok) {
+      throw new Error(`Failed to share document: ${response.statusText}`)
+    }
+    const data = await response.json()
+    return { ...data, createdAt: new Date(data.createdAt), updatedAt: new Date(data.updatedAt) }
+  }
+
+  static async unshare(id: string, targetUserId: string): Promise<Study> {
+    const response = await fetch(`${API_BASE_URL}/studies/${id}/share/${targetUserId}`, {
+      method: "DELETE",
+    })
+    if (!response.ok) {
+      throw new Error(`Failed to remove share: ${response.statusText}`)
+    }
+    const data = await response.json()
+    return { ...data, createdAt: new Date(data.createdAt), updatedAt: new Date(data.updatedAt) }
   }
 
   /**
