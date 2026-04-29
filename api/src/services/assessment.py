@@ -1,8 +1,11 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from bson import ObjectId
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from pymongo import ReturnDocument
-from src.models.assessment import Assessment, AssessmentCreate, AssessmentUpdate
+from src.models.assessment import Assessment, AssessmentCreate, AssessmentUpdate, LockResponse
+from src.core.deps import AuthenticatedUser
+
+LOCK_TTL_SECONDS = 300 # 5 minutes
 
 
 def _serialize_assessment(doc: dict) -> Assessment:
@@ -48,3 +51,59 @@ class AssessmentService:
     async def delete(self, db: AsyncIOMotorDatabase, assessment_id: str):
         doc = await db[self.collection].find_one_and_delete({"_id": ObjectId(assessment_id)})
         return _serialize_assessment(doc) if doc else None
+
+    async def acquire_lock(self, db: AsyncIOMotorDatabase, assessment_id: str, user: AuthenticatedUser) -> LockResponse | None:
+        now = datetime.utcnow()
+        display_name = user.email or user.username or user.id
+        doc = await db[self.collection].find_one_and_update(
+            {
+                "_id": ObjectId(assessment_id),
+                "$or": [
+                    {"lock_owner_id": None},
+                    {"lock_owner_id": user.id},
+                    {"lock_expires_at": {"$lt": now}},
+                ],
+            },
+            {
+                "$set": {
+                    "lock_owner_id": user.id,
+                    "lock_owner_name": display_name,
+                    "lock_expires_at": now + timedelta(seconds=LOCK_TTL_SECONDS),
+                }
+            },
+            return_document=ReturnDocument.AFTER,
+        )
+        if doc:
+            return LockResponse(
+                acquired=True,
+                lock_owner_id=user.id,
+                lock_expires_at=doc["lock_expires_at"],
+            )
+        current = await db[self.collection].find_one({"_id": ObjectId(assessment_id)})
+        if not current:
+            return None
+        return LockResponse(
+            acquired=False,
+            lock_owner_id=current.get("lock_owner_id"),
+            lock_owner_name=current.get("lock_owner_name"),
+            lock_expires_at=current.get("lock_expires_at"),
+        )
+
+    async def renew_lock(self, db: AsyncIOMotorDatabase, assessment_id: str, user_id: str) -> bool:
+        now = datetime.utcnow()
+        result = await db[self.collection].update_one(
+            {
+                "_id": ObjectId(assessment_id),
+                "lock_owner_id": user_id,
+                "lock_expires_at": {"$gt": now},
+            },
+            {"$set": {"lock_expires_at": now + timedelta(seconds=LOCK_TTL_SECONDS)}},
+        )
+        return result.modified_count > 0
+
+    async def release_lock(self, db: AsyncIOMotorDatabase, assessment_id: str, user_id: str) -> bool:
+        result = await db[self.collection].update_one(
+            {"_id": ObjectId(assessment_id), "lock_owner_id": user_id},
+            {"$set": {"lock_owner_id": None, "lock_owner_name": None, "lock_expires_at": None}},
+        )
+        return result.modified_count > 0

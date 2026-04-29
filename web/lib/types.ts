@@ -72,6 +72,16 @@ export interface Assessment {
   answerProvenance: Record<string, AnswerProvenance>
   createdAt: Date
   updatedAt: Date
+  lock_owner_id?: string | null
+  lock_owner_name?: string | null
+  lock_expires_at?: string | null
+}
+
+export interface LockResponse {
+  acquired: boolean
+  lock_owner_id: string | null
+  lock_owner_name: string | null
+  lock_expires_at: string | null
 }
 
 export interface CurrentUser {

@@ -7,10 +7,12 @@ import {
   WizardAiSetup,
   WizardErrorState,
   WizardHeader,
+  WizardLockedState,
   WizardQuestionCard,
   WizardQuestionMetadata,
 } from "./components"
 import { AiService } from "@/lib/services/ai-service"
+import { useAssessmentLock } from "@/hooks/use-assessment-lock"
 
 interface WizardPageClientProps {
   assessmentId: string
@@ -22,6 +24,8 @@ export function WizardPageClient({ assessmentId }: WizardPageClientProps) {
   const [phase, setPhase] = useState<Phase>("setup")
   const [aiSessionId, setAiSessionId] = useState<string | null>(null)
   const [aiUnavailable, setAiUnavailable] = useState(false)
+
+  const { lockState } = useAssessmentLock(assessmentId)
 
   const {
     answers,
@@ -71,6 +75,22 @@ export function WizardPageClient({ assessmentId }: WizardPageClientProps) {
   const handleSetupConfirm = (sessionId: string | null) => {
     setAiSessionId(sessionId)
     setPhase("wizard")
+  }
+
+  if (lockState.status === "acquiring") {
+    return (
+      <div className="container max-w-4xl py-8">
+        <p>Loading document...</p>
+      </div>
+    )
+  }
+
+  if (lockState.status === "denied") {
+    return <WizardLockedState lockedBy={lockState.lockedBy} />
+  }
+
+  if (lockState.status === "error") {
+    return <WizardErrorState />
   }
 
   if (phase === "setup") {

@@ -37,3 +37,13 @@ class Assessment(AssessmentBase):
     id: str
     createdAt: datetime
     updatedAt: datetime
+    lock_owner_id: str | None = None
+    lock_owner_name: str | None = None
+    lock_expires_at: datetime | None = None
+
+
+class LockResponse(BaseModel):
+    acquired: bool
+    lock_owner_id: str | None = None
+    lock_owner_name: str | None = None
+    lock_expires_at: datetime | None = None

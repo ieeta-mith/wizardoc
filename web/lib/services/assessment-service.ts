@@ -1,4 +1,4 @@
-import type { Assessment, AnswerProvenance, Study, QuestionPool, Question } from "@/lib/types"
+import type { Assessment, AnswerProvenance, Study, QuestionPool, Question, LockResponse } from "@/lib/types"
 import { StudyService } from "./study-service"
 import { QuestionPoolService } from "./question-pool-service"
 import { API_BASE_URL } from "./api-base-url"
@@ -231,6 +231,27 @@ export class AssessmentService {
       createdAt: new Date(updated.createdAt),
       updatedAt: new Date(updated.updatedAt),
     }
+  }
+
+  static async acquireLock(id: string): Promise<LockResponse> {
+    const response = await fetch(`${API_BASE_URL}/assessments/${id}/lock`, {
+      method: "POST",
+    })
+    if (!response.ok) {
+      throw new Error(`Failed to acquire lock: ${response.statusText}`)
+    }
+    return response.json()
+  }
+
+  static async renewLock(id: string): Promise<void> {
+    await fetch(`${API_BASE_URL}/assessments/${id}/lock/renew`, { method: "POST" })
+  }
+
+  static async releaseLock(id: string): Promise<void> {
+    await fetch(`${API_BASE_URL}/assessments/${id}/lock`, {
+      method: "DELETE",
+      keepalive: true,
+    })
   }
 
   /**
