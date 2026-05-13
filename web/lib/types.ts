@@ -29,6 +29,12 @@ export interface Question {
   [key: string]: unknown
 }
 
+export interface StudyCollaborator {
+  id: string
+  email?: string | null
+  name?: string | null
+}
+
 export interface Study {
   id: string
   owner_id?: string | null
@@ -37,8 +43,17 @@ export interface Study {
   studyQuestion?: string | null
   poolId: string
   metadata?: Record<string, unknown>
+  shared_with?: StudyCollaborator[]
   createdAt: Date
   updatedAt: Date
+}
+
+export interface ShareableUser {
+  id: string
+  username?: string | null
+  firstName?: string | null
+  lastName?: string | null
+  email?: string | null
 }
 
 export type StudyCreate = Omit<Study, "id" | "owner_id" | "createdAt" | "updatedAt">
@@ -57,6 +72,16 @@ export interface Assessment {
   answerProvenance: Record<string, AnswerProvenance>
   createdAt: Date
   updatedAt: Date
+  lock_owner_id?: string | null
+  lock_owner_name?: string | null
+  lock_expires_at?: string | null
+}
+
+export interface LockResponse {
+  acquired: boolean
+  lock_owner_id: string | null
+  lock_owner_name: string | null
+  lock_expires_at: string | null
 }
 
 export interface CurrentUser {

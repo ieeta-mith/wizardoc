@@ -4,6 +4,11 @@ from typing import Any
 from pydantic import BaseModel, ConfigDict, Field
 
 
+class StudyCollaborator(BaseModel):
+    id: str
+    email: str | None = None
+    name: str | None = None
+
 
 class StudyBase(BaseModel):
     name: str | None = None
@@ -11,6 +16,7 @@ class StudyBase(BaseModel):
     studyQuestion: str | None = None
     poolId: str
     metadata: dict[str, Any] = Field(default_factory=dict)
+    shared_with: list[StudyCollaborator] = Field(default_factory=list)
 
     model_config = ConfigDict(populate_by_name=True)
 
