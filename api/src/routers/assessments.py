@@ -1,7 +1,8 @@
+from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from src.core.deps import get_db, get_authenticated_user, AuthenticatedUser
-from src.models.assessment import Assessment, AssessmentCreate, AssessmentUpdate
+from src.models.assessment import Assessment, AssessmentCreate, AssessmentUpdate, LockResponse
 from src.services.assessment import AssessmentService
 from src.services.assessment_docx import AssessmentDocxService, DocxPopulationError
 from src.services.study import StudyService
@@ -70,8 +71,58 @@ async def update_assessment(
     if not assessment:
         raise HTTPException(status_code=404, detail="Assessment not found")
     await _require_study_access(db, assessment.studyId, user)
+    now = datetime.utcnow()
+    if (
+        assessment.lock_owner_id
+        and assessment.lock_owner_id != user.id
+        and assessment.lock_expires_at
+        and assessment.lock_expires_at > now
+    ):
+        raise HTTPException(status_code=423, detail="Document is currently being edited by another user")
     updated = await service.update(db, assessment_id, payload)
     return updated
+
+
+@router.post("/{assessment_id}/lock", response_model=LockResponse)
+async def acquire_assessment_lock(
+    assessment_id: str,
+    db: AsyncIOMotorDatabase = Depends(get_db),
+    user: AuthenticatedUser = Depends(get_authenticated_user),
+):
+    assessment = await service.get(db, assessment_id)
+    if not assessment:
+        raise HTTPException(status_code=404, detail="Assessment not found")
+    await _require_study_access(db, assessment.studyId, user)
+    result = await service.acquire_lock(db, assessment_id, user)
+    if result is None:
+        raise HTTPException(status_code=404, detail="Assessment not found")
+    return result
+
+
+@router.post("/{assessment_id}/lock/renew", status_code=204)
+async def renew_assessment_lock(
+    assessment_id: str,
+    db: AsyncIOMotorDatabase = Depends(get_db),
+    user: AuthenticatedUser = Depends(get_authenticated_user),
+):
+    assessment = await service.get(db, assessment_id)
+    if not assessment:
+        raise HTTPException(status_code=404, detail="Assessment not found")
+    await _require_study_access(db, assessment.studyId, user)
+    await service.renew_lock(db, assessment_id, user.id)
+
+
+@router.delete("/{assessment_id}/lock", status_code=204)
+async def release_assessment_lock(
+    assessment_id: str,
+    db: AsyncIOMotorDatabase = Depends(get_db),
+    user: AuthenticatedUser = Depends(get_authenticated_user),
+):
+    assessment = await service.get(db, assessment_id)
+    if not assessment:
+        raise HTTPException(status_code=404, detail="Assessment not found")
+    await _require_study_access(db, assessment.studyId, user)
+    await service.release_lock(db, assessment_id, user.id)
 
 
 @router.delete("/{assessment_id}", response_model=Assessment)
